@@ -1,0 +1,50 @@
+@startuml
+autonumber
+
+actor User
+participant "ProductScreen" as PS
+participant "ConfirmationDialog" as CD
+participant "ProductService" as Service
+participant "ProductDAL" as DAL
+database "Database" as DB
+
+User -> PS: Chọn món ăn cần xóa
+activate PS
+
+PS -> CD: Hiển thị hộp thoại xác nhận
+activate CD
+CD --> User: Hỏi xác nhận "Bạn có chắc muốn xóa món ăn này?"
+
+User -> CD: Xác nhận xóa
+CD --> PS: Người dùng đã xác nhận
+deactivate CD
+
+PS -> Service: deleteProduct(productId)
+activate Service
+
+Service -> DAL: canDeleteProduct(productId)
+activate DAL
+
+DAL -> DB: SELECT can_delete FROM products WHERE id = productId
+activate DB
+DB --> DAL: Trả về giá trị can_delete
+deactivate DB
+
+alt Có thể xóa
+    DAL --> Service: Trả về true
+    Service -> DAL: softDeleteProduct(productId)
+
+    DAL -> DB: UPDATE products SET is_deleted = true WHERE id = productId
+    activate DB
+    DB --> DAL: Xác nhận cập nhật thành công
+    deactivate DB
+
+    DAL --> Service: Trả về kết quả xóa 
+    Service --> PS: Trả về true
+    PS -> PS: Ẩn món ăn khỏi danh sách hiển thị
+    PS --> User: Hiển thị thông báo "Đã xóa món ăn thành công"
+else Không thể xóa
+    DAL --> Service: Trả về false
+    Service --> PS: Trả về false
+    PS --> User: Hiển thị thông báo "Không thể xóa món ăn này"
+end

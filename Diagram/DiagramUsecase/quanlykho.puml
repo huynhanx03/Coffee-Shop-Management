@@ -1,0 +1,25 @@
+@startuml QuanLyKho
+skinparam monochrome true
+skinparam Shadowing true
+
+
+left to right direction
+
+actor "Quản lý" as ql
+
+
+rectangle "Quản lý kho"{
+usecase "Quản lý kho" as qltd
+
+usecase "Nhập kho" as nk
+
+ql --- qltd
+
+  qltd --- nk:include
+  
+}
+
+
+
+@enduml
+

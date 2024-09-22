@@ -1,0 +1,72 @@
+@startuml QuanLyQuanCaPheUseCase
+skinparam monochrome true
+skinparam Shadowing true
+
+skinparam rectangleWidth 100
+skinparam rectangleHeight 100
+
+left to right direction
+
+actor "Quản Lý" as QL
+
+actor "Nhân viên" as NV
+actor "Khách hàng" as KH
+
+rectangle "QUẢN LÝ QUÁN CÀ PHÊ"{
+
+usecase "Quản lý thực đơn" as qltd
+usecase "Quản lý nhân viên" as qlnv
+usecase "Quản lý kho" as qlk
+usecase "Quản lý nguyên liệu" as qlnl
+usecase "Quản lý thống kê và báo cáo" as qltkvbc
+usecase "Quản lý bàn" as qlb
+usecase "Quản lý phiếu giảm giá" as qlpgg
+usecase "Quản lý đánh giá sản phẩm" as qldgsp
+usecase "Quản lý quán" as qlq
+usecase "Nhắn tin" as nt
+usecase "Quản lý đơn hàng" as qldh
+usecase "Thanh toán tại quán" as tttq
+usecase "Đăng nhập" as dn
+usecase "Đăng ký" as dk
+
+usecase "Thêm sản phẩm vào giỏ hàng" as tspvgh
+usecase "Đặt sản phẩm" as dsp
+usecase "Xem đơn hàng cũ" as xdhc
+usecase "Đánh giá sản phẩm" as dgsp
+usecase "Xem danh sách sản phẩm" as xdssp
+
+
+
+}
+NV <|-left- QL
+
+
+
+QL --- qltd
+QL --- qlnv
+QL --- qlk
+QL --- qlnl
+QL --- qltkvbc
+QL --- qlb
+QL --- qlpgg
+QL --- qldgsp
+QL --- qlq
+QL --- nt
+NV --- nt
+nt --- KH
+
+NV ---dn
+NV --- qldh
+NV --- tttq
+
+dn --- KH
+dk --- KH
+tspvgh ---KH
+dsp --- KH
+xdhc --- KH
+dgsp --- KH
+xdssp --- KH
+
+
+@enduml
+

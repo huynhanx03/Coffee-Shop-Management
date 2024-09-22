@@ -1,0 +1,28 @@
+@startuml QuanLyQuan
+skinparam monochrome true
+skinparam Shadowing true
+
+
+left to right direction
+
+actor "Quản lý" as ql
+
+
+
+rectangle "Quản lý quán"{
+usecase "Quản lý quán" as qlq
+
+usecase "Thêm banner" as tbn
+usecase "Thêm phiếu giảm giá hôm nay" as tmgg
+
+}
+ql --- qlq
+
+  qlq --- tbn:include
+  qlq --- tmgg:include
+
+
+
+
+@enduml
+

@@ -1,0 +1,31 @@
+@startuml Sơ đồ sequence Xóa Nhân Viên
+
+autonumber
+actor User
+participant EmployeeScreen
+participant ConfirmationDialog
+participant EmployeeService
+participant EmployeeDAL
+database Database
+
+User -> EmployeeScreen: Chọn nhân viên và nhấn "Xóa"
+EmployeeScreen -> ConfirmationDialog: Mở("Bạn có chắc muốn xóa không?")
+ConfirmationDialog -> User: Hiển thị hộp thoại xác nhận
+User -> ConfirmationDialog: Nhấn "Có, xóa"
+ConfirmationDialog -> EmployeeService: XóaNhanVien(maNhanVien)
+EmployeeService -> EmployeeDAL: XóaNhanVien(maNhanVien)
+EmployeeDAL -> Database: DELETE FROM NhanVien WHERE
+alt Thành công
+    Database --> EmployeeDAL: Thành công
+    EmployeeDAL --> EmployeeService: Thành công
+    EmployeeService --> EmployeeScreen: Thành công
+    EmployeeScreen -> EmployeeScreen: Xóa nhân viên khỏi danh sách
+    EmployeeScreen --> User: Hiển thị thông báo thành công
+else Thất bại
+    Database --> EmployeeDAL: Thất bại (ví dụ: ràng buộc khóa ngoại)
+    EmployeeDAL --> EmployeeService: Thất bại(thôngBáoLỗi)
+    EmployeeService --> EmployeeScreen: Thất bại(thôngBáoLỗi)
+    EmployeeScreen --> User: Hiển thị thông báo lỗi
+end
+
+@enduml

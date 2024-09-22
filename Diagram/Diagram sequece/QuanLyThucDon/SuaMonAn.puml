@@ -1,0 +1,61 @@
+@startuml
+autonumber
+
+actor User
+participant "ProductScreen" as PS
+participant "EditProductScreen" as EPS
+participant "ProductService" as Service
+participant "ProductDAL" as DAL
+database "Database" as DB
+
+User -> PS: Chọn món ăn cần sửa
+activate PS
+
+PS -> Service: getProductDetails(productId)
+activate Service
+
+Service -> DAL: fetchProduct(productId)
+activate DAL
+
+DAL -> DB: SELECT * FROM products WHERE id = productId
+activate DB
+DB --> DAL: Trả về thông tin món ăn
+deactivate DB
+
+DAL --> Service: Trả về thông tin món ăn
+deactivate DAL
+
+Service --> PS: Trả về thông tin món ăn
+deactivate Service
+
+PS -> EPS: Mở màn hình với thông tin món ăn
+activate EPS
+EPS --> User: Hiển thị form sửa món ăn
+
+User -> EPS: Chỉnh sửa thông tin món ăn
+EPS -> EPS: Kiểm tra dữ liệu nhập
+
+User -> EPS: Nhấn nút lưu
+EPS -> Service: updateProduct(productId, updatedDetails)
+activate Service
+
+Service -> DAL: editProduct(productId, updatedDetails)
+activate DAL
+
+DAL -> DB: UPDATE products SET ... WHERE id = productId
+activate DB
+DB --> DAL: Xác nhận cập nhật thành công
+deactivate DB
+
+DAL --> Service: Trả về kết quả cập nhật
+deactivate DAL
+
+Service --> EPS: Trả về thông tin món ăn đã cập nhật
+deactivate Service
+
+EPS --> User: Hiển thị thông báo cập nhật thành công
+EPS -> PS: Đóng màn hình và cập nhật danh sách món ăn
+deactivate EPS
+deactivate PS
+
+@enduml

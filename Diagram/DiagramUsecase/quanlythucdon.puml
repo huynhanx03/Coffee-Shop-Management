@@ -1,0 +1,32 @@
+@startuml QuanLyThucDon
+skinparam monochrome true
+skinparam Shadowing true
+
+
+left to right direction
+
+actor "Quản lý" as ql
+
+
+
+rectangle {
+usecase "Quản lý thực đơn" as qltd
+
+usecase "Thêm món ăn" as tma
+usecase "Xóa món ăn" as xma
+usecase "Sửa món ăn" as sma
+usecase "Tìm kiếm món ăn" as tkma
+
+}
+ql --- qltd
+
+  qltd --- tma:include
+  qltd --- xma:include
+  qltd --- sma:include
+  qltd --- tkma:include  
+
+
+
+
+@enduml
+

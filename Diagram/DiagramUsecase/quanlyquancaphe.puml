@@ -1,0 +1,187 @@
+@startuml QuanLyQuanCaPhe
+skinparam monochrome true
+skinparam Shadowing true
+
+
+left to right direction
+
+actor "Quản Lý" as QL
+
+actor "Nhân viên" as NV
+actor "Khách hàng" as KH
+
+
+usecase "Quản lý thực đơn" as qltd
+usecase "Quản lý nhân viên" as qlnv
+usecase "Quản lý kho" as qlk
+usecase "Quản lý nguyên liệu" as qlnl
+usecase "Quản lý thống kê và báo cáo" as qltkvbc
+usecase "Quản lý bàn" as qlb
+usecase "Quản lý phiếu giảm giá" as qlpgg
+usecase "Quản lý đánh giá sản phẩm" as qldgsp
+usecase "Quản lý quán" as qlq
+usecase "Nhắn tin" as nt
+usecase "Quản lý đơn hàng" as qldh
+usecase "Thanh toán tại quán" as tttq
+usecase "Đăng nhập" as dn
+usecase "đăng ký" as dk
+
+'quản lý thực đơn
+usecase "Thêm món ăn" as tma 
+usecase "Xóa món ăn" as xma 
+usecase "Sửa món ăn" as sma 
+usecase "Tìm kiếm món ăn" as tkma 
+
+'quản lý nhân viên
+usecase "Thêm nhân viên" as tnv
+usecase "Xóa nhân viên" as xnv 
+usecase "Sửa nhân viên" as snv 
+usecase "Tìm kiếm nhân viên" as tknv
+
+'quản lý kho
+usecase "Nhập kho" as nk
+
+'quản lý nguyên liệu
+usecase "Thêm nguyên liệu" as tnl
+usecase "Xóa nguyên liệu" as xnl 
+usecase "Sửa nguyên liệu" as snl 
+usecase "Tìm kiếm nguyên liệu" as tknl
+
+'quản lý thống kê và báo cáo
+usecase "Xuất file excel" as xfec
+
+'quản lý bàn
+usecase "Thêm bàn" as tb
+usecase "Xóa bàn" as xb
+usecase "Sửa bàn" as sb
+usecase "Chuyển bàn" as cb
+usecase "Gộp bàn" as gb
+
+'quản lý phiếu giảm giá
+usecase "Thêm phiếu giảm giá" as tpggq
+usecase "Xóa phiếu giảm giá" as xpggq 
+usecase "Tìm kiếm phiếu giảm giá" as tkpggq
+
+
+'quản lý đánh giá sản phẩm
+usecase "Xóa đánh giá" as xdg
+usecase "Tìm kiếm đánh giá" as tkdg
+
+'quản lý quán
+usecase "Tạo banner" as tbn
+usecase "Thêm phiếu giảm giá hôm nay" as tpgghm
+
+'quản lý tin nhắn
+
+
+'quản lý đơn hành
+usecase "Nhận đơn hàng" as ndh
+usecase "Hủy đơn hàng" as hdh
+'thanh toán tại quầy
+usecase "Xuất hóa đơn" as xhd
+
+'đăng nhập
+usecase "Đổi thông tin cá nhân" as dttcn
+usecase "Đổi mật khẩu" as dmk
+usecase "Quên mật khẩu" as qmk
+
+usecase "Thêm sản phẩm vào giỏ hàng" as tspvgh
+usecase "Xem danh sách sản phẩm" as xdssp
+usecase "Đặt sản phẩm" as dsp
+usecase "Xem đơn hàng cũ" as xdhc
+usecase "Đánh giá sản phẩm" as dgsp
+
+
+usecase "Tìm kiếm sản phẩm" as tksp
+
+NV <|-left- QL
+
+
+
+QL --- qltd
+QL --- qlnv
+QL --- qlk
+QL --- qlnl
+QL --- qltkvbc
+QL --- qlb
+QL --- qlpgg
+QL --- qldgsp
+QL --- qlq
+nt --- QL
+nt --- NV
+nt --- KH
+
+NV ---dn
+NV --- qldh
+NV --- tttq
+
+KH --- dn
+KH --- dk
+KH --- tspvgh
+KH --- xdssp
+KH --- dsp
+KH ---xdhc
+KH --- dgsp
+
+
+
+'quản lý thực đơn
+qltd --- tma:include
+qltd --- xma:include
+qltd --- sma:include
+qltd --- tkma:include
+
+'quản lý nhân viên
+qlnv --- tnv:include
+qlnv --- xnv:include
+qlnv --- snv:include
+qlnv --- tknv:include
+
+'quản lý kho
+qlk --- nk:include
+
+'quản lý nguyên liệu
+qlnl --- tnl:include
+qlnl --- xnl:include
+qlnl --- snl:include
+qlnl --- tknl:include
+
+'quản lý thống kê và báo cáo
+qltkvbc --- xfec:include
+
+'quản lý bàn
+qlb --- gb:extend
+qlb --- cb:extend
+qlb --- tb:include
+qlb --- xb:include
+qlb --- sb:include
+
+'quản lý phiếu giảm giá
+qlpgg --- tpggq:include
+qlpgg --- xpggq:include
+qlpgg --- tkpggq:include
+
+'quản lý đánh giá sản phẩm
+qldgsp ---xdg:include
+qldgsp ---tkdg:include
+
+'quản lý quán
+qlq --- tpgghm:include
+qlq --- tbn:include
+
+
+
+'quản lý đơn hành
+qldh --- ndh:include
+qldh --- hdh :include
+'thanh toán tại quầy
+tttq --- xhd:include
+
+'đăng nhập
+dn --- qmk: extend
+dn --- dmk: include
+dn --- dttcn: include
+
+xdssp --- tksp:include
+@enduml
+

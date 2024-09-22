@@ -1,0 +1,26 @@
+@startuml XemDanhSachSanPham
+skinparam monochrome true
+skinparam Shadowing true
+
+
+left to right direction
+
+actor "Khách hàng" as ql
+
+
+
+rectangle "Xem danh sách sản phẩm"{
+usecase "Xem danh sách sản phẩm" as qlpdg
+
+usecase "Tìm kiếm sản phẩm" as ndh
+
+}
+ql --- qlpdg
+
+  qlpdg --- ndh:include
+
+
+
+
+@enduml
+

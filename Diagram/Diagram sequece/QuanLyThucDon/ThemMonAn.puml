@@ -1,0 +1,44 @@
+@startuml
+actor User
+participant "ProductScreen" as PS
+participant "AddProductScreen" as APS
+participant "ProductService" as Service
+participant "ProductDAL" as DAL
+database "Database" as DB
+
+autonumber
+
+User -> PS: Nhấn nút có biểu tượng dấu cộng
+activate PS
+
+PS -> APS: Mở màn hình AddProductScreen
+activate APS
+APS --> User: Hiển thị form thêm món ăn
+
+User -> APS: Điền đầy đủ thông tin món ăn
+APS -> APS: Kiểm tra dữ liệu nhập
+
+User -> APS: Nhấn nút xác nhận
+APS -> Service: createProduct(productDetails)
+activate Service
+
+Service -> DAL: addProduct(productDetails)
+activate DAL
+
+DAL -> DB: INSERT INTO products (...)
+activate DB
+DB --> DAL: Xác nhận thêm thành công
+deactivate DB
+
+DAL --> Service: Trả về id của món ăn mới
+deactivate DAL
+
+Service --> APS: Trả về thông tin món ăn đã thêm
+deactivate Service
+
+APS --> User: Hiển thị thông báo thành công
+APS -> PS: Đóng màn hình và cập nhật danh sách món ăn
+deactivate APS
+deactivate PS
+
+@enduml

@@ -1,0 +1,37 @@
+@startuml QuanLyBan
+skinparam monochrome true
+skinparam Shadowing true
+
+
+left to right direction
+
+actor "Quản lý" as ql
+
+actor "Nhân viên" as nv
+
+rectangle "Quản lý bàn"{
+usecase "Quản lý bàn" as qlb
+
+usecase "Gộp bàn" as gb
+usecase "Chuyển bàn" as cb
+usecase "Thêm bàn" as tb
+usecase "Sửa bàn" as sb
+usecase "Xóa bàn" as xb
+
+}
+
+
+ql --- qlb
+nv --- qlb
+
+  qlb --- gb: extend
+  qlb --- cb: extend
+  qlb --- tb: include
+  qlb --- sb: include
+  qlb --- xb: include
+
+
+
+
+@enduml
+

@@ -1,0 +1,32 @@
+@startuml QuanLyNguyenLieu
+skinparam monochrome true
+skinparam Shadowing true
+
+
+left to right direction
+
+actor "Quản lý" as ql
+
+
+
+rectangle "Quản lý nguyên liệu"{
+usecase "Quản lý nguyên liệu" as qltd
+
+usecase "Thêm nguyên liệu" as tnl
+usecase "Xóa nguyên liệu" as xnl
+usecase "Tìm kiếm nguyên liệu" as snl
+usecase "Sửa nguyên liệu" as tknl
+
+}
+ql --- qltd
+
+  qltd --- tnl:include
+  qltd --- xnl:include
+  qltd --- snl:include
+  qltd --- tknl:include  
+
+
+
+
+@enduml
+

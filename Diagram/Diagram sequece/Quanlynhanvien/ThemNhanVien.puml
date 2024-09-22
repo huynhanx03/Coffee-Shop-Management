@@ -1,0 +1,42 @@
+@startuml Sơ đồ sequence Thêm Nhân Viên
+
+autonumber
+
+actor User
+participant EmployeeScreen
+participant AddEmployeeScreen
+participant EmployeeService
+participant EmployeeDAL
+database Database
+
+User -> EmployeeScreen: Nhấn "Thêm Nhân Viên"
+EmployeeScreen -> AddEmployeeScreen: HiểnThịMànHình()
+AddEmployeeScreen -> User: Hiển thị form thêm nhân viên
+User -> AddEmployeeScreen: Nhập thông tin nhân viên mới
+User -> AddEmployeeScreen: Nhấn "Lưu"
+AddEmployeeScreen -> EmployeeService: ThêmNhânViên(duLieuNhanVien)
+EmployeeService -> EmployeeDAL: ThêmNhânViên(duLieuNhanVien)
+EmployeeDAL -> Database: INSERTINTONhanVien(duLieuNhanVien)
+
+alt Thành công
+    Database --> EmployeeDAL: Thành công (maNhanVienMoi)
+    EmployeeDAL --> EmployeeService: Thành công(maNhanVienMoi)
+    EmployeeService --> AddEmployeeScreen: Thành công(maNhanVienMoi)
+    AddEmployeeScreen --> User: Hiển thị thông báo thành công
+    AddEmployeeScreen -> EmployeeScreen: Đóng()
+    EmployeeScreen -> EmployeeService: LấyDanhSáchNhânViên()
+    EmployeeService -> EmployeeDAL: LấyDanhSáchNhânViên()
+    EmployeeDAL -> Database: SELECT * FROM NhanVien
+    Database --> EmployeeDAL: Dữ liệu danh sách nhân viên
+    EmployeeDAL --> EmployeeService: Dữ liệu danh sách nhân viên
+    EmployeeService --> EmployeeScreen: Dữ liệu danh sách nhân viên
+    EmployeeScreen --> User: Hiển thị danh sách đã cập nhật
+else Thất bại
+    Database --> EmployeeDAL: Thất bại
+    EmployeeDAL --> EmployeeService: Thất bại(thôngBáoLỗi)
+    EmployeeService --> AddEmployeeScreen: Thất bại(thôngBáoLỗi)
+    AddEmployeeScreen --> User: Hiển thị thông báo lỗi
+    AddEmployeeScreen --> User: Đánh dấu các trường không hợp lệ
+end
+
+@enduml

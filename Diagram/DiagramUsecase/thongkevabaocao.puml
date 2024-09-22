@@ -1,0 +1,23 @@
+@startuml Thongkevabaocao
+skinparam monochrome true
+skinparam Shadowing true
+
+
+left to right direction
+
+actor "Quản lý" as ql
+
+rectangle "Thống kê và báo cáo"{
+usecase "Thống kê và báo cáo" as tkvbc
+
+usecase "Xuất file Excel" as xfe
+
+}
+
+ql --- tkvbc
+
+  tkvbc --- xfe: include
+
+
+@enduml
+

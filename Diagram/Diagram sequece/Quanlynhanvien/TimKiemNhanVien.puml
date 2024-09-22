@@ -1,0 +1,31 @@
+@startuml Sơ đồ sequence Tìm Kiếm Nhân Viên
+
+autonumber
+
+actor User
+participant EmployeeScreen
+participant SearchBar
+participant EmployeeService
+participant EmployeeDAL
+database Database
+
+User -> SearchBar: Nhập từ khóa tìm kiếm (ví dụ: tên, mã)
+SearchBar -> EmployeeService: TìmKiếmNhanVien(từKhóa)
+EmployeeService -> EmployeeDAL: TìmKiếmNhanVien(từKhóa)
+EmployeeDAL -> Database: Tìm từ khóa trong database
+Database --> EmployeeDAL: Dữ liệu nhân viên phù hợp
+EmployeeDAL --> EmployeeService: Dữ liệu nhân viên phù hợp
+EmployeeService --> EmployeeScreen: Dữ liệu nhân viên phù hợp
+
+alt Có kết quả
+    EmployeeScreen -> EmployeeScreen: Lọc và hiển thị nhân viên phù hợp
+    EmployeeScreen --> User: Hiển thị danh sách đã lọc
+else Không có kết quả
+    EmployeeScreen --> User: Hiển thị "Không tìm thấy nhân viên"
+end
+
+User -> EmployeeScreen: Chọn "Xóa Tìm Kiếm" hoặc xóa SearchBar
+EmployeeScreen -> EmployeeScreen: Làm mới để hiển thị tất cả nhân viên
+EmployeeScreen --> User: Hiển thị danh sách nhân viên đầy đủ
+
+@enduml

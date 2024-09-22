@@ -1,0 +1,59 @@
+@startuml Sơ đồ sequence Chuyển Bàn
+
+autonumber
+
+actor User
+participant TableScreen
+participant TransferTableScreen
+participant TableService
+participant TableDAL
+database Database
+
+User -> TableScreen: Nhấn biểu tượng "Chuyển Bàn"
+TableScreen -> TransferTableScreen: Mở()
+
+TransferTableScreen -> TableService: LấyDanhSáchBàn()
+TableService -> TableDAL: LấyDanhSáchBàn()
+TableDAL -> Database: SELECT * FROM Bàn
+Database --> TableDAL: Dữ liệu tất cả bàn
+TableDAL --> TableService: Dữ liệu tất cả bàn
+TableService --> TransferTableScreen: Dữ liệu tất cả bàn
+
+TransferTableScreen -> User: Hiển thị form chuyển bàn với danh sách bàn
+User -> TransferTableScreen: Chọn "Bàn muốn chuyển"
+User -> TransferTableScreen: Chọn "Bàn chuyển đến"
+
+alt Người dùng nhấn "Xác nhận"
+    User -> TransferTableScreen: Nhấn "Xác nhận"
+    TransferTableScreen -> TableService: ChuyểnBàn(maBànCũ, maBànMới)
+    TableService -> TableDAL: KiểmTraTrạngTháiBàn(maBànMới)
+    TableDAL -> Database: SELECT trạngThái FROM Bàn WHERE maBàn = :maBànMới
+    Database --> TableDAL: Trạng thái bàn mới
+    
+    alt Bàn mới trống
+        TableDAL --> TableService: Bàn trống
+        TableService -> TableDAL: CậpNhậtTrạngTháiBàn(maBànCũ, 'Trống')
+        TableDAL -> Database: UPDATE Bàn SET trạngThái = 'Trống' WHERE maBàn = :maBànCũ
+        Database --> TableDAL: Thành công
+        TableDAL -> TableService: Thành công
+        TableService -> TableDAL: CậpNhậtTrạngTháiBàn(maBànMới, 'Đang sử dụng')
+        TableDAL -> Database: UPDATE Bàn SET trạngThái = 'Đang sử dụng' WHERE maBàn = :maBànMới
+        Database --> TableDAL: Thành công
+        TableDAL --> TableService: Thành công
+        TableService --> TransferTableScreen: Thành công
+        TransferTableScreen --> User: Hiển thị "Chuyển bàn thành công"
+        TransferTableScreen -> TableScreen: Đóng()
+        TableScreen -> TableScreen: Làm mới sơ đồ bàn
+        TableScreen --> User: Hiển thị sơ đồ bàn đã cập nhật
+    else Bàn mới đang sử dụng
+        TableDAL --> TableService: Bàn đang sử dụng
+        TableService --> TransferTableScreen: Bàn đích đang sử dụng
+        TransferTableScreen --> User: Hiển thị "Bàn đích đang sử dụng, vui lòng chọn bàn khác"
+    end
+else Người dùng nhấn "Hủy"
+    User -> TransferTableScreen: Nhấn "Hủy"
+    TransferTableScreen -> TableScreen: Đóng()
+    TableScreen --> User: Hiển thị sơ đồ bàn (không thay đổi)
+end
+
+@enduml

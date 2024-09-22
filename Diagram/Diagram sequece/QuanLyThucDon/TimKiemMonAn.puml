@@ -1,0 +1,48 @@
+@startuml
+autonumber
+
+actor User
+participant "ProductScreen" as PS
+participant "SearchBar" as SB
+participant "ProductService" as Service
+participant "ProductDAL" as DAL
+database "Database" as DB
+
+User -> SB: 1. Nhấn vào thanh tìm kiếm
+activate SB
+
+SB --> User: Hiển thị cửa sổ nhập tìm kiếm
+User -> SB: Nhập từ khóa tìm kiếm
+
+SB -> PS: onTextChanged(keyword)
+activate PS
+
+PS -> Service: searchProducts(keyword)
+activate Service
+
+Service -> DAL: findProductsByKeyword(keyword)
+activate DAL
+
+DAL -> DB: findProductsByKeyword(keyword)
+activate DB
+DB --> DAL: Trả về danh sách món ăn phù hợp
+deactivate DB
+
+DAL --> Service: Trả về danh sách món ăn
+deactivate DAL
+
+Service -> Service: Sắp xếp món ăn theo độ phù hợp
+Service --> PS: Trả về danh sách món ăn đã sắp xếp
+deactivate Service
+
+PS -> PS: Cập nhật giao diện với danh sách món ăn
+PS --> User: 2. Hiển thị danh sách các món ăn phù hợp
+
+alt Không có kết quả
+    PS --> User: Hiển thị danh sách rỗng
+end
+
+deactivate PS
+deactivate SB
+
+@enduml

@@ -1,0 +1,42 @@
+@startuml Sơ đồ sequence Sửa Nhân Viên
+
+actor User
+participant EmployeeScreen
+participant EditEmployeeScreen
+participant EmployeeService
+participant EmployeeDAL
+database Database
+
+autonumber
+
+User -> EmployeeScreen: Chọn nhân viên và nhấn "Sửa"
+EmployeeScreen -> EmployeeService: LấyThôngTinNhanVien(maNhanVien)
+EmployeeService -> EmployeeDAL: LấyThôngTinNhanVien(maNhanVien)
+EmployeeDAL -> Database: SELECT * FROM NhanVien WHERE id = maNhanVien
+Database --> EmployeeDAL: Dữ liệu nhân viên
+EmployeeDAL --> EmployeeService: Dữ liệu nhân viên
+EmployeeService --> EmployeeScreen: Dữ liệu nhân viên
+EmployeeScreen -> EditEmployeeScreen: Mở(duLieuNhanVien)
+EditEmployeeScreen -> User: Hiển thị form với dữ liệu hiện tại
+User -> EditEmployeeScreen: Sửa thông tin nhân viên
+User -> EditEmployeeScreen: Nhấn "Lưu Thay Đổi"
+EditEmployeeScreen -> EmployeeService: CậpNhậtNhanVien(duLieuCapNhat)
+EmployeeService -> EmployeeDAL: CậpNhậtNhanVien(duLieuCapNhat)
+EmployeeDAL -> Database: UPDATE NhanVien SET ... WHERE id = maNhanVien
+
+alt Thành công
+    Database --> EmployeeDAL: Thành công
+    EmployeeDAL --> EmployeeService: Thành công
+    EmployeeService --> EditEmployeeScreen: Thành công
+    EditEmployeeScreen --> User: Hiển thị thông báo thành công
+    EditEmployeeScreen -> EmployeeScreen: Đóng()
+    EmployeeScreen -> EmployeeScreen: Làm mới danh sách nhân viên
+    EmployeeScreen --> User: Hiển thị danh sách đã cập nhật
+else Thất bại
+    Database --> EmployeeDAL: Thất bại
+    EmployeeDAL --> EmployeeService: Thất bại(thôngBáoLỗi)
+    EmployeeService --> EditEmployeeScreen: Thất bại(thôngBáoLỗi)
+    EditEmployeeScreen --> User: Hiển thị thông báo lỗi
+end
+
+@enduml

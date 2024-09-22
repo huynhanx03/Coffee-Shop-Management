@@ -1,0 +1,22 @@
+@startuml Sơ đồ sequence Xuất File Excel Thống Kê
+
+autonumber
+
+actor User
+participant ReportingScreen
+participant ReportingService
+participant Database
+
+User -> ReportingScreen: Chọn thời gian xuất hóa đơn
+ReportingScreen -> ReportingService: LấyDanhSáchHóaĐơn(thờiGian)
+ReportingService -> Database: Truy vấn hóa đơn trong thời gian
+Database --> ReportingService: Dữ liệu hóa đơn
+ReportingService --> ReportingScreen: Dữ liệu hóa đơn
+
+User -> ReportingScreen: Nhấn nút "Xuất Excel"
+ReportingScreen -> ReportingService: XuấtExcel(dữLiệuHóaĐơn)
+ReportingService -> ReportingService: Tạo file Excel từ dữ liệu
+ReportingService -> ReportingScreen: Trả về đường dẫn file Excel
+ReportingScreen -> User: Hiển thị thông báo "Xuất Excel thành công"
+
+@enduml

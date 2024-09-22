@@ -1,0 +1,28 @@
+@startuml QuanLyNhanVien
+skinparam monochrome true
+skinparam Shadowing true
+
+
+left to right direction
+
+actor "Quản lý" as ql
+
+rectangle "Quản lý nhân viên" {
+    usecase "Quản lý nhân viên" as qltd
+
+    usecase "Thêm nhân viên" as tma
+    usecase "Xóa nhân viên" as xma
+    usecase "Sửa thông tin nhân viên" as sma
+    usecase "Tìm kiếm nhân viên" as tkma
+}
+
+ql --- qltd
+
+qltd --- tma:include
+qltd --- xma:include
+qltd --- sma:include
+qltd --- tkma:include
+
+
+@enduml
+

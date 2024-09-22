@@ -1,0 +1,41 @@
+@startuml Sơ đồ sequence Thêm Bàn
+
+autonumber
+
+actor User
+participant TableScreen
+participant AddTableScreen
+participant TableService
+participant TableDAL
+database Database
+
+User -> TableScreen: Nhấn "Thêm Bàn"
+TableScreen -> AddTableScreen: Mở()
+AddTableScreen -> User: Hiển thị form thêm bàn
+User -> AddTableScreen: Nhập thông tin bàn mới (số bàn, sức chứa,...)
+User -> AddTableScreen: Nhấn "Tạo Bàn"
+AddTableScreen -> TableService: ThêmBàn(duLieuBàn)
+TableService -> TableDAL: ThêmBàn(duLieuBàn)
+TableDAL -> Database: INSERTINTOBàn 
+
+alt Thành công
+    Database --> TableDAL: Thành công (maBànMới)
+    TableDAL --> TableService: Thành công(maBànMới)
+    TableService --> AddTableScreen: Thành công(maBànMới)
+    AddTableScreen --> User: Hiển thị "Bàn đã được thêm thành công"
+    AddTableScreen -> TableScreen: Đóng()
+    TableScreen -> TableService: LấyDanhSáchBàn()
+    TableService -> TableDAL: LấyDanhSáchBàn()
+    TableDAL -> Database: SELECT * FROM Bàn
+    Database --> TableDAL: Dữ liệu danh sách bàn
+    TableDAL --> TableService: Dữ liệu danh sách bàn
+    TableService --> TableScreen: Dữ liệu danh sách bàn
+    TableScreen --> User: Hiển thị sơ đồ bàn đã cập nhật
+else Thất bại
+    Database --> TableDAL: Thất bại
+    TableDAL --> TableService: Thất bại(thôngBáoLỗi)
+    TableService --> AddTableScreen: Thất bại(thôngBáoLỗi)
+    AddTableScreen --> User: Hiển thị "Không thể tạo bàn: [thôngBáoLỗi]"
+end
+
+@enduml

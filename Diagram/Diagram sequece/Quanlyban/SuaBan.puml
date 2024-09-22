@@ -1,0 +1,61 @@
+@startuml Sơ đồ sequence Sửa Thông Tin Bàn
+
+autonumber
+
+actor User
+participant TableScreen
+participant EditTableScreen
+participant TableService
+participant TableDAL
+database Database
+
+User -> TableScreen: Chọn bàn và nhấn "Sửa Thông Tin"
+TableScreen -> TableService: LấyThôngTinBàn(maBàn)
+TableService -> TableDAL: LấyThôngTinBàn(maBàn)
+TableDAL -> Database: SELECT * FROM Bàn WHERE maBàn = :maBàn
+Database --> TableDAL: Dữ liệu bàn
+TableDAL --> TableService: Dữ liệu bàn
+TableService --> TableScreen: Dữ liệu bàn
+TableScreen -> EditTableScreen: Mở(duLieuBàn)
+EditTableScreen -> User: Hiển thị form với dữ liệu hiện tại
+
+User -> EditTableScreen: Sửa thông tin bàn (sức chứa, vị trí, ...)
+User -> EditTableScreen: Nhấn "Lưu Thay Đổi"
+EditTableScreen -> TableService: KiểmTraBànTrống(maBàn)
+TableService -> TableDAL: KiểmTraBànTrống(maBàn)
+TableDAL -> Database: SELECT COUNT(*) FROM Đặt_Bàn WHERE maBàn = :maBàn AND trạngThái = 'Đang sử dụng'
+Database --> TableDAL: Số lượng (0 nếu bàn trống)
+TableDAL --> TableService: Bàn trống (true/false)
+TableService --> EditTableScreen: Bàn trống (true/false)
+
+alt Bàn trống
+    EditTableScreen -> TableService: CậpNhậtBàn(duLieuCapNhat)
+    TableService -> TableDAL: CậpNhậtBàn(duLieuCapNhat)
+    TableDAL -> Database: UPDATE Bàn SET sứcChứa = :sứcChứa, vịTrí = :vịTrí, ... WHERE maBàn = :maBàn
+    
+    alt Cập nhật thành công
+        Database --> TableDAL: Thành công
+        TableDAL --> TableService: Thành công
+        TableService --> EditTableScreen: Thành công
+        EditTableScreen --> User: Hiển thị "Cập nhật bàn thành công"
+        EditTableScreen -> TableScreen: Đóng()
+        TableScreen -> TableService: LấyDanhSáchBàn()
+        TableService -> TableDAL: LấyDanhSáchBàn()
+        TableDAL -> Database: SELECT * FROM Bàn
+        Database --> TableDAL: Dữ liệu danh sách bàn
+        TableDAL --> TableService: Dữ liệu danh sách bàn
+        TableService --> TableScreen: Dữ liệu danh sách bàn
+        TableScreen --> User: Cập nhật sơ đồ bàn
+    else Cập nhật thất bại
+        Database --> TableDAL: Thất bại (ví dụ: sức chứa không hợp lệ)
+        TableDAL --> TableService: Thất bại(thôngBáoLỗi)
+        TableService --> EditTableScreen: Thất bại(thôngBáoLỗi)
+        EditTableScreen --> User: Hiển thị "Không thể cập nhật: [thôngBáoLỗi]"
+        EditTableScreen --> User: Đánh dấu trường không hợp lệ
+    end
+else Bàn đang được sử dụng
+    EditTableScreen --> User: Hiển thị "Không thể sửa bàn đang sử dụng"
+    EditTableScreen --> User: Disable các trường không thể sửa
+end
+
+@enduml

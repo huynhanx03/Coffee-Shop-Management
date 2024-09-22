@@ -1,0 +1,59 @@
+@startuml Sơ đồ sequence Gộp Bàn
+
+autonumber
+
+actor User
+participant TableScreen
+participant MergeTableScreen
+participant TableService
+participant TableDAL
+database Database
+
+User -> TableScreen: Nhấn biểu tượng "Gộp Bàn"
+TableScreen -> MergeTableScreen: Mở()
+
+MergeTableScreen -> TableService: LấyDanhSáchBàn()
+TableService -> TableDAL: LấyDanhSáchBàn()
+TableDAL -> Database: SELECT * FROM Bàn
+Database --> TableDAL: Dữ liệu tất cả bàn
+TableDAL --> TableService: Dữ liệu tất cả bàn
+TableService --> MergeTableScreen: Dữ liệu tất cả bàn
+
+MergeTableScreen -> User: Hiển thị form gộp bàn với danh sách bàn
+User -> MergeTableScreen: Chọn "Bàn muốn gộp"
+User -> MergeTableScreen: Chọn "Bàn muốn gộp vào"
+
+alt Người dùng nhấn "Xác nhận"
+    User -> MergeTableScreen: Nhấn "Xác nhận"
+    MergeTableScreen -> TableService: GộpBàn(maBànCũ, maBànMới)
+    TableService -> TableDAL: KiểmTraTrạngTháiBàn(maBànMới)
+    TableDAL -> Database: SELECT trạngThái FROM Bàn WHERE maBàn = :maBànMới
+    Database --> TableDAL: Trạng thái bàn mới
+    
+    alt Bàn mới trống
+        TableDAL --> TableService: Bàn trống
+        TableService -> TableDAL: CậpNhậtTrạngTháiBàn(maBànCũ, 'Trống')
+        TableDAL -> Database: UPDATE Bàn SET trạngThái = 'Trống' WHERE maBàn = :maBànCũ
+        Database --> TableDAL: Thành công
+        TableDAL -> TableService: Thành công
+        TableService -> TableDAL: CậpNhậtTrạngTháiBàn(maBànMới, 'Đang sử dụng')
+        TableDAL -> Database: UPDATE Bàn SET trạngThái = 'Đang sử dụng' WHERE maBàn = :maBànMới
+        Database --> TableDAL: Thành công
+        TableDAL --> TableService: Thành công
+        TableService --> MergeTableScreen: Thành công
+        MergeTableScreen --> User: Hiển thị "Gộp bàn thành công"
+        MergeTableScreen -> TableScreen: Đóng()
+        TableScreen -> TableScreen: Làm mới sơ đồ bàn
+        TableScreen --> User: Hiển thị sơ đồ bàn đã cập nhật
+    else Bàn mới đang sử dụng
+        TableDAL --> TableService: Bàn đang sử dụng
+        TableService --> MergeTableScreen: Bàn đích đang sử dụng
+        MergeTableScreen --> User: Hiển thị "Bàn đích đang sử dụng, vui lòng chọn bàn khác"
+    end
+else Người dùng nhấn "Hủy"
+    User -> MergeTableScreen: Nhấn "Hủy"
+    MergeTableScreen -> TableScreen: Đóng()
+    TableScreen --> User: Hiển thị sơ đồ bàn (không thay đổi)
+end
+
+@enduml
