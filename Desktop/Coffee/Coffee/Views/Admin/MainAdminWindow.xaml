@@ -1,0 +1,505 @@
+﻿<Window
+    x:Class="Coffee.Views.Admin.MainAdminWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cv="clr-namespace:Coffee.Utils.ConverterValue"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:Coffee.Views.Admin"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="clr-namespace:Coffee.UserControls"
+    Name="MainAdminWD"
+    Title="MainAdminWindow"
+    Width="1400"
+    Height="800"
+    AllowsTransparency="True"
+    DataContext="{StaticResource AdminVM}"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource ForegroundCF}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="none"
+    mc:Ignorable="d">
+    <Window.Clip>
+        <RectangleGeometry
+            RadiusX="15"
+            RadiusY="15"
+            Rect="0, 0, 1400, 800" />
+    </Window.Clip>
+
+    <Window.Resources>
+        <cv:RoleConverter x:Key="RoleConverter" />
+
+        <Storyboard x:Key="MenuOpen">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuBar" Storyboard.TargetProperty="Width">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="200" />
+            </DoubleAnimationUsingKeyFrames>
+            <!--  Show the overlay  -->
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Overlay" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <Storyboard x:Key="MenuClose">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuBar" Storyboard.TargetProperty="Width">
+                <EasingDoubleKeyFrame KeyTime="0" Value="200" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+            <!--  Hide the overlay  -->
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Overlay" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}" />
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="OpenMenuBtn">
+            <BeginStoryboard Storyboard="{StaticResource MenuOpen}" />
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="CloseMenuBtn">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}" />
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="TablesBtn">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}" />
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ItemsBtn">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}" />
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="IngredientsBtn">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}" />
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="BillsBtn">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}" />
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="EmployeeBtn">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}" />
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="SettingBtn">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}" />
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ChatBtn">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}" />
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="VoucherBtn">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}" />
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="EvaluateBtn">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}" />
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="StoreBtn">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}" />
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="OrderBtn">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}" />
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="CustomerBtn">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}" />
+        </EventTrigger>
+    </Window.Triggers>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding loadRoleIC}" />
+            <i:InvokeCommandAction Command="{Binding loadSettingButtonIC}" CommandParameter="{Binding ElementName=SettingBtn}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid Background="{DynamicResource Background2CF}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <uc:ControlbarUC />
+        </Grid>
+
+        <Grid Grid.Row="1" Background="{DynamicResource Background3CF}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="10*" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.5*" />
+                        <ColumnDefinition Width="9*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Border
+                        Grid.ColumnSpan="2"
+                        Margin="0,0,0,5"
+                        Background="{DynamicResource BackgroundCF}"
+                        BorderBrush="{DynamicResource BackgroundCF}"
+                        BorderThickness="1"
+                        CornerRadius="5">
+                        <Border.Effect>
+                            <DropShadowEffect
+                                BlurRadius="5"
+                                Direction="315"
+                                Opacity="0.3"
+                                ShadowDepth="5"
+                                Color="Gray" />
+                        </Border.Effect>
+                    </Border>
+
+
+                    <Grid
+                        Grid.Column="0"
+                        Margin="0,0,0,10"
+                        Background="{DynamicResource BackgroundCF}">
+                        <!--  Logo  -->
+                        <StackPanel
+                            Grid.Row="0"
+                            HorizontalAlignment="Left"
+                            Orientation="Horizontal">
+                            <Button
+                                x:Name="OpenMenuBtn"
+                                Margin="15,0,0,0"
+                                Background="{DynamicResource MainColorCF}"
+                                BorderBrush="{x:Null}"
+                                Cursor="Hand"
+                                Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
+                                <materialDesign:PackIcon Foreground="{DynamicResource BackgroundCF}" Kind="ArrowRight" />
+                            </Button>
+
+                            <Image
+                                Width="70"
+                                Margin="5,0,0,0"
+                                Source="/Resources/Images/cup-of-coffee-avatar-removebg-preview.png" />
+                        </StackPanel>
+
+
+                    </Grid>
+
+                    <DockPanel
+                        Grid.Column="1"
+                        Margin="0,0,0,10"
+                        Background="{DynamicResource BackgroundCF}">
+                        <TextBlock
+                            Margin="20,0,0,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource Header1}"
+                            Text="{Binding optionName}" />
+
+                        <StackPanel
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+                            <TextBlock
+                                Margin="0,0,10,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Style="{DynamicResource Header2}"
+                                Text="{Binding Name}" />
+
+                            <Ellipse
+                                Width="50"
+                                Height="50"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Cursor="Hand">
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="{Binding Image}" />
+                                </Ellipse.Fill>
+
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                                        <i:InvokeCommandAction Command="{Binding clickAvatarIC}" CommandParameter="{Binding ElementName=mainFrame}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Ellipse>
+
+                            <materialDesign:PopupBox
+                                Margin="0,0,10,0"
+                                DockPanel.Dock="Right"
+                                Foreground="{DynamicResource ForegroundCF}"
+                                PlacementMode="BottomAndAlignRightEdges">
+                                <StackPanel Orientation="Vertical">
+                                    <!--<Button
+                                        Name="btnVi"
+                                        Command="{Binding changeLanguageIC}"
+                                        CommandParameter="{Binding ElementName=btnVi}"
+                                        Content="Vi" />
+                                    <Button
+                                        Name="btnEn"
+                                        Command="{Binding changeLanguageIC}"
+                                        CommandParameter="{Binding ElementName=btnEn}"
+                                        Content="En" />-->
+                                    <Button Command="{Binding loguoutIC}" Content="{DynamicResource Logout}" />
+
+                                </StackPanel>
+                            </materialDesign:PopupBox>
+                        </StackPanel>
+                    </DockPanel>
+                </Grid>
+
+                <Grid Grid.Row="1" Background="{DynamicResource Background3CF}">
+                    <materialDesign:Card Margin="5,10,5,5" UniformCornerRadius="10">
+                        <Frame
+                            x:Name="mainFrame"
+                            Background="{DynamicResource Background2CF}"
+                            NavigationUIVisibility="Hidden">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Loaded">
+                                    <i:InvokeCommandAction Command="{Binding loadTablesPageIC}" CommandParameter="{Binding ElementName=mainFrame}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Frame>
+                    </materialDesign:Card>
+                </Grid>
+            </Grid>
+
+            <!--  Menu Bar  -->
+            <Grid
+                x:Name="MenuBar"
+                Width="0"
+                HorizontalAlignment="Left"
+                Panel.ZIndex="2"
+                Background="{DynamicResource BackgroundCF}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="10*" />
+                </Grid.RowDefinitions>
+
+                <!--  Logo  -->
+                <StackPanel
+                    Grid.Row="0"
+                    Width="200"
+                    Margin="0,0,0,10"
+                    HorizontalAlignment="Left"
+                    Background="{DynamicResource Background3CF}"
+                    Orientation="Horizontal">
+
+                    <Image
+                        Width="70"
+                        Margin="60,0,0,0"
+                        Source="/Resources/Images/cup-of-coffee-avatar-removebg-preview.png" />
+
+                    <Button
+                        x:Name="CloseMenuBtn"
+                        Margin="15,0,0,0"
+                        Background="{DynamicResource MainColorCF}"
+                        BorderBrush="{x:Null}"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
+                        <materialDesign:PackIcon Foreground="{DynamicResource BackgroundCF}" Kind="ArrowLeft" />
+                    </Button>
+                </StackPanel>
+
+                <!--  Các chức năng  -->
+                <ScrollViewer Grid.Row="1">
+                    <StackPanel Grid.Row="1">
+
+                        <!--  Button quản lý bàn  -->
+                        <Border CornerRadius="5">
+                            <RadioButton
+                                Name="TablesBtn"
+                                Command="{Binding loadTablesPageIC}"
+                                CommandParameter="{Binding ElementName=mainFrame}"
+                                GroupName="mainOptions"
+                                IsChecked="True"
+                                Style="{StaticResource MenuButtonMain}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Home" Style="{StaticResource menuButtonIcon}" />
+                                    <TextBlock Style="{StaticResource menuButtonText}" Text="{DynamicResource Home}" />
+                                </StackPanel>
+                            </RadioButton>
+                        </Border>
+
+                        <!--  Button quản lý thực đơn  -->
+                        <Border CornerRadius="5">
+                            <RadioButton
+                                Name="ItemsBtn"
+                                Command="{Binding loadMenuPageIC}"
+                                CommandParameter="{Binding ElementName=mainFrame}"
+                                GroupName="mainOptions"
+                                Style="{StaticResource MenuButtonMain}"
+                                Visibility="{Binding role, Converter={StaticResource RoleConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="ListBox" Style="{StaticResource menuButtonIcon}" />
+                                    <TextBlock Style="{StaticResource menuButtonText}" Text="{DynamicResource Item}" />
+                                </StackPanel>
+                            </RadioButton>
+                        </Border>
+
+                        <!--  Button quản lý nguyên liệu  -->
+                        <Border CornerRadius="5">
+                            <RadioButton
+                                Name="IngredientsBtn"
+                                Command="{Binding loadIngredientsPageIC}"
+                                CommandParameter="{Binding ElementName=mainFrame}"
+                                GroupName="mainOptions"
+                                Style="{StaticResource MenuButtonMain}"
+                                Visibility="{Binding role, Converter={StaticResource RoleConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Food" Style="{StaticResource menuButtonIcon}" />
+                                    <TextBlock Style="{StaticResource menuButtonText}" Text="{DynamicResource Ingredient}" />
+                                </StackPanel>
+                            </RadioButton>
+                        </Border>
+
+                        <!--  Button thống kê  -->
+                        <Border CornerRadius="5">
+                            <RadioButton
+                                Name="BillsBtn"
+                                Command="{Binding loadStatisticPageIC}"
+                                CommandParameter="{Binding ElementName=mainFrame}"
+                                GroupName="mainOptions"
+                                Style="{StaticResource MenuButtonMain}"
+                                Visibility="{Binding role, Converter={StaticResource RoleConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Finance" Style="{StaticResource menuButtonIcon}" />
+                                    <TextBlock Style="{StaticResource menuButtonText}" Text="{DynamicResource Statistic}" />
+                                </StackPanel>
+                            </RadioButton>
+                        </Border>
+
+                        <!--  Button quản lý nhân viên  -->
+                        <Border CornerRadius="5" IsEnabled="{Binding Role, Converter={StaticResource RoleConverter}}">
+                            <RadioButton
+                                Name="EmployeeBtn"
+                                Command="{Binding loadEmployeePageIC}"
+                                CommandParameter="{Binding ElementName=mainFrame}"
+                                GroupName="mainOptions"
+                                Style="{StaticResource MenuButtonMain}"
+                                Visibility="{Binding role, Converter={StaticResource RoleConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="AccountGroup" Style="{StaticResource menuButtonIcon}" />
+                                    <TextBlock Style="{StaticResource menuButtonText}" Text="{DynamicResource Employee}" />
+                                </StackPanel>
+                            </RadioButton>
+                        </Border>
+
+                        <!--  Button quản lý tin nhắn  -->
+                        <Border CornerRadius="5" IsEnabled="{Binding Role, Converter={StaticResource RoleConverter}}">
+                            <RadioButton
+                                Name="ChatBtn"
+                                Command="{Binding loadChatPageIC}"
+                                CommandParameter="{Binding ElementName=mainFrame}"
+                                GroupName="mainOptions"
+                                Style="{StaticResource MenuButtonMain}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Chat" Style="{StaticResource menuButtonIcon}" />
+                                    <TextBlock Style="{StaticResource menuButtonText}" Text="{DynamicResource Chat}" />
+                                </StackPanel>
+                            </RadioButton>
+                        </Border>
+
+                        <!--  Button quản lý phiếu giảm giá  -->
+                        <Border CornerRadius="5" IsEnabled="{Binding Role, Converter={StaticResource RoleConverter}}">
+                            <RadioButton
+                                Name="VoucherBtn"
+                                Command="{Binding loadVoucherPageIC}"
+                                CommandParameter="{Binding ElementName=mainFrame}"
+                                GroupName="mainOptions"
+                                Style="{StaticResource MenuButtonMain}"
+                                Visibility="{Binding role, Converter={StaticResource RoleConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="TicketPercent" Style="{StaticResource menuButtonIcon}" />
+                                    <TextBlock Style="{StaticResource menuButtonText}" Text="{DynamicResource Voucher}" />
+                                </StackPanel>
+                            </RadioButton>
+                        </Border>
+
+                        <!--  Button quản lý đánh giá sản phẩm  -->
+                        <Border CornerRadius="5" IsEnabled="{Binding Role, Converter={StaticResource RoleConverter}}">
+                            <RadioButton
+                                Name="EvaluateBtn"
+                                Command="{Binding loadEvaluatePageIC}"
+                                CommandParameter="{Binding ElementName=mainFrame}"
+                                GroupName="mainOptions"
+                                Style="{StaticResource MenuButtonMain}"
+                                Visibility="{Binding role, Converter={StaticResource RoleConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="AccountStar" Style="{StaticResource menuButtonIcon}" />
+                                    <TextBlock Style="{StaticResource menuButtonText}" Text="{DynamicResource Evaluate}" />
+                                </StackPanel>
+                            </RadioButton>
+                        </Border>
+
+                        <!--  Button quản lý khách hàng  -->
+                        <Border CornerRadius="5" IsEnabled="{Binding Role, Converter={StaticResource RoleConverter}}">
+                            <RadioButton
+                                Name="CustomerBtn"
+                                Command="{Binding loadCustomerPageIC}"
+                                CommandParameter="{Binding ElementName=mainFrame}"
+                                GroupName="mainOptions"
+                                Style="{StaticResource MenuButtonMain}"
+                                Visibility="{Binding role, Converter={StaticResource RoleConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Account" Style="{StaticResource menuButtonIcon}" />
+                                    <TextBlock Style="{StaticResource menuButtonText}" Text="{DynamicResource Customer}" />
+                                </StackPanel>
+                            </RadioButton>
+                        </Border>
+
+                        <!--  Button quản lý đơn hàng  -->
+                        <Border CornerRadius="5" IsEnabled="{Binding Role, Converter={StaticResource RoleConverter}}">
+                            <RadioButton
+                                Name="OrderBtn"
+                                Command="{Binding loadOrderPageIC}"
+                                CommandParameter="{Binding ElementName=mainFrame}"
+                                GroupName="mainOptions"
+                                Style="{StaticResource MenuButtonMain}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="FoodTakeoutBox" Style="{StaticResource menuButtonIcon}" />
+                                    <TextBlock Style="{StaticResource menuButtonText}" Text="{DynamicResource Order}" />
+                                </StackPanel>
+                            </RadioButton>
+                        </Border>
+
+                        <!--  Button quản lý quán  -->
+                        <Border CornerRadius="5" IsEnabled="{Binding Role, Converter={StaticResource RoleConverter}}">
+                            <RadioButton
+                                Name="StoreBtn"
+                                Command="{Binding loadStorePageIC}"
+                                CommandParameter="{Binding ElementName=mainFrame}"
+                                GroupName="mainOptions"
+                                Style="{StaticResource MenuButtonMain}"
+                                Visibility="{Binding role, Converter={StaticResource RoleConverter}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Storefront" Style="{StaticResource menuButtonIcon}" />
+                                    <TextBlock Style="{StaticResource menuButtonText}" Text="{DynamicResource Store}" />
+                                </StackPanel>
+                            </RadioButton>
+                        </Border>
+
+                        <!--  Button cài đặt  -->
+                        <Border CornerRadius="5">
+                            <RadioButton
+                                Name="SettingBtn"
+                                Command="{Binding loadSettingPageIC}"
+                                CommandParameter="{Binding ElementName=mainFrame}"
+                                GroupName="mainOptions"
+                                Style="{StaticResource MenuButtonMain}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Settings" Style="{StaticResource menuButtonIcon}" />
+                                    <TextBlock Style="{StaticResource menuButtonText}" Text="{DynamicResource Setting}" />
+                                </StackPanel>
+                            </RadioButton>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+
+            <!--  Overlay  -->
+            <Grid
+                x:Name="Overlay"
+                Width="1400"
+                Height="800"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Panel.ZIndex="1"
+                Background="Gray"
+                MouseDown="Overlay_MouseDown"
+                Opacity="0.3"
+                Visibility="Collapsed" />
+        </Grid>
+    </Grid>
+</Window>

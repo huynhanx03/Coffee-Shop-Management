@@ -1,0 +1,34 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:viewmodelChatAdmin="clr-namespace:Coffee.ViewModel.AdminVM.Chat"
+    xmlns:viewmodelCustomerAdmin="clr-namespace:Coffee.ViewModel.AdminVM.Customer"
+    xmlns:viewmodelEmployyAdmin="clr-namespace:Coffee.ViewModel.AdminVM.Employee"
+    xmlns:viewmodelEvaluateAdmin="clr-namespace:Coffee.ViewModel.AdminVM.Evaluate"
+    xmlns:viewmodelIngredientAdmin="clr-namespace:Coffee.ViewModel.AdminVM.Ingredient"
+    xmlns:viewmodelLogin="clr-namespace:Coffee.ViewModel.LoginVM"
+    xmlns:viewmodelMainAdmin="clr-namespace:Coffee.ViewModel.AdminVM"
+    xmlns:viewmodelMenuAdmin="clr-namespace:Coffee.ViewModel.AdminVM.Menu"
+    xmlns:viewmodelOrderAdmin="clr-namespace:Coffee.ViewModel.AdminVM.Order"
+    xmlns:viewmodelSettingAdmin="clr-namespace:Coffee.ViewModel.AdminVM.Setting"
+    xmlns:viewmodelStatisticAdmin="clr-namespace:Coffee.ViewModel.AdminVM.Statistic"
+    xmlns:viewmodelStoreAdmin="clr-namespace:Coffee.ViewModel.AdminVM.Store"
+    xmlns:viewmodelTableAdmin="clr-namespace:Coffee.ViewModel.AdminVM.Table"
+    xmlns:viewmodelUserControl="clr-namespace:Coffee.ViewModel.UserControlVM"
+    xmlns:viewmodelVoucherAdmin="clr-namespace:Coffee.ViewModel.AdminVM.Voucher">
+    <viewmodelUserControl:ControlbarViewModel x:Key="ControlbarVM" />
+    <viewmodelMainAdmin:MainAdminViewModel x:Key="AdminVM" />
+    <viewmodelEmployyAdmin:EmployeeViewModel x:Key="EmployeeVM" />
+    <viewmodelLogin:LoginViewModel x:Key="LoginVM" />
+    <viewmodelIngredientAdmin:IngredientViewModel x:Key="IngredientVM" />
+    <viewmodelMenuAdmin:MenuViewModel x:Key="MenuVM" />
+    <viewmodelTableAdmin:MainTableViewModel x:Key="TableVM" />
+    <viewmodelStatisticAdmin:StatisticViewModel x:Key="StatisticVM" />
+    <viewmodelSettingAdmin:SettingViewModel x:Key="SettingVM" />
+    <viewmodelChatAdmin:ChatViewModel x:Key="ChatVM" />
+    <viewmodelVoucherAdmin:VoucherViewModel x:Key="VoucherVM" />
+    <viewmodelEvaluateAdmin:EvaluateViewModel x:Key="EvaluateVM" />
+    <viewmodelStoreAdmin:StoreViewModel x:Key="StoreVM" />
+    <viewmodelCustomerAdmin:CustomerViewModel x:Key="CustomerVM" />
+    <viewmodelOrderAdmin:OrderViewModel x:Key="OrderVM" />
+</ResourceDictionary>

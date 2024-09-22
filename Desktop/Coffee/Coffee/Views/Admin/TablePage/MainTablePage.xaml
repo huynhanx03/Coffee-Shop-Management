@@ -1,0 +1,160 @@
+﻿<Page
+    x:Class="Coffee.Views.Admin.TablePage.MainTablePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:Coffee.Views.Admin.TablePage"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Name="MainTablePageCF"
+    Title="MainTablePage"
+    d:DesignHeight="698"
+    d:DesignWidth="1390"
+    DataContext="{StaticResource TableVM}"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+    <!--  Sự kiện chuyển trang  -->
+    <Page.Triggers>
+        <EventTrigger RoutedEvent="Page.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation
+                        Storyboard.TargetName="MainTablePageCF"
+                        Storyboard.TargetProperty="Opacity"
+                        From="0"
+                        To="1"
+                        Duration="0:0:0.5" />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Page.Triggers>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding loadShadowMaskIC}" CommandParameter="{Binding ElementName=ShadowMask}" />
+            <i:InvokeCommandAction Command="{Binding loadLeftFrameIC}" CommandParameter="{Binding ElementName=leftFrame}" />
+            <i:InvokeCommandAction Command="{Binding loadBtnMenuIC}" CommandParameter="{Binding ElementName=btnMenu}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid>
+        <Grid Background="{DynamicResource Background3CF}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid Margin="0,0,0,0" Background="{DynamicResource Background3CF}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="8*" />
+                        <RowDefinition Height="82*" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel
+                        Grid.Row="0"
+                        Margin="0,15,0,0"
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+                        <RadioButton
+                            Command="{Binding loadTablePageIC}"
+                            GroupName="MainLeftFrame"
+                            IsChecked="True"
+                            Style="{DynamicResource MenuHorizontalMain}">
+                            <TextBlock
+                                Margin="45,12,0,15"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="17"
+                                Style="{StaticResource menuButtonText}"
+                                Text="{DynamicResource Table}" />
+                        </RadioButton>
+
+                        <RadioButton
+                            Name="btnMenu"
+                            Margin="10,0,0,0"
+                            Command="{Binding loadMenuIC}"
+                            GroupName="MainLeftFrame"
+                            Style="{DynamicResource MenuHorizontalMain}">
+                            <TextBlock
+                                Margin="28,12,0,15"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="17"
+                                Style="{StaticResource menuButtonText}"
+                                Text="{DynamicResource Item}" />
+                        </RadioButton>
+                    </StackPanel>
+
+
+                    <Grid Grid.Row="1" Background="{DynamicResource Background3CF}">
+                        <Frame x:Name="leftFrame" NavigationUIVisibility="Hidden">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Loaded">
+                                    <i:InvokeCommandAction Command="{Binding loadTablePageIC}" CommandParameter="{Binding ElementName=leftFrame}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Frame>
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Column="1" Margin="10,0,0,0">
+                <Frame x:Name="rightFrame" NavigationUIVisibility="Hidden">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Loaded">
+                            <i:InvokeCommandAction Command="{Binding loadSellPageIC}" CommandParameter="{Binding ElementName=rightFrame}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Frame>
+            </Grid>
+        </Grid>
+
+        <!--  Mặt nạ mờ khi đang load  -->
+        <Grid
+            x:Name="ShadowMask"
+            Width="1400"
+            Height="800"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Background="Gray"
+            Opacity="0.3"
+            Visibility="Collapsed" />
+
+        <materialDesign:Card
+            Width="150"
+            Height="100"
+            Background="Transparent">
+            <StackPanel>
+                <ProgressBar
+                    x:Name="prg"
+                    Margin="0,30,0,0"
+                    Foreground="{DynamicResource MainColorCF}"
+                    IsIndeterminate="True"
+                    Style="{StaticResource MaterialDesignCircularProgressBar}" />
+                <Label
+                    Margin="0,10,0,0"
+                    HorizontalContentAlignment="Center"
+                    Content="Đang tải dữ liệu..."
+                    FontSize="15"
+                    Foreground="{DynamicResource MainColorCF}" />
+            </StackPanel>
+            <materialDesign:Card.Style>
+                <Style TargetType="materialDesign:Card">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </materialDesign:Card.Style>
+        </materialDesign:Card>
+    </Grid>
+</Page>

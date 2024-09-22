@@ -1,0 +1,91 @@
+﻿<Page
+    x:Class="Coffee.Views.Login.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:Coffee.Views.Login"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="clr-namespace:Coffee.UserControls"
+    Name="LoginP"
+    Title="LoginPage"
+    d:DesignHeight="320"
+    d:DesignWidth="350"
+    DataContext="{StaticResource LoginVM}"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource ForegroundCF}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+
+    <Grid Background="{DynamicResource BackgroundCF}">
+        <StackPanel Orientation="Vertical">
+            <TextBlock
+                Margin="0,10,0,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Style="{DynamicResource Header2}"
+                Text="Đăng nhập" />
+
+            <StackPanel
+                Margin="0,20,0,0"
+                HorizontalAlignment="Center"
+                Orientation="Horizontal">
+                <materialDesign:PackIcon
+                    Width="25"
+                    Height="25"
+                    VerticalAlignment="Center"
+                    Foreground="{DynamicResource MainColorCF}"
+                    Kind="Account" />
+
+                <TextBox
+                    Width="270"
+                    Margin="10,0,0,0"
+                    BorderBrush="{DynamicResource MainColorCF}"
+                    Style="{DynamicResource txbStyle}"
+                    Text="{Binding UsernameLogin}" />
+                <materialDesign:HintAssist.Hint>
+                    <TextBlock Foreground="{DynamicResource MainColorCF}" Text="{DynamicResource Username}" />
+                </materialDesign:HintAssist.Hint>
+            </StackPanel>
+
+            <StackPanel
+                Margin="0,15,0,0"
+                HorizontalAlignment="Center"
+                Orientation="Horizontal">
+                <materialDesign:PackIcon
+                    Width="25"
+                    Height="25"
+                    VerticalAlignment="Center"
+                    Foreground="{DynamicResource MainColorCF}"
+                    Kind="Lock" />
+                <PasswordBox
+                    x:Name="FloatingPasswordBox"
+                    Width="270"
+                    Margin="10,0,0,0"
+                    BorderBrush="{DynamicResource MainColorCF}"
+                    Style="{DynamicResource pwbStyle}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PasswordChanged">
+                            <i:InvokeCommandAction Command="{Binding savePasswordChangedCF}" CommandParameter="{Binding ElementName=FloatingPasswordBox}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </PasswordBox>
+                <materialDesign:HintAssist.Hint>
+                    <TextBlock Foreground="{DynamicResource MainColorCF}" Text="{DynamicResource Password}" />
+                </materialDesign:HintAssist.Hint>
+            </StackPanel>
+
+            <Button
+                Width="300"
+                Margin="0,50,0,0"
+                Command="{Binding loginIC}"
+                Content="{DynamicResource Login}"
+                IsDefault="True"
+                Style="{DynamicResource btnStyle}" />
+        </StackPanel>
+    </Grid>
+</Page>

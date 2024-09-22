@@ -1,0 +1,368 @@
+﻿<Page
+    x:Class="Coffee.Views.Admin.OrderPage.MainOrderPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cv="clr-namespace:Coffee.Utils.ConverterValue"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:Coffee.Views.Admin.OrderPage"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Name="MainOrderPageCF"
+    Title="MainOrderPage"
+    d:DesignHeight="698"
+    d:DesignWidth="1390"
+    DataContext="{StaticResource OrderVM}"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+
+    <!--  Sự kiện chuyển trang  -->
+    <Page.Triggers>
+        <EventTrigger RoutedEvent="Page.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation
+                        Storyboard.TargetName="MainOrderPageCF"
+                        Storyboard.TargetProperty="Opacity"
+                        From="0"
+                        To="1"
+                        Duration="0:0:0.5" />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Page.Triggers>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding loadShadowMaskIC}" CommandParameter="{Binding ElementName=ShadowMask}" />
+            <i:InvokeCommandAction Command="{Binding loadOrderListIC}" />
+            <i:InvokeCommandAction Command="{Binding loadStatusListIC}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Page.Resources>
+        <cv:OrderStatusColorCoverter x:Key="OrderStatusColorCoverter" />
+        <cv:OrderStatusBoolCoverter x:Key="OrderStatusBoolCoverter" />
+    </Page.Resources>
+
+    <Grid Background="{DynamicResource BackgroundCF}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="98" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!--  Horizontal Taskbar  -->
+            <Grid Grid.Row="0" Background="Transparent">
+                <!--  Tìm kiếm, thêm  -->
+                <StackPanel
+                    Width="auto"
+                    Margin="0,0,40,0"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+                    <Border
+                        Width="190"
+                        Height="45"
+                        Margin="5,0,0,0"
+                        BorderBrush="{DynamicResource MainColorCF}"
+                        BorderThickness="1.5"
+                        CornerRadius="16">
+                        <ComboBox
+                            Width="180"
+                            Height="35"
+                            Margin="0,0,8,0"
+                            Padding="12,2.4"
+                            HorizontalAlignment="Right"
+                            VerticalContentAlignment="Center"
+                            materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                            materialDesign:TextFieldAssist.TextFieldCornerRadius="24"
+                            BorderThickness="0"
+                            FontFamily="Inter"
+                            FontSize="15"
+                            ItemsSource="{Binding StatusList, UpdateSourceTrigger=PropertyChanged}"
+                            SelectedIndex="0"
+                            SelectedItem="{Binding SelectedStatus, UpdateSourceTrigger=PropertyChanged}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding selectedStatusIC}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                    </Border>
+
+                    <Border
+                        Height="40"
+                        Margin="10,0,7,0"
+                        BorderBrush="Black"
+                        BorderThickness="1,0,0,0" />
+
+                    <!--  Search Box  -->
+                    <Border
+                        Height="45"
+                        Margin="0,0,20,0"
+                        Background="{DynamicResource Background2CF}"
+                        BorderBrush="DarkGray"
+                        BorderThickness="2"
+                        CornerRadius="16">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon
+                                Width="25"
+                                Height="35"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                Foreground="Black"
+                                Kind="Magnify" />
+
+                            <TextBox
+                                x:Name="searchBox"
+                                Width="300"
+                                HorizontalContentAlignment="Left"
+                                VerticalContentAlignment="Center"
+                                materialDesign:HintAssist.Hint="{DynamicResource Search}"
+                                materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                FontSize="14"
+                                TextAlignment="Left">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction Command="{Binding searchOrderIC}" CommandParameter="{Binding ElementName=searchBox}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+
+            <Border
+                Grid.Row="1"
+                Margin="30,0,30,30"
+                Background="{DynamicResource MainColorCF}"
+                CornerRadius="30">
+                <Border
+                    Margin="10"
+                    Background="{DynamicResource BackgroundCF}"
+                    CornerRadius="20">
+                    <DataGrid
+                        x:Name="dataGrid"
+                        Margin="15"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        d:ItemsSource="{d:SampleData ItemCount=5}"
+                        AutoGenerateColumns="False"
+                        Background="{DynamicResource BackgroundCF}"
+                        CanUserReorderColumns="False"
+                        CanUserResizeColumns="False"
+                        CanUserSortColumns="True"
+                        ColumnWidth="SizeToCells"
+                        IsReadOnly="True"
+                        ItemsSource="{Binding OrderList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        SelectionMode="Single"
+                        SelectionUnit="FullRow">
+                        <DataGrid.CellStyle>
+                            <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="DataGridCell">
+                                <Setter Property="BorderThickness" Value="0" />
+                                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                            </Style>
+                        </DataGrid.CellStyle>
+
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn
+                                Width="100"
+                                Header="ID"
+                                SortMemberPath="MaDonHang">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock
+                                            HorizontalAlignment="Left"
+                                            Style="{DynamicResource txblInDtg}"
+                                            Text="{Binding MaDonHang}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn
+                                Width="130"
+                                Header="{DynamicResource CustomerID}"
+                                SortMemberPath="MaNguoiDung">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock
+                                            HorizontalAlignment="Left"
+                                            Style="{DynamicResource txblInDtg}"
+                                            Text="{Binding MaNguoiDung}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn
+                                Width="300"
+                                Header="{DynamicResource CustomeName}"
+                                SortMemberPath="TenKhachHang">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock
+                                            HorizontalAlignment="Left"
+                                            Style="{DynamicResource txblInDtg}"
+                                            Text="{Binding TenKhachHang}"
+                                            TextWrapping="Wrap" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn
+                                Width="auto"
+                                Header="{DynamicResource TransportFee}"
+                                SortMemberPath="PhiVanChuyen">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Style="{DynamicResource txblInDtg}" Text="{Binding PhiVanChuyen, StringFormat={}{0:N0} VNĐ}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+
+                            <DataGridTemplateColumn
+                                Width="auto"
+                                Header="{DynamicResource CreatedDate}"
+                                SortMemberPath="NgayTaoDon">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Style="{DynamicResource txblInDtg}" Text="{Binding NgayTaoDon}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn
+                                Width="auto"
+                                Header="{DynamicResource IntoMoney}"
+                                SortMemberPath="ThanhTien">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Style="{DynamicResource txblInDtg}" Text="{Binding ThanhTien, StringFormat={}{0:N0} VNĐ}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+
+                            <DataGridTemplateColumn
+                                Width="auto"
+                                Header="{DynamicResource Status}"
+                                SortMemberPath="TrangThai">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock
+                                            HorizontalAlignment="Left"
+                                            Foreground="{Binding TrangThai, Converter={StaticResource OrderStatusColorCoverter}}"
+                                            Style="{DynamicResource txblInDtg}"
+                                            Text="{Binding TrangThai}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Width="auto" Header="">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button
+                                                Margin="20,0,0,0"
+                                                Background="#8295B9"
+                                                BorderBrush="#41AAE2"
+                                                Command="{Binding DataContext.viewDetailOrderIC, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                CommandParameter="{Binding}"
+                                                Style="{DynamicResource btnInDtg}">
+                                                <materialDesign:PackIcon
+                                                    Width="15"
+                                                    Height="15"
+                                                    Kind="ArchiveSearch" />
+                                            </Button>
+
+                                            <Button
+                                                Margin="15,0,0,0"
+                                                Background="Green"
+                                                BorderBrush="Green"
+                                                Command="{Binding DataContext.confirmOrderIC, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                CommandParameter="{Binding}"
+                                                IsEnabled="{Binding TrangThai, Converter={StaticResource OrderStatusBoolCoverter}}"
+                                                Style="{DynamicResource btnInDtg}">
+                                                <materialDesign:PackIcon
+                                                    Width="15"
+                                                    Height="15"
+                                                    Kind="ArchiveCheck" />
+                                            </Button>
+
+                                            <Button
+                                                Margin="15,0,0,0"
+                                                Background="#AD7270"
+                                                BorderBrush="#A20F27"
+                                                Command="{Binding DataContext.cancelOrderIC, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                CommandParameter="{Binding}"
+                                                IsEnabled="{Binding TrangThai, Converter={StaticResource OrderStatusBoolCoverter}}"
+                                                Style="{StaticResource btnInDtg}">
+
+                                                <materialDesign:PackIcon
+                                                    Width="15"
+                                                    Height="15"
+                                                    Kind="ArchiveCancel" />
+                                            </Button>
+                                        </StackPanel>
+
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
+
+            </Border>
+        </Grid>
+
+        <!--  Mặt nạ mờ khi đang load  -->
+        <Grid
+            x:Name="ShadowMask"
+            Width="1400"
+            Height="800"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Background="Gray"
+            Opacity="0.3"
+            Visibility="Collapsed" />
+
+        <materialDesign:Card
+            Width="150"
+            Height="100"
+            Background="Transparent">
+            <StackPanel>
+                <ProgressBar
+                    x:Name="prg"
+                    Margin="0,30,0,0"
+                    Foreground="{DynamicResource MainColorCF}"
+                    IsIndeterminate="True"
+                    Style="{StaticResource MaterialDesignCircularProgressBar}" />
+                <Label
+                    Margin="0,10,0,0"
+                    HorizontalContentAlignment="Center"
+                    Content="Đang tải dữ liệu..."
+                    FontSize="15"
+                    Foreground="{DynamicResource MainColorCF}" />
+            </StackPanel>
+            <materialDesign:Card.Style>
+                <Style TargetType="materialDesign:Card">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </materialDesign:Card.Style>
+        </materialDesign:Card>
+    </Grid>
+</Page>
+

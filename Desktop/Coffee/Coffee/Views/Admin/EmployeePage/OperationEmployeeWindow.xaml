@@ -1,0 +1,373 @@
+﻿<Window
+    x:Class="Coffee.Views.Admin.EmployeePage.OperationEmployeeWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cv="clr-namespace:Coffee.Utils.ConverterValue"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:Coffee.Views.Admin.EmployeePage"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="clr-namespace:Coffee.UserControls"
+    x:Name="OperationEmployeeWindowCF"
+    Title="OperationEmployeeWindow"
+    Width="800"
+    Height="700"
+    AllowsTransparency="True"
+    Background="Transparent"
+    DataContext="{StaticResource EmployeeVM}"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource ForegroundCF}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="none"
+    mc:Ignorable="d">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding loadShadowMaskOperationIC}" CommandParameter="{Binding ElementName=ShadowMaskOperation}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Border
+        Background="{DynamicResource BackgroundCF}"
+        BorderBrush="{DynamicResource Background2CF}"
+        BorderThickness="1"
+        CornerRadius="20">
+
+        <Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock
+                    Margin="30,20,0,0"
+                    Style="{DynamicResource Header1}"
+                    Text="{Binding HeaderOperation}" />
+
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Margin="40,10,0,10"
+                        Style="{DynamicResource Header2}"
+                        Text="{DynamicResource BasicInformation}" />
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel
+                            Grid.Column="0"
+                            Margin="0,0,0,0"
+                            Orientation="Vertical">
+                            <TextBox
+                                Margin="0,0,0,0"
+                                BorderBrush="{DynamicResource MainColorCF}"
+                                Style="{DynamicResource txbStyle}"
+                                Text="{Binding FullName}">
+                                <materialDesign:HintAssist.Hint>
+                                    <TextBlock Foreground="{DynamicResource MainColorCF}" Text="{DynamicResource FullName}" />
+                                </materialDesign:HintAssist.Hint>
+                            </TextBox>
+
+                            <TextBox
+                                Margin="0,10,0,0"
+                                BorderBrush="{DynamicResource MainColorCF}"
+                                Style="{DynamicResource txbStyle}"
+                                Text="{Binding IDCard}">
+                                <materialDesign:HintAssist.Hint>
+                                    <TextBlock Foreground="{DynamicResource MainColorCF}" Text="{DynamicResource IDCard}" />
+                                </materialDesign:HintAssist.Hint>
+
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="PreviewTextInput">
+                                        <i:CallMethodAction MethodName="NumberValidationTextBox" TargetObject="{Binding}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+
+                            <TextBox
+                                Margin="0,10,0,0"
+                                BorderBrush="{DynamicResource MainColorCF}"
+                                Style="{DynamicResource txbStyle}"
+                                Text="{Binding Email}">
+                                <materialDesign:HintAssist.Hint>
+                                    <TextBlock Foreground="{DynamicResource MainColorCF}" Text="{DynamicResource Email}" />
+                                </materialDesign:HintAssist.Hint>
+                            </TextBox>
+
+                            <TextBox
+                                Margin="0,10,0,0"
+                                BorderBrush="{DynamicResource MainColorCF}"
+                                Style="{DynamicResource txbStyle}"
+                                Text="{Binding NumberPhone}">
+                                <materialDesign:HintAssist.Hint>
+                                    <TextBlock Foreground="{DynamicResource MainColorCF}" Text="{DynamicResource NumberPhone}" />
+                                </materialDesign:HintAssist.Hint>
+
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="PreviewTextInput">
+                                        <i:CallMethodAction MethodName="NumberValidationTextBox" TargetObject="{Binding}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+
+                            <ComboBox
+                                Margin="0,10,0,0"
+                                BorderBrush="{DynamicResource MainColorCF}"
+                                DisplayMemberPath="TenChucVu"
+                                ItemsSource="{Binding ListPosition, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                SelectedIndex="0"
+                                SelectedValue="TenChucVu"
+                                Style="{DynamicResource cbStyle}"
+                                Text="{Binding SelectedPositionName, Mode=TwoWay}">
+                                <materialDesign:HintAssist.Hint>
+                                    <TextBlock Foreground="{DynamicResource MainColorCF}" Text="{DynamicResource Position}" />
+                                </materialDesign:HintAssist.Hint>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel
+                            Grid.Column="1"
+                            Margin="0,0,0,0"
+                            Orientation="Vertical">
+                            <ComboBox
+                                BorderBrush="{DynamicResource MainColorCF}"
+                                ItemsSource="{Binding ListGender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                SelectedIndex="0"
+                                Style="{DynamicResource cbStyle}"
+                                Text="{Binding SelectedGender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <materialDesign:HintAssist.Hint>
+                                    <TextBlock Foreground="{DynamicResource MainColorCF}" Text="{DynamicResource Gender}" />
+                                </materialDesign:HintAssist.Hint>
+                            </ComboBox>
+
+                            <TextBox
+                                Margin="0,10,0,0"
+                                BorderBrush="{DynamicResource MainColorCF}"
+                                Style="{DynamicResource txbStyle}"
+                                Text="{Binding Address}">
+                                <materialDesign:HintAssist.Hint>
+                                    <TextBlock Foreground="{DynamicResource MainColorCF}" Text="{DynamicResource Address}" />
+                                </materialDesign:HintAssist.Hint>
+                            </TextBox>
+
+                            <DatePicker
+                                Margin="0,10,0,0"
+                                BorderBrush="{DynamicResource MainColorCF}"
+                                SelectedDate="{Binding Birthday, Mode=TwoWay}"
+                                Style="{DynamicResource dpStyle}">
+                                <materialDesign:HintAssist.Hint>
+                                    <TextBlock Foreground="{DynamicResource MainColorCF}" Text="{DynamicResource Birthday}" />
+                                </materialDesign:HintAssist.Hint>
+                            </DatePicker>
+
+                            <DatePicker
+                                Margin="0,10,0,0"
+                                BorderBrush="{DynamicResource MainColorCF}"
+                                SelectedDate="{Binding WorkingDay, Mode=TwoWay}"
+                                Style="{DynamicResource dpStyle}">
+                                <materialDesign:HintAssist.Hint>
+                                    <TextBlock Foreground="{DynamicResource MainColorCF}" Text="{DynamicResource WorkingDay}" />
+                                </materialDesign:HintAssist.Hint>
+                            </DatePicker>
+
+                            <TextBox
+                                Margin="0,10,0,0"
+                                BorderBrush="{DynamicResource MainColorCF}"
+                                Style="{DynamicResource txbStyle}"
+                                Text="{Binding Wage}">
+                                <materialDesign:HintAssist.Hint>
+                                    <TextBlock Foreground="{DynamicResource MainColorCF}" Text="{DynamicResource Wage}" />
+                                </materialDesign:HintAssist.Hint>
+
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="PreviewTextInput">
+                                        <i:CallMethodAction MethodName="NumberValidationTextBox" TargetObject="{Binding}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+
+
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            Grid.Row="0"
+                            Margin="40,10,0,10"
+                            Style="{DynamicResource Header2}"
+                            Text="{DynamicResource LoginInformation}" />
+
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <TextBlock
+                                Grid.Column="0"
+                                Margin="40,10,0,10"
+                                Style="{DynamicResource Header2}"
+                                Text="{DynamicResource Image}" />
+
+                            <materialDesign:PackIcon
+                                Grid.Column="1"
+                                Width="32"
+                                Height="32"
+                                Margin="15,0,0,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Foreground="{DynamicResource MainColorCF}"
+                                Kind="TrayArrowUp">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                                        <i:InvokeCommandAction Command="{Binding uploadImageIC}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </materialDesign:PackIcon>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel
+                            Grid.Column="0"
+                            Margin="0,0,0,0"
+                            Orientation="Vertical">
+                            <TextBox
+                                Margin="0,0,0,0"
+                                BorderBrush="{DynamicResource MainColorCF}"
+                                Style="{DynamicResource txbStyle}"
+                                Text="{Binding Username}">
+                                <materialDesign:HintAssist.Hint>
+                                    <TextBlock Foreground="{DynamicResource MainColorCF}" Text="{DynamicResource Username}" />
+                                </materialDesign:HintAssist.Hint>
+                            </TextBox>
+
+                            <TextBox
+                                Margin="0,30,0,0"
+                                BorderBrush="{DynamicResource MainColorCF}"
+                                Style="{DynamicResource txbStyle}"
+                                Text="{Binding Password}">
+                                <materialDesign:HintAssist.Hint>
+                                    <TextBlock Foreground="{DynamicResource MainColorCF}" Text="{DynamicResource Password}" />
+                                </materialDesign:HintAssist.Hint>
+                            </TextBox>
+                        </StackPanel>
+
+
+
+                        <Border
+                            Grid.Column="1"
+                            Width="170"
+                            Height="170"
+                            HorizontalAlignment="Center"
+                            Background="{DynamicResource Background3CF}"
+                            BorderBrush="{DynamicResource ForegroundCF}"
+                            BorderThickness="0.5"
+                            CornerRadius="100">
+                            <Ellipse Width="170" Height="170">
+                                <Ellipse.Fill>
+                                    <ImageBrush x:Name="img" ImageSource="{Binding Image}" />
+                                </Ellipse.Fill>
+                            </Ellipse>
+
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseLeftButtonUp">
+                                    <i:InvokeCommandAction Command="{Binding uploadImageIC}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Border>
+                    </Grid>
+
+                </Grid>
+                <Grid Grid.Row="3">
+                    <StackPanel
+                        Margin="0,10,20,30"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                        <Button
+                            Margin="0,0,20,0"
+                            Command="{Binding confirmOperationEmployeeIC}"
+                            Content="{DynamicResource Confirm}"
+                            Style="{DynamicResource btnStyle}" />
+
+                        <Button
+                            Margin="0,0,50,0"
+                            Command="{Binding closeOperationEmployeeWindowIC}"
+                            CommandParameter="{Binding ElementName=OperationEmployeeWindowCF}"
+                            Content="{DynamicResource Cancel}"
+                            Style="{DynamicResource btnStyle}" />
+                    </StackPanel>
+                </Grid>
+            </Grid>
+
+            <!--  Mặt nạ mờ khi đang load  -->
+            <Grid
+                x:Name="ShadowMaskOperation"
+                Width="1400"
+                Height="800"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Background="Gray"
+                Opacity="0.3"
+                Visibility="Collapsed" />
+
+            <materialDesign:Card
+                Width="150"
+                Height="100"
+                Background="Transparent">
+                <StackPanel>
+                    <ProgressBar
+                        x:Name="prg"
+                        Margin="0,30,0,0"
+                        Foreground="{DynamicResource MainColorCF}"
+                        IsIndeterminate="True"
+                        Style="{StaticResource MaterialDesignCircularProgressBar}" />
+                    <Label
+                        Margin="0,10,0,0"
+                        HorizontalContentAlignment="Center"
+                        Content="Đang tải dữ liệu..."
+                        FontSize="15"
+                        Foreground="{DynamicResource MainColorCF}" />
+                </StackPanel>
+                <materialDesign:Card.Style>
+                    <Style TargetType="materialDesign:Card">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoadingOperation}" Value="True">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </materialDesign:Card.Style>
+            </materialDesign:Card>
+        </Grid>
+    </Border>
+</Window>
+

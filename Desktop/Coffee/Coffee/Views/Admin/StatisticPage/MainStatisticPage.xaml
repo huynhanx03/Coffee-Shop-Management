@@ -1,0 +1,340 @@
+﻿<Page
+    x:Class="Coffee.Views.Admin.StatisticPage.MainStatisticPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:itemtopmenu="clr-namespace:Coffee.UserControls"
+    xmlns:local="clr-namespace:Coffee.Views.Admin.StatisticPage"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Name="MainStatisticPageCF"
+    Title="MainStatisticPage"
+    d:DesignHeight="698"
+    d:DesignWidth="1390"
+    DataContext="{StaticResource StatisticVM}"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+    <!--
+        Sự
+        kiện chuyển trang
+    -->
+    <Page.Triggers>
+        <EventTrigger RoutedEvent="Page.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation
+                        Storyboard.TargetName="MainStatisticPageCF"
+                        Storyboard.TargetProperty="Opacity"
+                        From="0"
+                        To="1"
+                        Duration="0:0:0.5" />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Page.Triggers>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding loadShadowMaskIC}" CommandParameter="{Binding ElementName=ShadowMask}" />
+            <i:InvokeCommandAction Command="{Binding loadMainFrame}" CommandParameter="{Binding ElementName=mainFrame}" />
+            <i:InvokeCommandAction Command="{Binding loadDataIC}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid>
+        <Grid Margin="0,0,0,0" Background="{DynamicResource Background3CF}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="8*" />
+                <RowDefinition Height="82*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel
+                Grid.Row="0"
+                Margin="0,15,0,0"
+                HorizontalAlignment="Left"
+                Orientation="Horizontal">
+                <RadioButton
+                    Command="{Binding loadSaleHistoryIC}"
+                    CommandParameter="{Binding ElementName=mainFrame}"
+                    GroupName="MenuStatistic"
+                    IsChecked="True"
+                    Style="{DynamicResource MenuHorizontalMain}">
+                    <TextBlock
+                        Margin="20,12,0,15"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="17"
+                        Style="{StaticResource menuButtonText}"
+                        Text="{DynamicResource SalesHistory}" />
+                </RadioButton>
+
+                <RadioButton
+                    Width="150"
+                    Margin="10,0,0,0"
+                    Command="{Binding loadImportHistoryIC}"
+                    CommandParameter="{Binding ElementName=mainFrame}"
+                    GroupName="MenuStatistic"
+                    Style="{DynamicResource MenuHorizontalMain}">
+                    <TextBlock
+                        Margin="8,12,0,15"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="17"
+                        Style="{StaticResource menuButtonText}"
+                        Text="{DynamicResource ImportHistory}" />
+                </RadioButton>
+
+                <RadioButton
+                    Margin="10,0,0,0"
+                    Command="{Binding loadStatisticIC}"
+                    CommandParameter="{Binding ElementName=mainFrame}"
+                    GroupName="MenuStatistic"
+                    Style="{DynamicResource MenuHorizontalMain}">
+                    <TextBlock
+                        Margin="18,12,0,15"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="17"
+                        Style="{StaticResource menuButtonText}"
+                        Text="{DynamicResource Revenue}" />
+                </RadioButton>
+            </StackPanel>
+
+            <Button
+                Width="150"
+                Height="50"
+                Margin="0,20,290,0"
+                HorizontalAlignment="Right"
+                Background="{DynamicResource Green}"
+                Command="{Binding exportExcelIC}"
+                Style="{DynamicResource btnStyle}">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon
+                            Width="25"
+                            Height="23"
+                            Foreground="{DynamicResource BackgroundCF}"
+                            Kind="FileExcel" />
+                        <Label
+                            Content="{DynamicResource ExportExcel}"
+                            FontSize="15"
+                            Foreground="{DynamicResource BackgroundCF}" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+
+            <Grid Grid.Row="1" Background="{DynamicResource BackgroundCF}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Border
+                    Grid.Column="0"
+                    Margin="20"
+                    Background="{DynamicResource MainColorCF}"
+                    CornerRadius="30">
+                    <Border
+                        Margin="10"
+                        Background="{DynamicResource BackgroundCF}"
+                        CornerRadius="20">
+                        <Frame
+                            x:Name="mainFrame"
+                            Margin="10"
+                            NavigationUIVisibility="Hidden">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Loaded">
+                                    <i:InvokeCommandAction Command="{Binding loadSaleHistoryIC}" CommandParameter="{Binding ElementName=mainFrame}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Frame>
+                    </Border>
+                </Border>
+                <Grid Grid.Column="1" Margin="0,20,20,20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Margin="0,0,0,20">
+                        <StackPanel>
+                            <TextBlock
+                                Margin="0,10,0,10"
+                                Style="{DynamicResource Header2}"
+                                Text="Thời gian" />
+
+                            <Border Background="{DynamicResource MainColorCF}" CornerRadius="30">
+                                <Border
+                                    Margin="10"
+                                    Background="{DynamicResource Background2CF}"
+                                    CornerRadius="20">
+
+                                    <StackPanel Margin="10">
+                                        <Border Padding="10" CornerRadius="20">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock
+                                                    Height="25"
+                                                    Margin="0,0,19,0"
+                                                    FontSize="25"
+                                                    FontWeight="SemiBold"
+                                                    Foreground="{DynamicResource ForegroundCF}"
+                                                    Text="Từ" />
+                                                <DatePicker
+                                                    x:Name="Fromdate"
+                                                    Background="White"
+                                                    BorderBrush="{DynamicResource MainColorCF}"
+                                                    SelectedDate="{Binding FromDate, Mode=TwoWay}"
+                                                    Style="{DynamicResource dpStyle2}">
+                                                    <materialDesign:HintAssist.Hint>
+                                                        <TextBlock Foreground="{DynamicResource MainColorCF}" Text="ngày" />
+                                                    </materialDesign:HintAssist.Hint>
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="SelectedDateChanged">
+                                                            <i:InvokeCommandAction Command="{Binding loadDataIC}" />
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </DatePicker>
+                                            </StackPanel>
+                                        </Border>
+
+                                        <Border
+                                            Margin="0,20,0,0"
+                                            Padding="10"
+                                            CornerRadius="20">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock
+                                                    Height="25"
+                                                    Margin="0,0,5,0"
+                                                    FontSize="25"
+                                                    FontWeight="SemiBold"
+                                                    Foreground="{DynamicResource ForegroundCF}"
+                                                    Text="Đến" />
+                                                <DatePicker
+                                                    x:Name="Todate"
+                                                    Background="White"
+                                                    BorderBrush="{DynamicResource MainColorCF}"
+                                                    SelectedDate="{Binding ToDate, Mode=TwoWay}"
+                                                    Style="{DynamicResource dpStyle2}">
+                                                    <materialDesign:HintAssist.Hint>
+                                                        <TextBlock Foreground="{DynamicResource MainColorCF}" Text="ngày" />
+                                                    </materialDesign:HintAssist.Hint>
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="SelectedDateChanged">
+                                                            <i:InvokeCommandAction Command="{Binding loadDataIC}" />
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </DatePicker>
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                </Border>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <StackPanel>
+                            <TextBlock
+                                Margin="10,10,0,10"
+                                Style="{DynamicResource Header2}"
+                                Text="Top món ăn" />
+
+                            <Border Background="{DynamicResource MainColorCF}" CornerRadius="30">
+                                <Border Height="225"
+                                    Margin="10"
+                                    Background="{DynamicResource BackgroundCF}"
+                                    CornerRadius="20">
+                                    <StackPanel>
+                                        <Border Margin="10,0,10,0" Background="Transparent">
+                                            <ListView
+                                                x:Name="topmenu"
+                                                d:ItemsSource="{d:SampleData ItemCount=3}"
+                                                ItemsSource="{Binding ListTopMenu}"
+                                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                SelectionMode="Single">
+                                                <ListView.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Orientation="Horizontal"
+                                                                    Margin="0 8 0 0">
+                                                            <Image
+                                                                Width="50"
+                                                                Height="50"
+                                                                Source="{Binding HinhAnh}" />
+                                                            <TextBlock
+                                                                Height="19"
+                                                                Margin="10,5,0,0"
+                                                                HorizontalAlignment="Left"
+                                                                FontSize="16"
+                                                                FontWeight="SemiBold"
+                                                                Foreground="{DynamicResource MainColorCF}"
+                                                                Text="{Binding TenSanPham}" />
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ListView.ItemTemplate>
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Loaded">
+                                                        <i:InvokeCommandAction Command="{Binding loadTopMenuIC}" CommandParameter="{Binding ElementName=topmenu}" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </ListView>
+
+                                        </Border>
+                                    </StackPanel>
+                                </Border>
+                            </Border>
+                        </StackPanel>
+
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <!--
+            Mặt
+            nạ mờ khi đang load
+        -->
+        <Grid
+            x:Name="ShadowMask"
+            Width="1400"
+            Height="800"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Background="Gray"
+            Opacity="0.3"
+            Visibility="Collapsed" />
+
+        <materialDesign:Card
+            Width="150"
+            Height="100"
+            Background="Transparent">
+            <StackPanel>
+                <ProgressBar
+                    x:Name="prg"
+                    Margin="0,30,0,0"
+                    Foreground="{DynamicResource MainColorCF}"
+                    IsIndeterminate="True"
+                    Style="{StaticResource MaterialDesignCircularProgressBar}" />
+                <Label
+                    Margin="0,10,0,0"
+                    HorizontalContentAlignment="Center"
+                    Content="Đang tải dữ liệu..."
+                    FontSize="15"
+                    Foreground="{DynamicResource MainColorCF}" />
+            </StackPanel>
+            <materialDesign:Card.Style>
+                <Style TargetType="materialDesign:Card">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </materialDesign:Card.Style>
+        </materialDesign:Card>
+    </Grid>
+</Page>

@@ -1,0 +1,225 @@
+﻿<Page
+    x:Class="Coffee.Views.Admin.TablePage.TablePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cv="clr-namespace:Coffee.Utils.ConverterValue"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:Coffee.Views.Admin.TablePage"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Name="TablePageCF"
+    Title="TablePage"
+    d:DesignHeight="636"
+    d:DesignWidth="695"
+    DataContext="{StaticResource TableVM}"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <cv:TableCoverter x:Key="TableConverter" />
+        <cv:RoleConverter x:Key="RoleConverter" />
+    </Page.Resources>
+
+    <!--  Sự kiện chuyển trang  -->
+    <Page.Triggers>
+        <EventTrigger RoutedEvent="Page.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation
+                        Storyboard.TargetName="TablePageCF"
+                        Storyboard.TargetProperty="Opacity"
+                        From="0"
+                        To="1"
+                        Duration="0:0:0.5" />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Page.Triggers>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding loadTableListIC}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid Background="{DynamicResource BackgroundCF}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="55" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel
+            Margin="4"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <Button
+                Margin="0,0,10,0"
+                HorizontalAlignment="Right"
+                Background="{DynamicResource MainColorCF}"
+                BorderBrush="{x:Null}"
+                Command="{Binding openWindowChangeTableIC}"
+                Cursor="Hand"
+                Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                ToolTip="{DynamicResource ChangeTable}">
+                <materialDesign:PackIcon Foreground="{DynamicResource BackgroundCF}" Kind="TableRowHeight" />
+            </Button>
+
+            <Button
+                Margin="0,0,10,0"
+                HorizontalAlignment="Right"
+                Background="{DynamicResource MainColorCF}"
+                BorderBrush="{x:Null}"
+                Command="{Binding openWindowMergeTableIC}"
+                Cursor="Hand"
+                Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                ToolTip="{DynamicResource MergeTable}">
+                <materialDesign:PackIcon Foreground="{DynamicResource BackgroundCF}" Kind="TableMergeCells" />
+            </Button>
+
+            <Button
+                HorizontalAlignment="Right"
+                Background="{DynamicResource MainColorCF}"
+                BorderBrush="{x:Null}"
+                Command="{Binding openWindowAddTableIC}"
+                Cursor="Hand"
+                Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                ToolTip="{DynamicResource AddTable}"
+                Visibility="{Binding role, Converter={StaticResource RoleConverter}}">
+                <materialDesign:PackIcon Foreground="{DynamicResource BackgroundCF}" Kind="PlusBold" />
+            </Button>
+        </StackPanel>
+        <ScrollViewer
+            x:Name="ScrollViewer"
+            Grid.Row="1"
+            Margin="4,0,4,4"
+            VerticalAlignment="Top"
+            HorizontalScrollBarVisibility="Hidden"
+            PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"
+            VerticalScrollBarVisibility="Hidden">
+            <ListView
+                d:ItemsSource="{d:SampleData ItemCount=1}"
+                ItemsSource="{Binding TableList, UpdateSourceTrigger=PropertyChanged}"
+                SelectedItem="{Binding SelectedTable}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="235" />
+                                <RowDefinition Height="235" />
+                                <RowDefinition Height="235" />
+                                <RowDefinition Height="235" />
+                                <RowDefinition Height="235" />
+                                <RowDefinition Height="235" />
+                                <RowDefinition Height="235" />
+                                <RowDefinition Height="235" />
+                                <RowDefinition Height="235" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemContainerStyle>
+                    <Style BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="ListViewItem">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="IsSelected" Value="True" />
+                                <Setter Property="Background" Value="{DynamicResource Background2CF}" />
+                            </Trigger>
+                        </Style.Triggers>
+
+                        <Setter Property="Grid.Row" Value="{Binding Hang}" />
+                        <Setter Property="Grid.Column" Value="{Binding Cot}" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Border
+                                Width="150"
+                                Height="215"
+                                BorderBrush="{Binding TrangThai, Converter={StaticResource TableConverter}}"
+                                BorderThickness="1.5"
+                                CornerRadius="15"
+                                Cursor="Hand">
+                                <StackPanel>
+                                    <Image
+                                        Width="90"
+                                        Height="92"
+                                        Margin="0,15,0,0"
+                                        Source="/Resources/Images/Table.png" />
+                                    <TextBlock
+                                        Height="19"
+                                        HorizontalAlignment="Center"
+                                        FontSize="15"
+                                        FontWeight="SemiBold"
+                                        Foreground="{DynamicResource MainColorCF}"
+                                        Text="{Binding TenBan}" />
+
+                                    <TextBlock
+                                        Height="19"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontSize="16"
+                                        Text="{Binding TenLoaiBan}" />
+
+                                    <TextBlock
+                                        Margin="0,3,0,0"
+                                        HorizontalAlignment="Center"
+                                        FontSize="12"
+                                        Foreground="{Binding TrangThai, Converter={StaticResource TableConverter}}"
+                                        Text="{Binding TrangThai}" />
+                                    <Grid Margin="0,7,0,0">
+                                        <Button
+                                            Margin="0,0,30,0"
+                                            Background="#8295B9"
+                                            BorderBrush="#41AAE2"
+                                            Command="{Binding DataContext.openEditTableIC, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                            CommandParameter="{Binding}"
+                                            Style="{DynamicResource btnInDtg}"
+                                            Visibility="{Binding DataContext.role, RelativeSource={RelativeSource AncestorType=ListView}, Converter={StaticResource RoleConverter}}">
+                                            <materialDesign:PackIcon
+                                                Width="15"
+                                                Height="15"
+                                                Kind="EditOutline" />
+                                        </Button>
+
+                                        <Button
+                                            Margin="30,0,0,0"
+                                            Background="#AD7270"
+                                            BorderBrush="#A20F27"
+                                            Command="{Binding DataContext.openDeleteTableIC, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                            CommandParameter="{Binding}"
+                                            Style="{StaticResource btnInDtg}"
+                                            Visibility="{Binding DataContext.role, RelativeSource={RelativeSource AncestorType=ListView}, Converter={StaticResource RoleConverter}}">
+                                            <materialDesign:PackIcon
+                                                Width="15"
+                                                Height="15"
+                                                Kind="DeleteOutline" />
+                                        </Button>
+                                    </Grid>
+                                </StackPanel>
+
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseUp">
+                                        <i:InvokeCommandAction Command="{Binding DataContext.loadMenuInTableIC, RelativeSource={RelativeSource AncestorType=ListView}}" />
+                                        <i:InvokeCommandAction Command="{Binding DataContext.clickTableIC, RelativeSource={RelativeSource AncestorType=ListView}}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
+    </Grid>
+</Page>

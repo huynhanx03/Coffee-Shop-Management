@@ -1,0 +1,132 @@
+﻿<Window
+    x:Class="Coffee.Views.MessageBox.MessageBoxCF"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cv="clr-namespace:Coffee.Utils.ConverterValue"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:Coffee.Views.MessageBox"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="clr-namespace:Coffee.UserControls"
+    Title="MessageBoxCF"
+    Width="450"
+    Height="250"
+    AllowsTransparency="True"
+    Background="Transparent"
+    DataContext="{StaticResource EmployeeVM}"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource ForegroundCF}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="none"
+    mc:Ignorable="d">
+    <Border
+        Background="{DynamicResource BackgroundCF}"
+        BorderBrush="Black"
+        BorderThickness="1.2"
+        CornerRadius="10">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="8*" />
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="3*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid
+                Grid.Row="0"
+                Grid.ColumnSpan="2"
+                Margin="0,10,0,-10">
+                <Image x:Name="imageStatus" Source="/Resources/Images/check-circle.png" />
+            </Grid>
+
+            <Grid
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                Margin="0,0,0,0">
+                <materialDesign:TransitioningContent MaxHeight="80" VerticalAlignment="Center">
+                    <materialDesign:TransitioningContent.OpeningEffects>
+                        <materialDesign:TransitionEffect Kind="FadeIn" />
+                        <materialDesign:TransitionEffect Kind="SlideInFromBottom" />
+                    </materialDesign:TransitioningContent.OpeningEffects>
+                    <TextBlock
+                        x:Name="txtMessage"
+                        Width="250"
+                        MaxHeight="80"
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        Foreground="{DynamicResource ForegroundCF}"
+                        Text="Hệ thống bị lỗi "
+                        TextAlignment="Center"
+                        TextWrapping="Wrap" />
+                </materialDesign:TransitioningContent>
+            </Grid>
+
+            <Grid
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                Margin="0,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Button
+                    x:Name="btnOk"
+                    Grid.Column="1"
+                    Width="95"
+                    Margin="20,2,20,0"
+                    Background="{DynamicResource MainColorCF}"
+                    BorderBrush="{DynamicResource BackgroundCF}"
+                    Click="btnOk_Click"
+                    Content="{DynamicResource Confirm}"
+                    Foreground="{DynamicResource BackgroundCF}"
+                    Style="{StaticResource MaterialDesignRaisedButton}" />
+                <Button
+                    x:Name="btnCancel"
+                    Grid.Column="2"
+                    Width="75"
+                    Margin="20,2,20,0"
+                    Background="{DynamicResource RedCF}"
+                    BorderBrush="{DynamicResource BackgroundCF}"
+                    Click="btnCancel_Click"
+                    Content="{DynamicResource Cancel}"
+                    Foreground="{DynamicResource BackgroundCF}"
+                    Style="{StaticResource MaterialDesignRaisedButton}" />
+                <Button
+                    x:Name="btnYes"
+                    Grid.Column="1"
+                    Width="80"
+                    Margin="20,2,20,0"
+                    Background="{DynamicResource MainColorCF}"
+                    BorderBrush="{DynamicResource BackgroundCF}"
+                    Click="btnYes_Click"
+                    Content="{DynamicResource Yes}"
+                    Foreground="{DynamicResource BackgroundCF}"
+                    Style="{StaticResource MaterialDesignRaisedButton}" />
+                <Button
+                    x:Name="btnNo"
+                    Grid.Column="2"
+                    Width="80"
+                    Margin="20,2,20,0"
+                    Background="{DynamicResource RedCF}"
+                    BorderBrush="{DynamicResource BackgroundCF}"
+                    Click="btnNo_Click"
+                    Content="{DynamicResource No}"
+                    Foreground="{DynamicResource BackgroundCF}"
+                    Style="{StaticResource MaterialDesignRaisedButton}" />
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

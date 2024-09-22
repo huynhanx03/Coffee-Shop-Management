@@ -1,0 +1,137 @@
+﻿<Window
+    x:Class="Coffee.Views.Admin.TablePage.OperationOfTableWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cv="clr-namespace:Coffee.Utils.ConverterValue"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:Coffee.Views.Admin.TablePage"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uc="clr-namespace:Coffee.UserControls"
+    x:Name="OperationOfTableWindowCF"
+    Title="OperationOfTableWindow"
+    Width="400"
+    Height="300"
+    AllowsTransparency="True"
+    Background="Transparent"
+    DataContext="{StaticResource TableVM}"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource ForegroundCF}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="none"
+    mc:Ignorable="d">
+    <Border
+        Background="{DynamicResource BackgroundCF}"
+        BorderBrush="{DynamicResource Background2CF}"
+        BorderThickness="1"
+        CornerRadius="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Margin="30,20,0,0"
+                Style="{DynamicResource Header1}"
+                Text="{DynamicResource AddTable}" />
+
+            <Grid Grid.Row="1" Margin="0,10,0,0">
+                <Grid>
+                    <StackPanel Orientation="Vertical">
+                        <TextBox
+                            BorderBrush="{DynamicResource MainColorCF}"
+                            Style="{DynamicResource txbStyle}"
+                            Text="{Binding TableName}">
+                            <materialDesign:HintAssist.Hint>
+                                <TextBlock Foreground="{DynamicResource MainColorCF}" Text="{DynamicResource TableName}" />
+                            </materialDesign:HintAssist.Hint>
+                        </TextBox>
+
+                        <ComboBox
+                            Margin="0,10,0,0"
+                            BorderBrush="{DynamicResource MainColorCF}"
+                            DisplayMemberPath="TenLoaiBan"
+                            ItemsSource="{Binding TableTypeList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            SelectedIndex="0"
+                            SelectedValue="TenLoaiBan"
+                            Style="{DynamicResource cbStyle}"
+                            Text="{Binding SelectedTableTypeName, Mode=TwoWay}">
+                            <materialDesign:HintAssist.Hint>
+                                <TextBlock Foreground="{DynamicResource MainColorCF}" Text="{DynamicResource TableType}" />
+                            </materialDesign:HintAssist.Hint>
+                        </ComboBox>
+
+                        <StackPanel
+                            Margin="0,10,0,0"
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal">
+                            <TextBox
+                                Width="140"
+                                BorderBrush="{DynamicResource MainColorCF}"
+                                Style="{DynamicResource txbStyle}"
+                                Text="{Binding Row}">
+                                <materialDesign:HintAssist.Hint>
+                                    <TextBlock Foreground="{DynamicResource MainColorCF}" Text="{DynamicResource Row}" />
+                                </materialDesign:HintAssist.Hint>
+
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="PreviewTextInput">
+                                        <i:CallMethodAction MethodName="NumberValidationTextBox" TargetObject="{Binding}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+
+                            <TextBox
+                                Width="140"
+                                Margin="20,0,0,0"
+                                BorderBrush="{DynamicResource MainColorCF}"
+                                Style="{DynamicResource txbStyle}"
+                                Text="{Binding Coloumn}">
+                                <materialDesign:HintAssist.Hint>
+                                    <TextBlock Foreground="{DynamicResource MainColorCF}" Text="{DynamicResource Column}" />
+                                </materialDesign:HintAssist.Hint>
+
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="PreviewTextInput">
+                                        <i:CallMethodAction MethodName="NumberValidationTextBox" TargetObject="{Binding}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <StackPanel
+                    Margin="0,10,0,30"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+                    <Button
+                        Margin="0,0,20,0"
+                        Width="140"
+                        
+                        Command="{Binding confirmOperationTableIC}"
+                        CommandParameter="{Binding ElementName=OperationOfTableWindowCF}"
+                        Content="{DynamicResource Confirm}"
+                        Style="{DynamicResource btnStyle}" />
+
+                    <Button
+                        Margin="0,0,50,0"
+                        Width="140"
+                        Command="{Binding closeOperationTableWindowIC}"
+                        CommandParameter="{Binding ElementName=OperationOfTableWindowCF}"
+                        Content="{DynamicResource Cancel}"
+                        Style="{DynamicResource btnStyle}" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

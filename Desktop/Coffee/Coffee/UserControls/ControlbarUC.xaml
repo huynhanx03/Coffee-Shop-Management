@@ -1,0 +1,66 @@
+﻿<UserControl
+    x:Class="Coffee.UserControls.ControlbarUC"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:Coffee.UserControls"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="ControlBarUC"
+    Background="Transparent"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    Tag="Title"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseLeftButtonDown">
+            <i:InvokeCommandAction Command="{Binding MouseMoveWindowCommand}" CommandParameter="{Binding ElementName=ControlBarUC}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid>
+        <materialDesign:ColorZone
+            x:Name="backGroum"
+            Margin="0,2,0,0"
+            Padding="2"
+            Background="#F7F7F7"
+            CornerRadius="10 10 0 0">
+            <Grid>
+                <DockPanel>
+
+                    <StackPanel
+                        Background="Transparent"
+                        DockPanel.Dock="Right"
+                        Orientation="Horizontal">
+                        <!--  Button close  -->
+                        <Button
+                            Width="20"
+                            Height="20"
+                            Margin="7,0,7,0"
+                            Background="#FFE17365"
+                            Command="{Binding closeWindowCommand}"
+                            CommandParameter="{Binding ElementName=ControlBarUC}"
+                            Style="{StaticResource MaterialDesignFloatingActionButton}"
+                            ToolTip="Close" />
+
+                        <!--  Button minimize  -->
+                        <Button
+                            Width="20"
+                            Height="20"
+                            Margin="7,0,7,0"
+                            Background="#FF2BD655"
+                            Command="{Binding minimizeWindowCommand}"
+                            CommandParameter="{Binding ElementName=ControlBarUC}"
+                            Style="{StaticResource MaterialDesignFloatingActionButton}"
+                            ToolTip="Minimize" />
+                    </StackPanel>
+                </DockPanel>
+            </Grid>
+        </materialDesign:ColorZone>
+    </Grid>
+</UserControl>

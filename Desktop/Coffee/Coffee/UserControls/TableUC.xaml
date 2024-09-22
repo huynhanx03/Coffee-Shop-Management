@@ -1,0 +1,88 @@
+﻿<UserControl
+    x:Class="Coffee.UserControls.TableUC"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Coffee.UserControls"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    TextElement.FontSize="13"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+    <Grid Background="{DynamicResource BackgroundCF}">
+        <Border
+            Width="165"
+            Height="220"
+            BorderThickness="1"
+            CornerRadius="15">
+            <StackPanel>
+                <Button
+                    Width="100"
+                    Height="100"
+                    Margin="0,15,0,0"
+                    Command="{Binding DataContext.OpenInfo, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"
+                    CommandParameter="{Binding}">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Image
+                                Width="90"
+                                Height="92"
+                                Source="/Resources/Images/Table.png" />
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <TextBlock
+                    Height="19"
+                    HorizontalAlignment="Center"
+                    FontSize="16"
+                    FontWeight="SemiBold"
+                    Foreground="{DynamicResource MainColorCF}"
+                    Text="3" />
+                <TextBlock
+                    Height="19"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    Text="Bàn 4" />
+
+                <TextBlock
+                    Margin="0,3,0,0"
+                    HorizontalAlignment="Center"
+                    FontSize="9.5"
+                    Foreground="#FF3DFF3D"
+                    Text="Còn trống" />
+                <Grid Margin="0,7,0,0">
+                    <!--  button_repair_table  -->
+                    <Button
+                        Margin="0,0,30,0"
+                        Background="#8295B9"
+                        BorderBrush="#41AAE2"
+                        Style="{DynamicResource btnInDtg}">
+                        <materialDesign:PackIcon
+                            Width="15"
+                            Height="15"
+                            Kind="EditOutline" />
+                    </Button>
+
+                    <Button
+                        Margin="30,0,0,0"
+                        Background="#AD7270"
+                        BorderBrush="#A20F27"
+                        Style="{StaticResource btnInDtg}">
+
+                        <materialDesign:PackIcon
+                            Width="15"
+                            Height="15"
+                            Kind="DeleteOutline" />
+                    </Button>
+
+                </Grid>
+
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

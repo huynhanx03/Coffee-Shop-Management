@@ -1,0 +1,17 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="themeLight">
+    <SolidColorBrush x:Key="MainColorCF" Color="#704232" />
+    <SolidColorBrush x:Key="HoverColorCF" Color="#B8A199" />
+    <SolidColorBrush x:Key="Green" Color="#547226" />
+    <SolidColorBrush x:Key="BorderBrushCF" Color="#ECEDEE" />
+    <SolidColorBrush x:Key="BackgroundCF" Color="White" />
+    <SolidColorBrush x:Key="WhiteSmoke" Color="WhiteSmoke" />
+    <SolidColorBrush x:Key="Background2CF" Color="#F7F7F7" />
+    <SolidColorBrush x:Key="Background3CF" Color="#E6E6E9" />
+    <SolidColorBrush x:Key="ForegroundCF" Color="Black" />
+    <SolidColorBrush x:Key="RedCF" Color="#B82119" />
+    <SolidColorBrush x:Key="GreenCF" Color="#38A119" />
+    <SolidColorBrush x:Key="GrayCF" Color="#7C716D" />
+</ResourceDictionary>
