@@ -18,6 +18,7 @@ const tableRoutes = require('./routes/tableRoutes')
 const billSellRoutes = require('./routes/billSellRouter')
 const orderRoutes = require('./routes/orderRoutes')
 const reviewRoutes = require('./routes/reviewRoutes')
+const paymentRoutes = require('./routes/paymentRoutes')
 
 const app = express()
 const port = 3000
@@ -42,6 +43,7 @@ app.use('/table', tableRoutes)
 app.use('/bill-sell', billSellRoutes)
 app.use('/order', orderRoutes)
 app.use('/review', reviewRoutes)
+app.use('/payment', paymentRoutes)
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`)

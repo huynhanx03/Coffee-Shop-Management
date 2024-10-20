@@ -140,7 +140,7 @@ const updateCartWithLastPrice = async (req, res) => {
     try {
         const userId = req.params.userId
         const carts = await getCartHandler(userId)
-
+        
         for (const key in carts[userId]) {
             const product = carts[userId][key]
             const detailProduct = await getProductById(product.MaSanPham)

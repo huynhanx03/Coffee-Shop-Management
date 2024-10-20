@@ -3,10 +3,10 @@ const router = express.Router();
 const cartController = require('../controllers/cartController');
 const authenticateToken = require('../middleware/authMiddleware');
 
-router.post('/:userId', authenticateToken, cartController.setCart)
-router.delete('/:userId/:MaSanPham', authenticateToken, cartController.deleteItemCart)
-router.delete('/:userId', authenticateToken, cartController.removeCart)
-router.get('/:userId', cartController.getCart)
-router.put('/:userId', authenticateToken, cartController.updateCartWithLastPrice)
+router.post('/set-cart/:userId', authenticateToken, cartController.setCart)
+router.delete('/delete-item-cart/:userId/:MaSanPham', authenticateToken, cartController.deleteItemCart)
+router.delete('/remove-cart/:userId', authenticateToken, cartController.removeCart)
+router.get('/get-cart/:userId', cartController.getCart)
+router.put('/update-cart/:userId', authenticateToken, cartController.updateCartWithLastPrice)
 
 module.exports = router;

@@ -1,4 +1,5 @@
-﻿using Coffee.DALs;
+﻿using Coffee.API;
+using Coffee.DALs;
 using Coffee.DTOs;
 using Coffee.Utils;
 using System;
@@ -33,7 +34,8 @@ namespace Coffee.Services
         /// </returns>
         public async Task<(string, List<OrderDTO>)> getListOrder()
         {
-            return await OrderDAL.Ins.getListOrder();
+            return await OrderAPI.Ins.getListOrder();
+            //return await OrderDAL.Ins.getListOrder();
         }
 
         /// <summary>
@@ -44,12 +46,14 @@ namespace Coffee.Services
         /// <returns></returns>
         public async Task<(string, bool)> updateStatusOrder(string orderId, string status)
         {
-            return await OrderDAL.Ins.updateStatusOrder(orderId, status);
+            return await OrderAPI.Ins.updateStatusOrder(orderId, status);
+            //return await OrderDAL.Ins.updateStatusOrder(orderId, status);
         }
 
         public async Task<(string, bool)> updateBillIDOrder(string orderId, string billID)
         {
-            return await OrderDAL.Ins.updateBillIDOrder(orderId, billID);
+            return await OrderAPI.Ins.updateBillIDOrder(orderId, billID);
+            //return await OrderDAL.Ins.updateBillIDOrder(orderId, billID);
         }
     }
 }

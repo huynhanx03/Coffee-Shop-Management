@@ -1,4 +1,5 @@
-﻿using Coffee.Properties;
+﻿using Coffee.DesignPattern.Mediator;
+using Coffee.Properties;
 using Coffee.Utils;
 using Coffee.Views.Admin;
 using Coffee.Views.Admin.ChatPage;
@@ -44,11 +45,25 @@ namespace Coffee.ViewModel.AdminVM
         }
 
         private string _Image;
-
         public string Image
         {
             get { return _Image; }
             set { _Image = value; OnPropertyChanged(); }
+        }
+
+
+        private int _orderCount;
+        public int orderCount
+        {
+            get { return _orderCount; }
+            set { _orderCount = value; OnPropertyChanged(); }
+        }
+
+        private string _optionName { get; set; }
+        public string optionName
+        {
+            get { return _optionName; }
+            set { _optionName = value; OnPropertyChanged(); }
         }
 
         private RadioButton settingBtn {  get; set; }
@@ -70,18 +85,20 @@ namespace Coffee.ViewModel.AdminVM
         public ICommand loguoutIC { get; set; }
         public ICommand loadSettingButtonIC { get; set; }
         public ICommand clickAvatarIC { get; set; }
+        public ICommand loadBeginningIC { get; set; }
 
-        private string _optionName { get; set; }
-        public string optionName
-        {
-            get { return _optionName; }
-            set { _optionName = value; OnPropertyChanged(); }
-        }
 
         public MainAdminViewModel()
         {
+            if (ConcreteMediator.Ins.mainAdminViewModel == null) ConcreteMediator.Ins.mainAdminViewModel = this;
+
             Image = Memory.user.HinhAnh;
             Name = Memory.user.HoTen;
+
+            loadBeginningIC = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                loadBeginning();
+            });
 
             loadRoleIC = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -167,10 +184,12 @@ namespace Coffee.ViewModel.AdminVM
                 optionName = "Quản lý khách hàng";
             });
 
-            loadOrderPageIC = new RelayCommand<Frame>((p) => { return true; }, (p) =>
+            loadOrderPageIC = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
             {
                 p.Content = new MainOrderPage();
                 optionName = "Quản lý đơn hàng";
+
+                await ConcreteMediator.Ins.Notify(this, "LoadOrderList");
             });
 
             loguoutIC = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -212,6 +231,15 @@ namespace Coffee.ViewModel.AdminVM
 
             // Đóng của sổ hiện tại
             wAdmin.Close();
+        }
+
+        private async void loadBeginning()
+        {
+        }
+
+        public void UpdateOrderCount(int amount)
+        {
+            orderCount = amount;
         }
     }
 }

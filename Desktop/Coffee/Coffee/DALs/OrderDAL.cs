@@ -55,7 +55,7 @@ namespace Coffee.DALs
                                       NgayTaoDon = order.NgayTaoDon,
                                       PhiVanChuyen = order.PhiVanChuyen,
                                       TenKhachHang = user.HoTen,
-                                      SanPham = order.SanPham,
+                                      //SanPham = order.SanPham,
                                       ThanhTien = order.ThanhTien,
                                       TrangThai = order.TrangThai
                                   }).ToList();

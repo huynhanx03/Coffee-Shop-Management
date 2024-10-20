@@ -14,4 +14,5 @@
     <SolidColorBrush x:Key="RedCF" Color="#B82119" />
     <SolidColorBrush x:Key="GreenCF" Color="#38A119" />
     <SolidColorBrush x:Key="GrayCF" Color="#7C716D" />
+    <SolidColorBrush x:Key="RedNCF" Color="#DC514D" />
 </ResourceDictionary>

@@ -33,6 +33,7 @@
 
     <Window.Resources>
         <cv:RoleConverter x:Key="RoleConverter" />
+        <cv:HintCountConverter x:Key="CountConverter" />
 
         <Storyboard x:Key="MenuOpen">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MenuBar" Storyboard.TargetProperty="Width">
@@ -105,6 +106,7 @@
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding loadRoleIC}" />
+            <i:InvokeCommandAction Command="{Binding loadBeginningIC}" />
             <i:InvokeCommandAction Command="{Binding loadSettingButtonIC}" CommandParameter="{Binding ElementName=SettingBtn}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
@@ -158,15 +160,33 @@
                             Grid.Row="0"
                             HorizontalAlignment="Left"
                             Orientation="Horizontal">
-                            <Button
-                                x:Name="OpenMenuBtn"
-                                Margin="15,0,0,0"
-                                Background="{DynamicResource MainColorCF}"
-                                BorderBrush="{x:Null}"
-                                Cursor="Hand"
-                                Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
-                                <materialDesign:PackIcon Foreground="{DynamicResource BackgroundCF}" Kind="ArrowRight" />
-                            </Button>
+                            <Grid>
+                                <Button
+                                    x:Name="OpenMenuBtn"
+                                    Margin="15,0,0,0"
+                                    Background="{DynamicResource MainColorCF}"
+                                    BorderBrush="{x:Null}"
+                                    Cursor="Hand"
+                                    Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
+                                    <materialDesign:PackIcon Foreground="{DynamicResource BackgroundCF}" Kind="ArrowRight" />
+                                </Button>
+
+                                <Border Background="{DynamicResource RedNCF}"
+                                        CornerRadius="100"
+                                        Width="20"
+                                        Height="20"
+                                        VerticalAlignment="Top"
+                                        HorizontalAlignment="Right"
+                                        Visibility="{Binding orderCount,Converter={StaticResource CountConverter}}"
+                                        Margin="0, 5, 0, 0">
+                                    <TextBlock Text="{Binding orderCount}"
+                                               FontSize="8"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               Foreground="{DynamicResource BackgroundCF}" />
+                                </Border>
+                            </Grid>
+                            
 
                             <Image
                                 Width="70"
@@ -248,7 +268,7 @@
                             NavigationUIVisibility="Hidden">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Loaded">
-                                    <i:InvokeCommandAction Command="{Binding loadTablesPageIC}" CommandParameter="{Binding ElementName=mainFrame}" />
+                                    <i:InvokeCommandAction Command="{Binding loadOrderPageIC}" CommandParameter="{Binding ElementName=mainFrame}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Frame>
@@ -303,7 +323,6 @@
                                 Command="{Binding loadTablesPageIC}"
                                 CommandParameter="{Binding ElementName=mainFrame}"
                                 GroupName="mainOptions"
-                                IsChecked="True"
                                 Style="{StaticResource MenuButtonMain}">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Home" Style="{StaticResource menuButtonIcon}" />
@@ -440,19 +459,38 @@
                         </Border>
 
                         <!--  Button quản lý đơn hàng  -->
-                        <Border CornerRadius="5" IsEnabled="{Binding Role, Converter={StaticResource RoleConverter}}">
-                            <RadioButton
-                                Name="OrderBtn"
-                                Command="{Binding loadOrderPageIC}"
-                                CommandParameter="{Binding ElementName=mainFrame}"
-                                GroupName="mainOptions"
-                                Style="{StaticResource MenuButtonMain}">
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Kind="FoodTakeoutBox" Style="{StaticResource menuButtonIcon}" />
-                                    <TextBlock Style="{StaticResource menuButtonText}" Text="{DynamicResource Order}" />
-                                </StackPanel>
-                            </RadioButton>
-                        </Border>
+                        <Grid>
+                            <Border CornerRadius="5" IsEnabled="{Binding Role, Converter={StaticResource RoleConverter}}">
+                                <RadioButton
+                                        Name="OrderBtn"
+                                        Command="{Binding loadOrderPageIC}"
+                                        CommandParameter="{Binding ElementName=mainFrame}"
+                                        GroupName="mainOptions"
+                                        IsChecked="True"
+                                        Style="{StaticResource MenuButtonMain}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="FoodTakeoutBox" Style="{StaticResource menuButtonIcon}" />
+                                        <TextBlock Style="{StaticResource menuButtonText}" Text="{DynamicResource Order}" />
+                                    </StackPanel>
+                                </RadioButton>
+                            </Border>
+
+                            <Border Background="{DynamicResource RedNCF}"
+                                    CornerRadius="100"
+                                    Width="20"
+                                    Height="20"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Right"
+                                    Visibility="{Binding orderCount,Converter={StaticResource CountConverter}}"
+                                    Margin="0, 15, 5, 0">
+                                <TextBlock Text="{Binding orderCount}"
+                                   FontSize="8"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Foreground="{DynamicResource BackgroundCF}" />
+                            </Border>
+                        </Grid>
+                        
 
                         <!--  Button quản lý quán  -->
                         <Border CornerRadius="5" IsEnabled="{Binding Role, Converter={StaticResource RoleConverter}}">

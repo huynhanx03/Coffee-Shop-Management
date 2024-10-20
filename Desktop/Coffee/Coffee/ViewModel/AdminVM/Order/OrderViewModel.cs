@@ -1,5 +1,6 @@
 ﻿using CloudinaryDotNet.Actions;
 using Coffee.DALs;
+using Coffee.DesignPattern.Mediator;
 using Coffee.DTOs;
 using Coffee.Models;
 using Coffee.Services;
@@ -88,6 +89,8 @@ namespace Coffee.ViewModel.AdminVM.Order
 
         public OrderViewModel()
         {
+            if (ConcreteMediator.Ins.orderViewModel == null) ConcreteMediator.Ins.orderViewModel = this;
+
             loadShadowMaskIC = new RelayCommand<Grid>((p) => { return true; }, (p) =>
             {
                 MaskName = p;
@@ -95,7 +98,13 @@ namespace Coffee.ViewModel.AdminVM.Order
 
             loadOrderListIC = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
+                MaskName.Visibility = Visibility.Visible;
+                IsLoading = true;
+
                 loadOrderList();
+
+                MaskName.Visibility = Visibility.Collapsed;
+                IsLoading = false;
             });
 
             loadStatusListIC = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -138,11 +147,8 @@ namespace Coffee.ViewModel.AdminVM.Order
         /// <summary>
         /// Load danh sách đơn hàng
         /// </summary>
-        private async void loadOrderList()
+        public async Task loadOrderList()
         {
-            MaskName.Visibility = Visibility.Visible;
-            IsLoading = true;
-
             (string label, List<OrderDTO> Orders) = await OrderService.Ins.getListOrder();
 
             if (Orders != null)
@@ -162,8 +168,7 @@ namespace Coffee.ViewModel.AdminVM.Order
                 OrderStatusList = new List<OrderDTO>();
             }
 
-            MaskName.Visibility = Visibility.Collapsed;
-            IsLoading = false;
+            await ConcreteMediator.Ins.Notify(this, "UpdateOrderCount " + __OrderList.Count(order => order.TrangThai == Constants.StatusOrder.WAITTING).ToString());
         }
 
         /// <summary>
@@ -207,43 +212,35 @@ namespace Coffee.ViewModel.AdminVM.Order
             {
                 IsLoading = true;
 
-                // Tạo hoá đơn
                 BillModel bill = new BillModel
                 {
                     MaBan = "",
                     MaNhanVien = Memory.user.MaNguoiDung,
                     NgayTao = Order.NgayTaoDon,
-                    TongTien = Order.ThanhTien,
                     TrangThai = StatusBill.PAID,
-                    MaKhachHang = Order.MaNguoiDung
+                    MaKhachHang = Order.MaNguoiDung,
+                    ChiTietHoaDon = Order.DanhSachSanPham.ToDictionary(
+                    detail => detail.MaSanPham + "-" + detail.MaKichThuoc,
+                    detail => new DetailBillModel
+                    {
+                        MaSanPham = detail.MaSanPham,
+                        MaKichThuoc = detail.MaKichThuoc,
+                        SoLuong = detail.SoLuong,
+                        ThanhTien = detail.Gia * detail.SoLuong
+                    })
                 };
 
-                List<DetailBillModel> DetailBillList = new List<DetailBillModel>();
+                (string labelCreateBill, bool isCreate) = await BillService.Ins.createBill(bill);
 
-                foreach (var product in Order.SanPham.Values)
-                {
-                    DetailBillList.Add(new DetailBillModel
-                    {
-                        MaSanPham = product.MaSanPham,
-                        MaKichThuoc = product.MaKichThuoc,
-                        SoLuong = product.SoLuong,
-                        ThanhTien = product.Gia * product.SoLuong
-                    });
-                }
-
-                (string labelCreateBill, BillModel billNew) = await BillService.Ins.createBill(bill, DetailBillList);
-
-                if (billNew != null)
+                if (isCreate)
                 {
                     // Thêm mã hoá đơn vào trong đơn hàng
                     (string labelUpdateBillIDOrder, bool isUpdateBillIDOrder) = await OrderService.Ins.updateBillIDOrder(Order.MaDonHang, bill.MaHoaDon);
 
-                    (string labelUpdatePoint, bool isUpdate) = await CustomerService.Ins.updatePointRankCustomer(Order.MaNguoiDung, (double)bill.TongTien / 10000);
-
                     //// Tăng điểm
-                    //(string labelUpdatePoint, double point) = await CustomerService.Ins.updatePointRankCustomer(Order.MaNguoiDung, (double)bill.TongTien / 10000);
+                    (string labelUpdatePoint, bool isUpdate) = await CustomerService.Ins.updatePointRankCustomer(Order.MaNguoiDung, (double)Order.ThanhTien / 10000);
 
-                    //CustomerService.Ins.checkUpdateRankCustomer(Order.MaNguoiDung, point);
+                    reduceProduct(Order.DanhSachSanPham);
 
                     (string label, bool isConfirmOrder) = await OrderService.Ins.updateStatusOrder(Order.MaDonHang, Constants.StatusOrder.CONFIRMED);
 
@@ -271,7 +268,7 @@ namespace Coffee.ViewModel.AdminVM.Order
 
         public async void viewDetailOrder(OrderDTO Order)
         {
-            ProductOrderList = new ObservableCollection<ProductOrderDTO>(Order.SanPham.Values);
+            ProductOrderList = new ObservableCollection<ProductOrderDTO>(Order.DanhSachSanPham);
 
             MaskName.Visibility = Visibility.Visible;
 
@@ -316,6 +313,24 @@ namespace Coffee.ViewModel.AdminVM.Order
             OrderList = new ObservableCollection<OrderDTO>(OrderSearchList.Intersect(OrderStatusList));
         }
 
+        private async void reduceProduct(List<ProductOrderDTO> DanhSachSanPham)
+        {
+            var groupedData = DanhSachSanPham.GroupBy(item => item.MaSanPham)
+                                .Select(group => new
+                                {
+                                    MaSanPham = group.Key,
+                                    SoLuong = group.Sum(item => item.SoLuong)
+                                }).ToList();
+
+            foreach (var group in groupedData)
+            {
+                await ProductService.Ins.reduceQuantityProduct(group.MaSanPham, group.SoLuong);
+            }
+
+        }
+
         #endregion
     }
+    
+
 }

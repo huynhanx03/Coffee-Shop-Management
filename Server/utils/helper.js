@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt')
+
 function nextID(ID, key) {
   if (!ID || ID.trim() === "") {
     return `${key}0001`;
@@ -89,10 +91,30 @@ const optionsDateTime = {
   hour12: false
 };
 
+const verifyPassword = async (password, hash) => {
+  try {
+      return await bcrypt.compare(password, hash)
+  } catch (error) {
+      throw error
+  }
+}
+
+const hashPassword = async (password) => {
+  try {
+      const saltRound = 10
+      const hash = await bcrypt.hash(password, saltRound)
+      return hash
+  } catch (error) {
+      throw error
+  }
+}
+
 module.exports = {
   nextID,
   convertToDateString,
   convertToDateTime,
   convertUnit,
-  optionsDateTime
+  optionsDateTime,
+  verifyPassword,
+  hashPassword
 };

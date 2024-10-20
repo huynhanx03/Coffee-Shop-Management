@@ -2,8 +2,11 @@ const db = require('../config/firebase')
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv')
 const crypto = require('crypto')
+const bcrypt = require('bcrypt')
 const { updateUser, checkIDCard, checkEmail, checkNumberPhone, checkUsername } = require('../dao/userDAO')
 const { messaging } = require('firebase-admin')
+const { shipperLoginDAO, setStatusShipperDAO, getStatusShipperDAO, getProfitByShipperDAO } = require('../dao/shipper/userDAO')
+const { hashPassword, verifyPassword } = require('../utils/helper')
 
 dotenv.config()
 
@@ -27,13 +30,14 @@ const getNewId = async () => {
 const register = async (req, res) => {
     try {
         const { username, email, password } = req.body
+        const hasPass = await hashPassword(password)
         const newId = await getNewId()
         const currentTime = new Date()
         const dateCreated = currentTime.toLocaleDateString('vi-VN')
         await db.ref('NguoiDung/' + newId).set({
             TaiKhoan: username,
             Email: email,
-            MatKhau: password,
+            MatKhau: hasPass,
             VaiTro: '2',
             CCCD_CMND: '',
             DiaChi: '',
@@ -78,7 +82,9 @@ const login = async (req, res) => {
             return res.status(404).json({ success: false, message: 'Không tìm thấy người dùng' })
         }
 
-        if (password !== userData[Object.keys(userData)[0]].MatKhau) {
+        const verify = await verifyPassword(password, userData[Object.keys(userData)[0]].MatKhau)
+
+        if (!verify) {
             return res.status(401).json({ success: false, message: 'Sai tài khoản hoặc mật khẩu' })
         }
 
@@ -244,6 +250,58 @@ const checkTokenHandler = async (req, res) => {
     }
 }
 
+//Shipper
+const shipperLogin = async (req, res) => {
+    try {
+        const {username, password} = req.body;
+        
+        const userData = await shipperLoginDAO(username, password);
+
+        return res.status(200).json({ success: true, token: userData.token, data: userData.data });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error.message });
+    }
+}
+
+const setStatusShipper = async (req, res) => {
+    try {
+        const { shipperId, status } = req.body;
+        const result = await setStatusShipperDAO(shipperId, status);
+        
+        return res.status(200).json({ success: true, message: result.message });
+    } catch (error) {
+        if (error.message === 'Không tìm thấy mã shipper') {
+            return res.status(404).json({ success: false, message: error.message });
+        }
+        return res.status(500).json({ success: false, message: error.message });
+    }
+}
+
+const getStatusShipper = async (req, res) => {
+    try {
+        const { shipperId } = req.params;
+        const result = await getStatusShipperDAO(shipperId);
+
+        return res.status(200).json({ success: true, data: result.data });
+    } catch (error) {
+        if (error.message === 'Không tìm thấy mã shipper') {
+            return res.status(404).json({ success: false, message: error.message });
+        }
+        return res.status(500).json({ success: false, message: error.message });
+    }
+}
+
+const getProfitByShipper = async (req, res) => {
+    try {
+        const { shipperId } = req.params;
+        const result = await getProfitByShipperDAO(shipperId)
+
+        return res.status(200).json({ success: true, data: result.data });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error.message })
+    }
+}
+
 module.exports = {
     register,
     login,
@@ -254,5 +312,9 @@ module.exports = {
     updateUserHandler,
     getUserByNumberphoneHandler,
     loginDesktopHandler,
-    checkTokenHandler
+    checkTokenHandler,
+    shipperLogin,
+    setStatusShipper,
+    getStatusShipper,
+    getProfitByShipper
 }
