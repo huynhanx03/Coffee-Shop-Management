@@ -7,11 +7,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Coffee.ViewModel.AdminVM.Statistic
 {
-    public partial class StatisticViewModel:BaseViewModel
+    public partial class StatisticViewModel : BaseViewModel
     {
         #region variable
         private ObservableCollection<ImportDTO> _BillImportList = new ObservableCollection<ImportDTO>();
@@ -29,7 +30,7 @@ namespace Coffee.ViewModel.AdminVM.Statistic
         #endregion
 
         #region Icommand
-        public ICommand loadBillImportListtimeIC {  get; set; }
+        public ICommand loadBillImportListtimeIC { get; set; }
         public ICommand openWindowBillImportIC { get; set; }
         #endregion
         /// <summary>
@@ -37,7 +38,7 @@ namespace Coffee.ViewModel.AdminVM.Statistic
         /// </summary>
         private async Task loadBillImportList(DateTime fromDate = default(DateTime), DateTime toDate = default(DateTime))
         {
-            (string label, List<ImportDTO> billimportlist) = await BillImportService.Ins.getListBillImporttime(fromDate,toDate);
+            (string label, List<ImportDTO> billimportlist) = await BillImportService.Ins.getListBillImporttime(fromDate, toDate);
 
             if (billimportlist != null)
             {
@@ -53,7 +54,7 @@ namespace Coffee.ViewModel.AdminVM.Statistic
         /// </summary>
         public async void deleteBillImport()
         {
-            MessageBoxCF ms = new MessageBoxCF("Xác nhận xoá hóa đơn nhập kho?", MessageType.Waitting, MessageButtons.YesNo);
+            MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["ConfirmDeleteWarehouseBill"] as string, MessageType.Waitting, MessageButtons.YesNo);
 
             if (ms.ShowDialog() == true)
             {

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Coffee.Models;
 using Coffee.DTOs;
 using Coffee.Utils.Helper;
+using System.Windows;
 
 namespace Coffee.API
 {
@@ -61,7 +62,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Thêm phiếu nhập kho thành công", true);
+                        return (Application.Current.Resources["AddBillImportSuccess"] as string, true);
                     }
                     else
                     {
@@ -103,7 +104,7 @@ namespace Coffee.API
                         var data = jsonObj["data"];
 
                         var imports = JsonConvert.DeserializeObject<List<ImportDTO>>(data.ToString());
-                        return ("Lấy danh sách hóa đơn nhập khoa thành công", imports);
+                        return (Application.Current.Resources["GetListBillImportSuccess"] as string, imports);
                     }
                     else
                     {
@@ -132,7 +133,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Xoá phiếu nhập kho thành công", true);
+                        return (Application.Current.Resources["DeleteBillImportSuccess"] as string, true);
                     }
                     else
                     {

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Coffee.Utils;
 using Coffee.DTOs;
 using Coffee.Utils.Helper;
+using System.Windows;
 
 namespace Coffee.API
 {
@@ -53,7 +54,7 @@ namespace Coffee.API
                     {
                         var data = jsonObj["data"];
                         var vouchers = JsonConvert.DeserializeObject<List<VoucherDTO>>(data.ToString());
-                        return ("Lấy danh sách phiếu giảm giá thành công", vouchers);
+                        return (Application.Current.Resources["GetListVoucherSuccess"] as string, vouchers);
                     }
                     else
                     {
@@ -85,7 +86,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Thêm phiếu giảm giá thành công", true);
+                        return (Application.Current.Resources["AddVoucherSuccess"] as string, true);
                     }
                     else
                     {
@@ -116,7 +117,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Xoá phiếu giảm giá thành công", true);
+                        return (Application.Current.Resources["DeleteVoucherSuccess"] as string, true);
                     }
                     else
                     {

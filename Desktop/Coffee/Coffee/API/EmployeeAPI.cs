@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Coffee.Utils;
 using Coffee.Utils.Helper;
+using System.Windows;
 
 namespace Coffee.API
 {
@@ -66,7 +67,7 @@ namespace Coffee.API
                         // Deserialize the data portion into a list
                         var emloyees = JsonConvert.DeserializeObject<List<EmployeeDTO>>(data.ToString());
 
-                        return ("Lấy danh sách nhân viên thành công", emloyees);
+                        return (Application.Current.Resources["GetListEmployeeSuccess"] as string, emloyees);
                     }
                     else
                     {
@@ -113,7 +114,7 @@ namespace Coffee.API
                         // Deserialize the data portion into a list
                         var position = JsonConvert.DeserializeObject<List<PositionDTO>>(data.ToString());
 
-                        return ("Lấy danh sách chức vụ nhân viên thành công", position);
+                        return (Application.Current.Resources["GetListPositionEmployeeSuccess"] as string, position);
                     }
                     else
                     {
@@ -154,7 +155,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Thêm nhân viên thành công", employee);
+                        return (Application.Current.Resources["CreateEmployeeSuccess"] as string, employee);
                     }
                     else
                     {
@@ -200,7 +201,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Cập nhật nhân viên thành công", employee);
+                        return (Application.Current.Resources["UpdateEmployeeSuccess"] as string, employee);
                     }
                     else
                     {
@@ -244,7 +245,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Xoá nhân viên thành công", true);
+                        return (Application.Current.Resources["DeleteEmployeeSuccess"] as string, true);
                     }
                     else
                     {

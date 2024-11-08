@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Coffee.API
 {
@@ -55,7 +56,7 @@ namespace Coffee.API
                         var data = jsonObj["data"];
 
                         var billsells = JsonConvert.DeserializeObject<List<BillDTO>>(data.ToString());
-                        return ("Lấy danh sách hóa đơn thành công", billsells);
+                        return (Application.Current.Resources["GetListBillSellSuccess"] as string, billsells);
                     }
                     else
                     {
@@ -86,7 +87,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Thêm hóa đơn thành công", true);
+                        return (Application.Current.Resources["CreateBillSellSuccess"] as string, true);
                     }
                     else
                     {
@@ -124,7 +125,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Cập nhật hoá đơn thành công", billSell);
+                        return (Application.Current.Resources["UpdateBillSellSuccess"] as string, billSell);
                     }
                     else
                     {
@@ -168,7 +169,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Cập nhật hoá đơn thành công", true);
+                        return (Application.Current.Resources["UpdateBillSellSuccess"] as string, true);
                     }
                     else
                     {
@@ -222,7 +223,7 @@ namespace Coffee.API
 
                         var bill = JsonConvert.DeserializeObject<BillDTO>(data.ToString());
 
-                        return ("Lấy hoá đơn thành công", bill);
+                        return (Application.Current.Resources["GetBillSuccess"] as string, bill);
                     }
                     else
                     {
@@ -251,7 +252,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Xóa hóa đơn thành công", true);
+                        return (Application.Current.Resources["DeleteBillSellSuccess"] as string, true);
                     }
                     else
                     {
@@ -294,11 +295,11 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Cập nhật hoá đơn thành công", true);
+                        return (Application.Current.Resources["UpdateBillSellSuccess"] as string, true);
                     }
                     else
                     {
-                        return ("Cập nhật hoá đơn thất bại", false);
+                        return (Application.Current.Resources["UpdateBillSellFailure"] as string, false);
                     }
                 }
                 catch (HttpRequestException e)

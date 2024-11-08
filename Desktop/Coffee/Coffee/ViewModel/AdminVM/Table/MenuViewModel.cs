@@ -14,7 +14,7 @@ using System.Windows.Input;
 
 namespace Coffee.ViewModel.AdminVM.Table
 {
-    public partial class MainTableViewModel: BaseViewModel
+    public partial class MainTableViewModel : BaseViewModel
     {
         #region variable
         private ObservableCollection<ProductDTO> _ProductList;
@@ -137,8 +137,8 @@ namespace Coffee.ViewModel.AdminVM.Table
             // Đã hết số lượng
             if (totalQuantity == SelectedProduct.SoLuong)
             {
-                MessageBoxCF ms = new MessageBoxCF("Sản phẩm đã hết hàng\nGợi ý sản phẩm?", MessageType.Waitting, MessageButtons.YesNo);
-                
+                MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["ProductIsOutOfStockRecommendProduct"] as string, MessageType.Waitting, MessageButtons.YesNo);
+
                 MaskName.Visibility = Visibility.Visible;
 
                 if (ms.ShowDialog() == true)
@@ -154,7 +154,7 @@ namespace Coffee.ViewModel.AdminVM.Table
                     }
                     else
                     {
-                        MessageBoxCF msEr = new MessageBoxCF("Lỗi", MessageType.Error, MessageButtons.OK);
+                        MessageBoxCF msEr = new MessageBoxCF(Application.Current.Resources["Failure"] as string, MessageType.Error, MessageButtons.OK);
                         msEr.ShowDialog();
                     }
                 }
@@ -170,7 +170,7 @@ namespace Coffee.ViewModel.AdminVM.Table
 
                 // Add size khác
                 List<ProductSizeDetailDTO> listSize = SelectedProduct.DanhSachChiTietKichThuocSanPham.Except(listProductSizeDetail).ToList();
-            
+
                 if (listSize.Count > 0)
                 {
                     DetailBillList.Add(new DetailBillDTO

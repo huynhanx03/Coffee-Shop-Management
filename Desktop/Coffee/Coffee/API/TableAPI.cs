@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Coffee.Utils;
 using Coffee.Utils.Helper;
+using System.Windows;
 
 namespace Coffee.API
 {
@@ -54,7 +55,7 @@ namespace Coffee.API
                     {
                         var data = jsonObj["data"];
                         var tables = JsonConvert.DeserializeObject<List<TableDTO>>(data.ToString());
-                        return ("Lấy danh sách bàn thành công", tables);
+                        return (Application.Current.Resources["GetListTableSuccess"] as string, tables);
                     }
                     else
                     {
@@ -90,7 +91,7 @@ namespace Coffee.API
                     {
                         var data = jsonObj["data"];
                         var tableTypes = JsonConvert.DeserializeObject<List<TableTypeDTO>>(data.ToString());
-                        return ("Lấy danh sách loại bàn thành công", tableTypes);
+                        return (Application.Current.Resources["GetListTypeTableSuccess"] as string, tableTypes);
                     }
                     else
                     {
@@ -131,7 +132,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Thêm bàn thành công", table);
+                        return (Application.Current.Resources["AddTableSuccess"] as string, table);
                     }
                     else
                     {
@@ -177,7 +178,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Cập nhật bàn thành công", table);
+                        return (Application.Current.Resources["UpdateInformationTableSuccess"] as string, table);
                     }
                     else
                     {
@@ -196,7 +197,7 @@ namespace Coffee.API
             }
         }
 
-        
+
 
         /// <summary>
         /// Xoá bàn
@@ -223,7 +224,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Xoá bàn thành công", true);
+                        return (Application.Current.Resources["DeleteTableSuccess"] as string, true);
                     }
                     else
                     {
@@ -265,7 +266,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Cập nhật bàn thành công", true);
+                        return (Application.Current.Resources["UpdateStatusTableSuccess"] as string, true);
                     }
                     else
                     {

@@ -15,7 +15,7 @@ using System.Windows.Input;
 
 namespace Coffee.ViewModel.AdminVM.Table
 {
-    public partial class MainTableViewModel: BaseViewModel
+    public partial class MainTableViewModel : BaseViewModel
     {
         #region variable
         private ObservableCollection<TableDTO> _TableList;
@@ -106,13 +106,13 @@ namespace Coffee.ViewModel.AdminVM.Table
 
             if (table.TrangThai == Constants.StatusTable.BOOKED)
             {
-                MessageBoxCF msTable = new MessageBoxCF("Bàn này đang có khách không thể xoá", MessageType.Error, MessageButtons.OK);
+                MessageBoxCF msTable = new MessageBoxCF(Application.Current.Resources["ThisTableIsOccupiedAndCannotBeDeleted"] as string, MessageType.Error, MessageButtons.OK);
                 msTable.ShowDialog();
                 MaskName.Visibility = Visibility.Collapsed;
                 return;
             }
 
-            MessageBoxCF ms = new MessageBoxCF("Xác nhận xoá bàn?", MessageType.Waitting, MessageButtons.YesNo);
+            MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["ConfirmDeleteTable"] as string, MessageType.Waitting, MessageButtons.YesNo);
 
             if (ms.ShowDialog() == true)
             {
@@ -199,7 +199,7 @@ namespace Coffee.ViewModel.AdminVM.Table
             if (TableMoveSelected == TableTransferSelected)
             {
                 // Nếu 2 bàn giống nhau thì không chuyển được
-                MessageBoxCF ms = new MessageBoxCF("Không thể chuyển từ bàn này sang bàn chính nó", MessageType.Error, MessageButtons.OK);
+                MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["CannotTransferToSameTable"] as string, MessageType.Error, MessageButtons.OK);
                 ms.ShowDialog();
                 MaskName.Visibility = Visibility.Collapsed;
 
@@ -209,7 +209,7 @@ namespace Coffee.ViewModel.AdminVM.Table
             if (TableMoveSelected.TrangThai == Constants.StatusTable.FREE)
             {
                 // Nếu bàn muốn chuyển đang trạng thái "trống" thì không chuyển được
-                MessageBoxCF ms = new MessageBoxCF("Bàn này không có hoá đơn để chuyển", MessageType.Error, MessageButtons.OK);
+                MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["NoBillToTransfer"] as string, MessageType.Error, MessageButtons.OK);
                 ms.ShowDialog();
                 MaskName.Visibility = Visibility.Collapsed;
 
@@ -219,7 +219,7 @@ namespace Coffee.ViewModel.AdminVM.Table
             if (TableTransferSelected.TrangThai == Constants.StatusTable.BOOKED)
             {
                 // Nếu bàn muốn chuyển đến đang trạng thái "đã đặt" thì không chuyển được
-                MessageBoxCF ms = new MessageBoxCF("Bàn này muốn chuyển đến đã có người. Xin hãy gộp bàn nếu muốn chuyển đến", MessageType.Error, MessageButtons.OK);
+                MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["TableOccupied"] as string, MessageType.Error, MessageButtons.OK);
                 ms.ShowDialog();
                 MaskName.Visibility = Visibility.Collapsed;
 
@@ -242,7 +242,7 @@ namespace Coffee.ViewModel.AdminVM.Table
 
                 loadTableList();
 
-                MessageBoxCF ms = new MessageBoxCF("Chuyển bàn thành công", MessageType.Accept, MessageButtons.OK);
+                MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["TransferTableSuccess"] as string, MessageType.Accept, MessageButtons.OK);
                 ms.ShowDialog();
 
                 w.Close();
@@ -276,7 +276,7 @@ namespace Coffee.ViewModel.AdminVM.Table
             if (TableNumber1Selected == TableNumber2Selected)
             {
                 // Nếu 2 bàn giống nhau thì không chuyển được
-                MessageBoxCF ms = new MessageBoxCF("Không thể gộp từ bàn này sang bàn chính nó", MessageType.Error, MessageButtons.OK);
+                MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["CannotMergeToSameTable"] as string, MessageType.Error, MessageButtons.OK);
                 ms.ShowDialog();
                 MaskName.Visibility = Visibility.Collapsed;
 
@@ -286,7 +286,7 @@ namespace Coffee.ViewModel.AdminVM.Table
             if (TableNumber1Selected.TrangThai == Constants.StatusTable.FREE)
             {
                 // Không thể gộp với bàn "trống"
-                MessageBoxCF ms = new MessageBoxCF("Bàn này chưa được đặt để gộp", MessageType.Error, MessageButtons.OK);
+                MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["TableNotReservedForMerging"] as string, MessageType.Error, MessageButtons.OK);
                 ms.ShowDialog();
                 MaskName.Visibility = Visibility.Collapsed;
 
@@ -296,7 +296,7 @@ namespace Coffee.ViewModel.AdminVM.Table
             if (TableNumber2Selected.TrangThai == Constants.StatusTable.FREE)
             {
                 // Không thể gộp với bàn "trống"
-                MessageBoxCF ms = new MessageBoxCF("Bàn này chưa được đặt để gộp", MessageType.Error, MessageButtons.OK);
+                MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["TableNotReservedForMerging"] as string, MessageType.Error, MessageButtons.OK);
                 ms.ShowDialog();
                 MaskName.Visibility = Visibility.Collapsed;
 
@@ -317,7 +317,7 @@ namespace Coffee.ViewModel.AdminVM.Table
 
                 loadTableList();
 
-                MessageBoxCF ms = new MessageBoxCF("Gộp bàn thành công", MessageType.Accept, MessageButtons.OK);
+                MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["MergeTableSuccess"] as string, MessageType.Accept, MessageButtons.OK);
                 ms.ShowDialog();
 
                 w.Close();

@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Coffee.Utils;
+using System.Windows;
 
 namespace Coffee.API
 {
@@ -60,7 +61,7 @@ namespace Coffee.API
                         var data = jsonObj["data"];
 
                         var orders = JsonConvert.DeserializeObject<List<OrderDTO>>(data.ToString());
-                        return ("Lấy danh sách đơn hàng thành công", orders);
+                        return (Application.Current.Resources["GetListOrderSuccess"] as string, orders);
                     }
                     else
                     {
@@ -99,7 +100,7 @@ namespace Coffee.API
 
                     if (resp.IsSuccessStatusCode)
                     {
-                        return ("Cập nhật trạng thái đơn hàng thành công", true);
+                        return (Application.Current.Resources["UpdateStatusOrderSuccess"] as string, true);
                     }
                     else
                     {
@@ -111,7 +112,7 @@ namespace Coffee.API
                     return (e.Message, false);
                 }
             }
-                
+
         }
 
         public async Task<(string, bool)> updateBillIDOrder(string orderId, string billID)
@@ -139,7 +140,7 @@ namespace Coffee.API
 
                     if (resp.IsSuccessStatusCode)
                     {
-                        return ("Cập nhật hoá đơn đơn hàng thành công", true);
+                        return (Application.Current.Resources["UpdateBillOrderSuccess"] as string, true);
                     }
                     else
                     {

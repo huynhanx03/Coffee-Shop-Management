@@ -11,6 +11,7 @@ using Coffee.DTOs;
 using Coffee.Utils;
 using System.Reflection;
 using Coffee.Utils.Helper;
+using System.Windows;
 
 namespace Coffee.API
 {
@@ -67,7 +68,7 @@ namespace Coffee.API
                         // Deserialize the data portion into a list
                         var customers = JsonConvert.DeserializeObject<List<CustomerDTO>>(data.ToString());
 
-                        return ("Lấy danh sách khách hàng thành công", customers);
+                        return (Application.Current.Resources["GetListCustomerSuccess"] as string, customers);
                     }
                     else
                     {
@@ -108,7 +109,7 @@ namespace Coffee.API
                         // Deserialize the data portion into a list
                         var customers = JsonConvert.DeserializeObject<List<RankModel>>(data.ToString());
 
-                        return ("Lấy danh sách mức độ thân thiết khách hàng thành công", customers);
+                        return (Application.Current.Resources["GetRankCustomerSuccess"] as string, customers);
                     }
                     else
                     {
@@ -155,7 +156,7 @@ namespace Coffee.API
                         // Deserialize the data portion into a list
                         var addressCustomers = JsonConvert.DeserializeObject<List<AddressModel>>(data.ToString());
 
-                        return ("Lấy danh sách địa chỉ khách hàng thành công", addressCustomers);
+                        return (Application.Current.Resources["GetAddressCustomerSuccess"] as string, addressCustomers);
                     }
                     else
                     {
@@ -192,7 +193,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Cập nhật điểm thành công", true);
+                        return (Application.Current.Resources["UpdatePointSuccess"] as string, true);
                     }
                     else
                     {
@@ -238,7 +239,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Thêm khách hàng thành công", Customer);
+                        return (Application.Current.Resources["CreateCustomerSuccess"] as string, Customer);
                     }
                     else
                     {
@@ -284,7 +285,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Cập nhật khách hàng thành công", Customer);
+                        return (Application.Current.Resources["UpdateCustomerSuccess"] as string, Customer);
                     }
                     else
                     {
@@ -328,7 +329,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Xoá khách hàng thành công", true);
+                        return (Application.Current.Resources["DeleteCustomerSuccess"] as string, true);
                     }
                     else
                     {

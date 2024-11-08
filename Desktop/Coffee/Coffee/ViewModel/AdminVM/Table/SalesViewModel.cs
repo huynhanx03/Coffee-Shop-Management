@@ -18,7 +18,7 @@ using static Coffee.Utils.Constants;
 
 namespace Coffee.ViewModel.AdminVM.Table
 {
-    public partial class MainTableViewModel: BaseViewModel, IConstraintViewModel
+    public partial class MainTableViewModel : BaseViewModel, IConstraintViewModel
     {
         #region variable
         private ObservableCollection<DetailBillDTO> _DetailBillList = new ObservableCollection<DetailBillDTO>();
@@ -66,7 +66,7 @@ namespace Coffee.ViewModel.AdminVM.Table
             get { return _EmployeeName; }
             set { _EmployeeName = value; OnPropertyChanged(); }
         }
-        
+
         private string _CustomeName = "Khách vãng lai";
 
         public string CustomeName
@@ -74,7 +74,7 @@ namespace Coffee.ViewModel.AdminVM.Table
             get { return _CustomeName; }
             set { _CustomeName = value; OnPropertyChanged(); }
         }
-        
+
         private string _CustomerPhone;
 
         public string CustomerPhone
@@ -82,7 +82,7 @@ namespace Coffee.ViewModel.AdminVM.Table
             get { return _CustomerPhone; }
             set { _CustomerPhone = value; OnPropertyChanged(); }
         }
-        
+
         private UserDTO _Customer;
 
         public UserDTO Customer
@@ -135,9 +135,9 @@ namespace Coffee.ViewModel.AdminVM.Table
                 DetailBillList = new ObservableCollection<DetailBillDTO>(DetailBillList);
                 CalculateTotalBill();
             }
-            catch (Exception ex) 
-            { 
-         
+            catch (Exception ex)
+            {
+
             }
         }
 
@@ -170,7 +170,7 @@ namespace Coffee.ViewModel.AdminVM.Table
             List<DetailBillDTO> listFind = DetailBillList.Where(x => x.MaSanPham == SelectedDetailBill.MaSanPham).ToList();
 
             int totalQuantity = listFind.Sum(x => x.SoLuong);
-            
+
             // Kiếm tra số lượng
             if (totalQuantity + 1 <= product.SoLuong)
             {
@@ -193,7 +193,7 @@ namespace Coffee.ViewModel.AdminVM.Table
         private void removeBill()
         {
             MaskName.Visibility = Visibility.Visible;
-            MessageBoxCF ms = new MessageBoxCF("Xác nhận gỡ sản phẩm này khỏi hoá đơn", MessageType.Waitting, MessageButtons.YesNo);
+            MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["ConfirmRemoveProductFromBill"] as string, MessageType.Waitting, MessageButtons.YesNo);
             if (ms.ShowDialog() == true)
             {
                 DetailBillList.Remove(SelectedDetailBill);
@@ -212,7 +212,7 @@ namespace Coffee.ViewModel.AdminVM.Table
 
             foreach (var item in DetailBillList)
                 total += item.ThanhTien;
-        
+
             TotalBill = total;
         }
 
@@ -257,7 +257,7 @@ namespace Coffee.ViewModel.AdminVM.Table
                 bill.MaKhachHang = Customer.MaNguoiDung;
 
             (string label, bool isCreate) = await BillService.Ins.createBill(bill);
-        
+
             if (isCreate)
             {
                 // Cộng điểm cho khách hàng
@@ -280,7 +280,7 @@ namespace Coffee.ViewModel.AdminVM.Table
 
                 billCurrent = bill;
 
-                MessageBoxCF ms = new MessageBoxCF("Đặt món thành công", MessageType.Accept, MessageButtons.OK);
+                MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["OrderSuccess"] as string, MessageType.Accept, MessageButtons.OK);
                 ms.ShowDialog();
             }
             else
@@ -441,10 +441,10 @@ namespace Coffee.ViewModel.AdminVM.Table
         }
 
         /// <summary>
-         /// Kiểm tra chỉ được nhập số
-         /// </summary>
-         /// <param name="sender"></param>
-         /// <param name="e"></param>
+        /// Kiểm tra chỉ được nhập số
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");

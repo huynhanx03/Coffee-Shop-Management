@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Markup;
 
 namespace Coffee.API
@@ -82,7 +83,7 @@ namespace Coffee.API
                                 product.LoaiSanPham = productTypes[findIndexProductType].LoaiSanPham;
                         }
 
-                        return ("Lấy danh sách sản phẩm thành công", products);
+                        return (Application.Current.Resources["GetListProductSuccess"] as string, products);
                     }
                     else
                     {
@@ -117,7 +118,7 @@ namespace Coffee.API
 
                         var product = JsonConvert.DeserializeObject<ProductDTO>(data.ToString());
 
-                        return ("Lấy danh sách sản phẩm thành công", product);
+                        return (Application.Current.Resources["GetListProductSuccess"] as string, product);
                     }
                     else
                     {
@@ -154,7 +155,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Cập nhật sản phẩm thành công", true);
+                        return (Application.Current.Resources["UpdateProductSuccess"] as string, true);
                     }
                     else
                     {
@@ -196,7 +197,7 @@ namespace Coffee.API
                         // Deserialize the data portion into a list
                         var sizes = JsonConvert.DeserializeObject<List<ProductSizeDetailDTO>>(data.ToString());
 
-                        return ("Lấy danh sách kích thước thành công", sizes);
+                        return (Application.Current.Resources["GetListSizeProductSuccess"] as string, sizes);
                     }
                     else
                     {
@@ -239,7 +240,7 @@ namespace Coffee.API
                         // Deserialize the data portion into a list
                         var products = JsonConvert.DeserializeObject<List<DiscountProductDTO>>(data.ToString());
 
-                        return ("Lấy danh sách sản phẩm giảm giá thành công", products);
+                        return (Application.Current.Resources["GetListDiscountProductSuccess"] as string, products);
                     }
                     else
                     {
@@ -279,7 +280,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Cập nhật giảm giá sản phẩm thành công", true);
+                        return (Application.Current.Resources["UpdateDiscountProductSuccess"] as string, true);
                     }
                     else
                     {
@@ -310,7 +311,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Xoá sản phẩm thành công", true);
+                        return (Application.Current.Resources["DeleteProductSuccess"] as string, true);
                     }
                     else
                     {
@@ -356,7 +357,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Thêm sản phẩm thành công", product);
+                        return (Application.Current.Resources["AddProductSuccess"] as string, product);
                     }
                     else
                     {
@@ -402,7 +403,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Cập nhật sản phẩm thành công", product);
+                        return (Application.Current.Resources["UpdateProductSuccess"] as string, product);
                     }
                     else
                     {

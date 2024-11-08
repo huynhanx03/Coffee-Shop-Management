@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Coffee.Utils;
+using System.Windows;
 
 namespace Coffee.API
 {
@@ -63,7 +64,7 @@ namespace Coffee.API
                         // Convert the dictionary values to a list
                         var productTypes = productTypesDict.Values.ToList();
 
-                        return ("Lấy danh sách loại sản phẩm thành công", productTypes);
+                        return (Application.Current.Resources["GetListTypeProductSuccess"] as string, productTypes);
                     }
                     else
                     {

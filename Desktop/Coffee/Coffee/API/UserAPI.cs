@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Coffee.API
 {
@@ -62,7 +63,7 @@ namespace Coffee.API
                         // Deserialize the nested object to UserDTO
                         var user = userToken.ToObject<UserDTO>();
 
-                        return ("Lấy thông tin người dùng thành công", user);
+                        return (Application.Current.Resources["GetInformationUserSuccess"] as string, user);
                     }
                     else
                     {
@@ -130,7 +131,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Cập nhật người dùng thành công", user);
+                        return (Application.Current.Resources["UpdateUserSuccess"] as string, user);
                     }
                     else
                     {
@@ -185,7 +186,7 @@ namespace Coffee.API
                         Properties.Settings.Default.UserID = user.MaNguoiDung;
                         Properties.Settings.Default.Save();
 
-                        return ("Đăng nhập thành công", user);
+                        return (Application.Current.Resources["LoginSuccess"] as string, user);
                     }
                     else
                     {
@@ -221,7 +222,7 @@ namespace Coffee.API
                     {
                         UserDTO user = JsonConvert.DeserializeObject<UserDTO>(jsonObj["data"].ToString());
 
-                        return ("Lấy thông tin người dùng thành công", user);
+                        return (Application.Current.Resources["GetInformationUserSuccess"] as string, user);
                     }
                     else
                     {

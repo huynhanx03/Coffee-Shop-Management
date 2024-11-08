@@ -108,7 +108,7 @@ namespace Coffee.ViewModel.AdminVM.Store
                 for (int count = 0; count < Quantity; ++count)
                 {
                     int index = rnd.Next(0, sizeProduct);
-                    
+
                     ProductDTO product = products[index];
 
                     products.RemoveAt(index);
@@ -124,12 +124,12 @@ namespace Coffee.ViewModel.AdminVM.Store
                 }
 
                 loadDiscountProductList();
-                MessageBoxCF ms = new MessageBoxCF("Tạo giảm giá thành công", MessageType.Accept, MessageButtons.OK);
-                ms.ShowDialog();    
+                MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["CreateVoucherSuccess"] as string, MessageType.Accept, MessageButtons.OK);
+                ms.ShowDialog();
             }
             else
             {
-                MessageBoxCF ms = new MessageBoxCF("Tạo giảm giá thất bại", MessageType.Error, MessageButtons.OK);
+                MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["CreateVoucherFailure"] as string, MessageType.Error, MessageButtons.OK);
                 ms.ShowDialog();
             }
 

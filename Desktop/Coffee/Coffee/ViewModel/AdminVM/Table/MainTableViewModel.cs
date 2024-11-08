@@ -15,7 +15,7 @@ using System.Windows.Input;
 
 namespace Coffee.ViewModel.AdminVM.Table
 {
-    public partial class MainTableViewModel: BaseViewModel
+    public partial class MainTableViewModel : BaseViewModel
     {
         #region variable
         public Grid MaskName { get; set; }
@@ -226,21 +226,21 @@ namespace Coffee.ViewModel.AdminVM.Table
                 loadCustomer();
             });
 
-            bookingIC = new RelayCommand<object>((p) => 
-            { 
-                return (currentTable != null 
+            bookingIC = new RelayCommand<object>((p) =>
+            {
+                return (currentTable != null
                         && currentTable.TrangThai != Constants.StatusTable.BOOKED
-                        && DetailBillList.Count > 0); 
-            }, 
+                        && DetailBillList.Count > 0);
+            },
             (p) =>
             {
                 booking();
             });
 
             payIC = new RelayCommand<object>((p) =>
-            { 
-                return DetailBillList.Count > 0; 
-            }, 
+            {
+                return DetailBillList.Count > 0;
+            },
             (p) =>
             {
                 pay();
@@ -288,7 +288,7 @@ namespace Coffee.ViewModel.AdminVM.Table
         {
             if (table.TrangThai == Constants.StatusTable.BOOKED)
             {
-                MessageBoxCF msTable = new MessageBoxCF("Bàn này đang có khách không thể chỉnh sửa", MessageType.Error, MessageButtons.OK);
+                MessageBoxCF msTable = new MessageBoxCF(Application.Current.Resources["ThisTableIsOccupiedAndCannotBeEdited"] as string, MessageType.Error, MessageButtons.OK);
                 msTable.ShowDialog();
                 return;
             }

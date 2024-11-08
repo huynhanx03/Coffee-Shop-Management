@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Coffee.Models;
 using Coffee.Utils;
 using Coffee.Utils.Helper;
@@ -62,7 +63,7 @@ namespace Coffee.API
                         // Deserialize the data portion into a list
                         var banners = JsonConvert.DeserializeObject<List<BannerModel>>(data.ToString());
 
-                        return ("Lấy danh sách banner thành công", banners);
+                        return (Application.Current.Resources["GetListBannerSuccess"] as string, banners);
                     }
                     else
                     {
@@ -99,7 +100,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Thêm banner thành công", banner);
+                        return (Application.Current.Resources["CreateBannerSuccess"] as string, banner);
                     }
                     else
                     {
@@ -173,11 +174,11 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Xoá banner thành công", true);
+                        return (Application.Current.Resources["DeleteBannerSuccess"] as string, true);
                     }
                     else
                     {
-                        return ("Xoá banner thất bại", false);
+                        return (Application.Current.Resources["DeleteBannerFailure"] as string, false);
                     }
                 }
                 catch (HttpRequestException e)

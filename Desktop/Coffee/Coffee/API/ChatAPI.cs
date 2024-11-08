@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Coffee.Utils;
 using Coffee.DTOs;
 using Coffee.Utils.Helper;
+using System.Windows;
 
 namespace Coffee.API
 {
@@ -65,7 +66,7 @@ namespace Coffee.API
                         // Deserialize the data portion into a list
                         var userContacts = JsonConvert.DeserializeObject<List<UserContactDTO>>(data.ToString());
 
-                        return ("Lấy danh bạ người dùng thành công", userContacts);
+                        return (Application.Current.Resources["GetUserContactSuccess"] as string, userContacts);
                     }
                     else
                     {
@@ -123,7 +124,7 @@ namespace Coffee.API
                         // Deserialize the data portion into a list
                         var messages = JsonConvert.DeserializeObject<List<ChatDTO>>(data.ToString());
 
-                        return ("Lấy danh sách tin nhắn thành công", messages);
+                        return (Application.Current.Resources["GetListMessageSuccess"] as string, messages);
                     }
                     else
                     {
@@ -164,7 +165,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Thêm tin nhắn thành công", true);
+                        return (Application.Current.Resources["AddMessageSuccess"] as string, true);
                     }
                     else
                     {

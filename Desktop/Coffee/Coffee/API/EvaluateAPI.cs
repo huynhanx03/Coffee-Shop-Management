@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Coffee.DTOs;
 using Coffee.Utils;
 using Coffee.Utils.Helper;
+using System.Windows;
 
 namespace Coffee.API
 {
@@ -60,7 +61,7 @@ namespace Coffee.API
                         // Deserialize the data portion into a list
                         var evaluates = JsonConvert.DeserializeObject<List<EvaluateDTO>>(data.ToString());
 
-                        return ("Lấy danh sách đánh giá thành công", evaluates);
+                        return (Application.Current.Resources["GetListEvaluateSuccess"] as string, evaluates);
                     }
                     else
                     {
@@ -95,7 +96,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Xoá đánh giá thành công", true);
+                        return (Application.Current.Resources["DeleteEvaluateSuccess"] as string, true);
                     }
                     else
                     {

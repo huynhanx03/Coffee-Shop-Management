@@ -78,7 +78,7 @@ namespace Coffee.ViewModel.AdminVM.Store
 
             (string label, BannerModel bannerNew) = await BannerService.Ins.createBanner(banner);
 
-            if (bannerNew != null) 
+            if (bannerNew != null)
             {
                 MessageBoxCF ms = new MessageBoxCF(label, MessageType.Accept, MessageButtons.OK);
                 loadBanner();
@@ -115,7 +115,7 @@ namespace Coffee.ViewModel.AdminVM.Store
         {
             MaskName.Visibility = Visibility.Visible;
 
-            MessageBoxCF msDelete = new MessageBoxCF("Xác nhận xoá banner này", MessageType.Waitting, MessageButtons.YesNo);
+            MessageBoxCF msDelete = new MessageBoxCF(Application.Current.Resources["ComfirmDeleteBanner"] as string, MessageType.Waitting, MessageButtons.YesNo);
 
             if (msDelete.ShowDialog() == true)
             {

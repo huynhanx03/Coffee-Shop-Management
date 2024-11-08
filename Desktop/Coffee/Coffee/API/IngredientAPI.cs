@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Coffee.Utils;
 using FireSharp.Response;
 using Coffee.Utils.Helper;
+using System.Windows;
 
 namespace Coffee.API
 {
@@ -66,7 +67,7 @@ namespace Coffee.API
                         // Deserialize the data portion into a list
                         var ingredients = JsonConvert.DeserializeObject<List<IngredientDTO>>(data.ToString());
 
-                        return ("Lấy danh sách nguyên liệu thành công", ingredients);
+                        return (Application.Current.Resources["GetListIngredientSuccess"] as string, ingredients);
                     }
                     else
                     {
@@ -108,7 +109,7 @@ namespace Coffee.API
                         // Deserialize the data portion into a list
                         var units = JsonConvert.DeserializeObject<List<UnitDTO>>(data.ToString());
 
-                        return ("Lấy danh sách đơn vị nguyên liệu thành công", units);
+                        return (Application.Current.Resources["GetListUnitIngredientSuccess"] as string, units);
                     }
                     else
                     {
@@ -149,7 +150,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Thêm nguyên liệu thành công", Ingredient);
+                        return (Application.Current.Resources["CreateIngredientSuccess"] as string, Ingredient);
                     }
                     else
                     {
@@ -193,7 +194,7 @@ namespace Coffee.API
                         string responseContent = await response.Content.ReadAsStringAsync();
                         IngredientDTO ingredient = JsonConvert.DeserializeObject<IngredientDTO>(responseContent);
 
-                        return ("Lấy nguyên liệu thành công", ingredient);
+                        return (Application.Current.Resources["GetIngredientSuccess"] as string, ingredient);
                     }
                     else
                     {
@@ -238,7 +239,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Cập nhật nguyên liệu thành công", Ingredient);
+                        return (Application.Current.Resources["UpdateIngredientSuccess"] as string, Ingredient);
                     }
                     else
                     {
@@ -280,7 +281,7 @@ namespace Coffee.API
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Cập nhật nguyên liệu thành công", true);
+                        return (Application.Current.Resources["UpdateIngredientSuccess"] as string, true);
                     }
                     else
                     {
@@ -320,11 +321,11 @@ namespace Coffee.API
                     // Add Bearer token to Authorization header
                     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
-                    HttpResponseMessage response = await client .DeleteAsync(Constants.API.IP + beginUrl + $"/ingredient/{IngredientID}");
+                    HttpResponseMessage response = await client.DeleteAsync(Constants.API.IP + beginUrl + $"/ingredient/{IngredientID}");
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return ("Xoá nguyên liệu thành công", true);
+                        return (Application.Current.Resources["DeleteIngredientSuccess"] as string, true);
                     }
                     else
                     {
