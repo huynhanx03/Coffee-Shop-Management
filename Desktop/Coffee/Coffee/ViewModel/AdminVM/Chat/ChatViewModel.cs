@@ -129,22 +129,24 @@ namespace Coffee.ViewModel.AdminVM.Chat
 
             ChatModel chat = new ChatModel
             {
-                MaKH = "",
-                NoiDung = MessageText,
-                ThoiGian = DateTime.Now.ToString("HH:mm:ss dd/MM/yyyy")
+                MaKhachHang = "",
+                MaNhanVien = "ND0001",
+                ChiTiet = MessageText,
+                ThoiGian = DateTime.Now.ToString("HH:mm:ss dd/MM/yyyy"),
+                DaXem = false
             };
 
             (string label, bool isCreate) = await ChatAPI.Ins.AddMessage(chat, UserID);
 
             if (isCreate)
             {
-                // Thêm vào danh sách
-                ChatList.Add(new ChatDTO
-                {
-                    IsReceived = false,
-                    NoiDung = chat.NoiDung,
-                    ThoiGian = chat.ThoiGian
-                });
+                //// Thêm vào danh sách
+                //ChatList.Add(new ChatDTO
+                //{
+                //    IsReceived = false,
+                //    ChiTiet = chat.ChiTiet,
+                //    ThoiGian = chat.ThoiGian
+                //});
 
                 ChatList = new ObservableCollection<ChatDTO>(ChatList);
 

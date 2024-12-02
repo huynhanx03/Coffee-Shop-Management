@@ -1,5 +1,5 @@
 const db = require('../config/firebase');
-const { getDiscountProducts, updateDiscountFromProduct, deleteProduct, getProductSizes, updateQuantityProduct, getMaxProductId, addProduct, updateProduct, handleGetProductById } = require('../dao/productDAO');
+const { getDiscountProducts, updateDiscountFromProduct, deleteProduct, getProductSizes, updateQuantityProduct, getMaxProductId, addProduct, updateProduct, handleGetProductById, findProductByName } = require('../dao/productDAO');
 const { nextID } = require('../utils/helper');
 
 const getCategories = async (req, res) => {
@@ -155,11 +155,16 @@ const addProductHandler = async (req, res) => {
     const product = req.body;
 
     try {
+        const existingProduct = await findProductByName(product.TenSanPham);
+        if (existingProduct) {
+            return res.status(400).json({ success: false, message: 'Product name already exists' });
+        }
+
         const maxProductId = await getMaxProductId();
         const newProductId = nextID(maxProductId, "SP");
 
         product.MaSanPham = newProductId;
-
+        
         await addProduct(product);
 
         return res.status(201).json({ success: true, message: 'Product added successfully' });
@@ -173,6 +178,12 @@ const updateProductHandler = async (req, res) => {
     const { productID } = req.params;
 
     try {
+        const existingProduct = await findProductByName(product.TenSanPham);
+        if (existingProduct && existingProduct.MaSanPham !== productID) {
+            return res.status(400).json({ success: false, message: 'Product name already exists' });
+        }
+
+
         product.MaSanPham = productID;
 
         await updateProduct(product);

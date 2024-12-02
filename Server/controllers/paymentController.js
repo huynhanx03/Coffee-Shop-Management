@@ -9,7 +9,7 @@ const payment = async (req, res) => {
     var secretKey = process.env.SECRET_KEY_MOMO;
     var orderInfo = 'pay with MoMo';
     var partnerCode = 'MOMO';
-    var redirectUrl = 'https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b';
+    var redirectUrl = 'com.namngo102003.CoffeeApp://';
     var ipnUrl = 'https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b';
     var requestType = "payWithMethod";
     var amount = total;

@@ -103,6 +103,16 @@ const getIngredient = async (ingredientID) => {
     }
 };
 
+const findIngredientByName = async (name) => {
+    const snapshot = await db.ref('NguyenLieu').orderByChild('TenNguyenLieu').equalTo(name).once('value');
+    if (snapshot.exists()) {
+        const ingredients = snapshot.val();
+        const firstIngredientKey = Object.keys(ingredients)[0];
+        return { id: firstIngredientKey, ...ingredients[firstIngredientKey] };
+    }
+    return null;
+};
+
 module.exports = {
     getIngredients,
     addIngredient,
@@ -111,5 +121,6 @@ module.exports = {
     updateIngredient,
     getUnits,
     updateQuantityIngredient,
-    getIngredient
+    getIngredient,
+    findIngredientByName
 };

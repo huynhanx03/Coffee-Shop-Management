@@ -16,6 +16,8 @@ router.get('/number-phone/:numberPhone', authenticateToken, userController.getUs
 router.get('/token/check-token', authenticateToken, userController.checkTokenHandler);
 router.put('/shipper/status', userController.setStatusShipper);
 router.get('/profit/:shipperId', userController.getProfitByShipper);
-router.post('shipper/login', userController.shipperLogin);
+router.post('/shipper/login', userController.shipperLogin);
+
+router.get('/verify-token', authenticateToken, userController.verifyToken);
 
 module.exports = router;

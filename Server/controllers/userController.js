@@ -27,9 +27,13 @@ const getNewId = async () => {
     }
 }
 
+const verifyToken = async (req, res) => {
+    return res.status(200).json({ success: true, message: 'Token hợp lệ' })
+}
+
 const register = async (req, res) => {
     try {
-        const { username, email, password } = req.body
+        const { name, username, phone, email, password } = req.body
         const hasPass = await hashPassword(password)
         const newId = await getNewId()
         const currentTime = new Date()
@@ -42,11 +46,11 @@ const register = async (req, res) => {
             CCCD_CMND: '',
             DiaChi: '',
             GioiTinh: '',
-            HoTen: '',
+            HoTen: name,
             MaNguoiDung: newId,
             NgayTao: dateCreated,
-            SoDienThoai: '',
-            HinhAnh: '',
+            SoDienThoai: phone,
+            HinhAnh: 'https://user-images.githubusercontent.com/5709133/50445980-88299a80-0912-11e9-962a-6fd92fd18027.png',
             NgaySinh: '',
         })
 
@@ -65,7 +69,7 @@ const register = async (req, res) => {
             },
         })
 
-        return res.status(200).json({ success: true, message: 'Đăng ký thành công!' })
+        return res.status(200).json({ success: true, message: 'Đăng ký thành công!', data: { MaKhachHang: newId, HinhAnh: 'https://user-images.githubusercontent.com/5709133/50445980-88299a80-0912-11e9-962a-6fd92fd18027.png', HoTen: name, SoDienThoai: phone } })
     } catch (error) {
         console.log(error)
         return res.status(500).json({ success: false, message: 'Đăng ký thất bại!' })
@@ -73,12 +77,12 @@ const register = async (req, res) => {
 }
 
 const login = async (req, res) => {
-    const { username, password } = req.body
     try {
+        const { username, password } = req.body
         const snapshot = await db.ref('NguoiDung/').orderByChild('TaiKhoan').equalTo(username).once('value')
         const userData = snapshot.val()
 
-        if (!userData || userData[Object.keys(userData)[0]].VaiTro !== 2) {
+        if (!userData || +userData[Object.keys(userData)[0]].VaiTro !== 2) {
             return res.status(404).json({ success: false, message: 'Không tìm thấy người dùng' })
         }
 
@@ -125,8 +129,8 @@ const loginDesktopHandler = async (req, res) => {
 }
 
 const getUserById = async (req, res) => {
-    const userId = req.params.userId
     try {
+        const userId = req.params.userId
         const snapshot = await db.ref('NguoiDung/' + userId).once('value')
         const userData = snapshot.val()
 
@@ -254,7 +258,6 @@ const checkTokenHandler = async (req, res) => {
 const shipperLogin = async (req, res) => {
     try {
         const {username, password} = req.body;
-        
         const userData = await shipperLoginDAO(username, password);
 
         return res.status(200).json({ success: true, token: userData.token, data: userData.data });
@@ -316,5 +319,6 @@ module.exports = {
     shipperLogin,
     setStatusShipper,
     getStatusShipper,
-    getProfitByShipper
+    getProfitByShipper,
+    verifyToken
 }

@@ -153,7 +153,9 @@ namespace Coffee.ViewModel.AdminVM.Order
 
             if (Orders != null)
             {
-                Orders = Orders.OrderBy(s => DateTime.ParseExact(s.NgayTaoDon, "HH:mm:ss dd/MM/yyyy", CultureInfo.InvariantCulture)).ToList();
+                Orders = Orders
+                    .OrderByDescending(s => DateTime.ParseExact(s.NgayTaoDon, "HH:mm:ss dd/MM/yyyy", CultureInfo.InvariantCulture))
+                    .ToList();
 
                 OrderList = new ObservableCollection<OrderDTO>(Orders);
                 __OrderList = new List<OrderDTO>(Orders);
@@ -285,7 +287,10 @@ namespace Coffee.ViewModel.AdminVM.Order
                 "Toàn bộ",
                 Constants.StatusOrder.WAITTING,
                 Constants.StatusOrder.CONFIRMED,
+                Constants.StatusOrder.DELIVERED,
+                Constants.StatusOrder.RECEIVED,
                 Constants.StatusOrder.CANCEL,
+
             };
         }
 
@@ -326,7 +331,6 @@ namespace Coffee.ViewModel.AdminVM.Order
             {
                 await ProductService.Ins.reduceQuantityProduct(group.MaSanPham, group.SoLuong);
             }
-
         }
 
         #endregion

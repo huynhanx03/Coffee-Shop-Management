@@ -16,6 +16,7 @@ namespace Coffee.DTOs
         public decimal PhiVanChuyen {  get; set; }
         public decimal ThanhTien{  get; set; }
         public string TrangThai {  get; set; }
+        public bool ThanhToan {  get; set; }
 
         public Dictionary<string, ProductOrderDTO> _SanPham;
 

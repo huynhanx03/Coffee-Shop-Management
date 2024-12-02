@@ -63,6 +63,25 @@ const handleGetProductById = async (productId) => {
     return snapshot.val();
 }
 
+const findProductByName = async (name) => {
+    try {
+        const snapshot = await db.ref('SanPham').orderByChild('TenSanPham').equalTo(name).once('value');
+        
+        // Check if any product matches the given name
+        if (snapshot.exists()) {
+            // Firebase returns an object with product IDs as keys, so get the first entry
+            const products = snapshot.val();
+            const firstProductKey = Object.keys(products)[0];
+            return { id: firstProductKey, ...products[firstProductKey] };
+        } else {
+            return null; // No product found with the given name
+        }
+    } catch (error) {
+        console.error('Error finding product by name:', error);
+        throw error;
+    }
+};
+
 module.exports = {
     getDiscountProducts,
     updateDiscountFromProduct,
@@ -72,5 +91,6 @@ module.exports = {
     addProduct,
     getMaxProductId,
     updateProduct,
-    handleGetProductById
+    handleGetProductById,
+    findProductByName
 };

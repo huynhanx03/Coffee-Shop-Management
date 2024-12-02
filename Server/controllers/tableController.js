@@ -23,6 +23,11 @@ const addTableHandler = async (req, res) => {
     const table = req.body;
 
     try {
+        const existingTable = await tableDAO.findTableByName(table.TenBan);
+        if (existingTable) {
+            return res.status(400).json({ success: false, message: 'Table name already exists' });
+        }
+
         const maxTableId = await tableDAO.getMaxTableId();
         const newTableId = nextID(maxTableId, "BA");
         table.MaBan = newTableId;
@@ -39,6 +44,11 @@ const updateTableHandler = async (req, res) => {
     const { tableID } = req.params;
 
     try {
+        const existingTable = await tableDAO.findTableByName(table.TenBan);
+        if (existingTable && existingTable.MaBan !== tableID) {
+            return res.status(400).json({ success: false, message: 'Table name already exists' });
+        }
+
         table.MaBan = tableID
 
         await tableDAO.updateTable(table);

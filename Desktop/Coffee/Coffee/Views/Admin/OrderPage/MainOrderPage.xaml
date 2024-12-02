@@ -48,6 +48,7 @@
     <Page.Resources>
         <cv:OrderStatusColorCoverter x:Key="OrderStatusColorCoverter" />
         <cv:OrderStatusBoolCoverter x:Key="OrderStatusBoolCoverter" />
+        <cv:OrderPayCoverter x:Key="OrderPayCoverter" />
     </Page.Resources>
 
     <Grid Background="{DynamicResource BackgroundCF}">
@@ -202,7 +203,7 @@
                             </DataGridTemplateColumn>
 
                             <DataGridTemplateColumn
-                                Width="300"
+                                Width="150"
                                 Header="{DynamicResource CustomeName}"
                                 SortMemberPath="TenKhachHang">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -215,7 +216,22 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-
+                            
+                            <DataGridTemplateColumn
+                                            Width="100"
+                                            Header="Thanh toán"
+                                            SortMemberPath="ThanhToan">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock
+                                            HorizontalAlignment="Left"
+                                            Style="{DynamicResource txblInDtg}"
+                                            Text="{Binding ThanhToan, Converter={StaticResource OrderPayCoverter}}"
+                                            TextWrapping="Wrap" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            
                             <DataGridTemplateColumn
                                 Width="auto"
                                 Header="{DynamicResource TransportFee}"

@@ -61,7 +61,7 @@ namespace Coffee.DALs
                             var chatDTO = dataChat.Values;
                             List<ChatDTO> ListChat = dataChat.Values.ToList();
 
-                            var lastChat = ListChat.Last(x => !string.IsNullOrEmpty(x.MaKH));
+                            var lastChat = ListChat.Last(x => !string.IsNullOrEmpty(x.MaKhachHang));
 
                             var user = ListUser.First(x => x.MaNguoiDung == CustomerId);
 
@@ -71,7 +71,7 @@ namespace Coffee.DALs
                                 HoTen = user.HoTen,
                                 HinhAnh = user.HinhAnh,
                                 ThoiGianTinNhanCuoiCung = lastChat.ThoiGiandt.ToString("dd/MM"),
-                                TinNhanCuoiCung = lastChat.NoiDung
+                                TinNhanCuoiCung = lastChat.ChiTiet
                             };
 
                             listUserContact.Add(userContact);

@@ -3,47 +3,42 @@ const { convertToDateString } = require('../utils/helper');
 const { binarySearchUser } = require('../dsa/binarySearch');
 const { nextID, convertToDateTime } = require('../utils/helper');
 
-const getUserContacts = async () => {
-    const messageSnapshot = await db.ref('TinNhan').once('value');
-    const messageData = messageSnapshot.val();
+const getUserContacts = async (prefix) => {
+    try {
+        const messageSnapshot = await db.ref('TinNhan').once('value');
+        const messageData = messageSnapshot.val();
 
-    if (!messageData) {
+        if (!messageData) {
+            return [];
+        }
+
+        const userSnapshot = await db.ref('NguoiDung').once('value');
+        const userData = userSnapshot.val();
+        const listUser = Object.values(userData);
+        const sizeUsers = listUser.length;
+
+        const listUserContact = Object.entries(messageData)
+            .filter(([key]) => key.startsWith(`${prefix}-`))
+            .map(([key, data]) => {
+                const customerId = key.split('-')[1];
+                const user = listUser.find(x => x.MaNguoiDung === customerId);
+
+                if (user) {
+                    return {
+                        MaKhachHang: user.MaNguoiDung,
+                        HoTen: user.HoTen,
+                        HinhAnh: user.HinhAnh,
+                    };
+                }
+                return null;
+            })
+            .filter(Boolean);
+
+        return listUserContact;
+    } catch (error) {
+        console.error('Lỗi khi lấy danh sách User Contact:', error);
         return [];
     }
-
-    const userSnapshot = await db.ref('NguoiDung').once('value');
-    const userData = userSnapshot.val();
-    const listUser = Object.values(userData);
-    const sizeUsers = listUser.length
-    const listCustomerId = Object.keys(messageData);
-
-    const listUserContact = [];
-
-    for (const customerId of listCustomerId) {
-        const chatSnapshot = await db.ref(`TinNhan/${customerId}`).once('value');
-        const chatData = chatSnapshot.val();
-        const listChat = Object.values(chatData);
-
-        const lastChat = listChat.reverse().find(x => x.MaKH);
-        // const lastChat = "";
-
-        const findIndexCustomer = binarySearchUser(listUser, sizeUsers, customerId);
-
-        const user = listUser[findIndexCustomer]
-        // const user = listUser.find(x => x.MaNguoiDung === customerId);
-
-        const userContact = {
-            MaKhachHang: user.MaNguoiDung,
-            HoTen: user.HoTen,
-            HinhAnh: user.HinhAnh,
-            ThoiGianTinNhanCuoiCung: convertToDateString(lastChat.ThoiGian),
-            TinNhanCuoiCung: lastChat.NoiDung
-        };
-
-        listUserContact.push(userContact);
-    }
-
-    return listUserContact;
 };
 
 const getMaxMessageId = async (userID) => {
@@ -63,15 +58,25 @@ const getMaxMessageId = async (userID) => {
 };
 
 const addMessage = async (message, userID) => {
-    maxMessageID = await getMaxMessageId(userID)
+    // maxMessageID = await getMaxMessageId(userID)
 
-    const newMessageID = nextID(maxMessageID, "TN")
+    // const newMessageID = nextID(maxMessageID, "TN")
 
-    await db.ref(`TinNhan/${userID}/${newMessageID}`).set(message);
+    const key = 'ND0001' + '-' + userID
+    const snapshot = await db.ref('TinNhan/' + key).once('value')
+    const chat = snapshot.val()
+
+    if (!chat) {
+        throw new Error('Không tìm thấy cuộc trò chuyện!')
+    }
+
+    const newChatId = chat.NoiDung ? Object.keys(chat.NoiDung).length : 0
+
+    await db.ref(`TinNhan/${key}/NoiDung/${newChatId}`).set(message);
 };
 
 const getMessages = async (userID, datetime) => {
-    const messagesSnapshot = await db.ref(`TinNhan/${userID}`).once('value');
+    const messagesSnapshot = await db.ref(`TinNhan/ND0001-${userID}/NoiDung`).once('value');
 
     messages = messagesSnapshot.val()
 

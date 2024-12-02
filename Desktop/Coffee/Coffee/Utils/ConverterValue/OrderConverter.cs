@@ -49,4 +49,19 @@ namespace Coffee.Utils.ConverterValue
             throw new NotImplementedException();
         }
     }
+
+    public class OrderPayCoverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            bool valueConvert = (bool) value;
+
+            return valueConvert == true ? "Đã thanh toán" : "Chưa thanh toán";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

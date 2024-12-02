@@ -9,18 +9,29 @@ namespace Coffee.DTOs
 {
     public class ChatDTO
     {
-        private string _MaKH;
-        public string MaKH
+        private string _MaKhachHang;
+        public string MaKhachHang
         {
-            get { return _MaKH; }
+            get { return _MaKhachHang; }
             set
             {
-                _MaKH = value;
+                _MaKhachHang = value;
                 IsReceived = !string.IsNullOrEmpty(value);
             }
         }
-        
-        public string NoiDung { get; set; }
+
+        private string _MaNhanVien;
+        public string MaNhanVien
+        {
+            get { return _MaKhachHang; }
+            set
+            {
+                _MaKhachHang = value;
+                IsReceived = string.IsNullOrEmpty(value);
+            }
+        }
+
+        public string ChiTiet { get; set; }
         private string _ThoiGian;
         public string ThoiGian
         {
@@ -31,6 +42,7 @@ namespace Coffee.DTOs
                 ThoiGiandt = DateTime.ParseExact(ThoiGian, "HH:mm:ss dd/MM/yyyy", CultureInfo.InvariantCulture);
             }
         }
+
         public bool IsReceived { get; set; }
         public DateTime ThoiGiandt { get; set; }
     }

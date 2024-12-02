@@ -104,6 +104,16 @@ const updateTableStatus = async (tableID, status) => {
     }
 };
 
+const findTableByName = async (name) => {
+    const snapshot = await db.ref('Ban').orderByChild('TenBan').equalTo(name).once('value');
+    if (snapshot.exists()) {
+        const tables = snapshot.val();
+        const firstTableKey = Object.keys(tables)[0];
+        return { id: firstTableKey, ...tables[firstTableKey] };
+    }
+    return null;
+};
+
 module.exports = {
     getTables,
     addTable,
@@ -111,5 +121,6 @@ module.exports = {
     deleteTable,
     getMaxTableId,
     getTypeTables,
-    updateTableStatus
+    updateTableStatus,
+    findTableByName
 };

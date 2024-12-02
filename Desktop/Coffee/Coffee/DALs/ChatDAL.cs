@@ -105,9 +105,9 @@ namespace Coffee.DALs
                     var result = (from chat in chatData.Values
                                   select new ChatDTO
                                   {
-                                      IsReceived = !string.IsNullOrEmpty(chat.MaKH),
-                                      MaKH = chat.MaKH,
-                                      NoiDung = chat.NoiDung,
+                                      IsReceived = !string.IsNullOrEmpty(chat.MaKhachHang),
+                                      MaKhachHang = chat.MaKhachHang,
+                                      ChiTiet = chat.ChiTiet,
                                       ThoiGian = chat.ThoiGian
                                   }).ToList();
 
@@ -136,12 +136,12 @@ namespace Coffee.DALs
                     Dictionary<string, ChatDTO> chatData = chatResponse.ResultAs<Dictionary<string, ChatDTO>>();
 
                     var result = (from chat in chatData.Values
-                                  where chat.ThoiGiandt > datetime && !string.IsNullOrEmpty(chat.MaKH)
+                                  where chat.ThoiGiandt > datetime && !string.IsNullOrEmpty(chat.MaKhachHang)
                                   select new ChatDTO
                                   {
-                                      IsReceived = !string.IsNullOrEmpty(chat.MaKH),
-                                      MaKH = chat.MaKH,
-                                      NoiDung = chat.NoiDung,
+                                      //IsReceived = !string.IsNullOrEmpty(chat.MaKH),
+                                      //MaKH = chat.MaKH,
+                                      //NoiDung = chat.NoiDung,
                                       ThoiGian = chat.ThoiGian
                                   }).ToList();
 

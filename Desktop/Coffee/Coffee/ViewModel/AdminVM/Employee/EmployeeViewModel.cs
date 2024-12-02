@@ -89,6 +89,8 @@ namespace Coffee.ViewModel.AdminVM.Employee
 
         public EmployeeViewModel()
         {
+            resetEmployee();
+
             ListGender = new ObservableCollection<string>{
                 (string)Application.Current.Resources["Male"],
                 (string)Application.Current.Resources["Female"],
@@ -283,7 +285,7 @@ namespace Coffee.ViewModel.AdminVM.Employee
             Username = "";
             Password = "";
             Address = "";
-            Image = "";
+            Image = "https://user-images.githubusercontent.com/5709133/50445980-88299a80-0912-11e9-962a-6fd92fd18027.png";
             Wage = 0;
         }
 

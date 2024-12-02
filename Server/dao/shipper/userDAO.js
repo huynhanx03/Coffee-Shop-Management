@@ -1,12 +1,11 @@
 const db = require('../../config/firebase')
-const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 const { verifyPassword } = require('../../utils/helper')
 
 const shipperLoginDAO = async (username, password) => {
     try {
         const snapshot = await db.ref('NguoiDung').orderByChild('TaiKhoan').equalTo(username).once('value')
         const userData = snapshot.val()
-
         if (!userData || userData[Object.keys(userData)[0]].VaiTro !== 3) {
             throw new Error('Không tìm thấy người dùng')
         }

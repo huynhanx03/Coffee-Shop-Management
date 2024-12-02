@@ -50,7 +50,8 @@ const saveOrder = async (req, res) => {
         await db.ref('DonHang/' + newId).set({
             MaDonHang: newId,
             MaNguoiDung: userId,
-            TrangThai: status,
+            TrangThai: 'Chờ xác nhận',
+            ThanhToan: status === 'Đã thanh toán' ? true : false,
             SanPham: {
                 ...productObj,
             },
@@ -107,6 +108,7 @@ const setStatusOrder = async (req, res) => {
         const { status } = req.body
         await db.ref('DonHang/' + orderId).update({
             TrangThai: status,
+            ThanhToan: ThanhToan ? true : status === 'Đã nhận hàng' ? true : false,
         })
 
         return res.status(200).json({ success: true, message: 'Cập nhật trạng thái đơn hàng thành công' })

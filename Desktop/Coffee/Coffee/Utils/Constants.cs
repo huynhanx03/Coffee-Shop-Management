@@ -25,6 +25,8 @@ namespace Coffee.Utils
             public static readonly string CANCEL = "Đã huỷ";
             public static readonly string WAITTING = "Chờ xác nhận";
             public static readonly string CONFIRMED = "Đã xác nhận";
+            public static readonly string DELIVERED = "Chờ giao hàng";
+            public static readonly string RECEIVED = "Đã nhận hàng";
         }
 
         public class API

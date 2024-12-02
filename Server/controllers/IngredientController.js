@@ -1,4 +1,4 @@
-const { getIngredients, getMaxIngredientId, addIngredient, deleteIngredient, updateIngredient, getUnits, updateQuantityIngredient } = require('../dao/IngredientDAO');
+const { getIngredients, getMaxIngredientId, addIngredient, deleteIngredient, updateIngredient, getUnits, updateQuantityIngredient, findIngredientByName } = require('../dao/IngredientDAO');
 const { nextID } = require('../utils/helper');
 
 const getIngredientsHandle = async (req, res) => {
@@ -25,6 +25,11 @@ const addIngredientHandler = async (req, res) => {
     const ingredient = req.body;
 
     try {
+        const existingIngredient = await findIngredientByName(ingredient.TenNguyenLieu);
+        if (existingIngredient) {
+            return res.status(400).json({ success: false, message: 'Ingredient name already exists' });
+        }
+
         const maxIngredientId = await getMaxIngredientId()
         const newIngredientId = nextID(maxIngredientId, "NL")
 
@@ -57,6 +62,11 @@ const updateIngredientHandler = async (req, res) => {
     ingredient.MaNguyenLieu = ingredientID
     
     try {
+        const existingIngredient = await findIngredientByName(ingredient.TenNguyenLieu);
+        if (existingIngredient && existingIngredient.MaNguyenLieu !== ingredientID) {
+            return res.status(400).json({ success: false, message: 'Ingredient name already exists' });
+        }
+
         await updateIngredient(ingredient);
         
         return res.status(201).json({ success: true, message: 'Ingredient updated successfully' });
