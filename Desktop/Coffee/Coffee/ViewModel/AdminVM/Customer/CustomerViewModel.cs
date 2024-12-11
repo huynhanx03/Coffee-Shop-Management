@@ -251,7 +251,7 @@ namespace Coffee.ViewModel.AdminVM.Customer
         {
             MaskName.Visibility = Visibility.Visible;
 
-            MessageBoxCF ms = new MessageBoxCF("Xác nhận xoá khách hàng?", MessageType.Waitting, MessageButtons.YesNo);
+            MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["ConfirmDeleteCustomer"] as string, MessageType.Waitting, MessageButtons.YesNo);
 
             if (ms.ShowDialog() == true)
             {
@@ -315,7 +315,7 @@ namespace Coffee.ViewModel.AdminVM.Customer
                 }
                 else
                 {
-                    MessageBoxCF ms = new MessageBoxCF("Tải ảnh lên thất bại", MessageType.Error, MessageButtons.OK);
+                    MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["UploadImageFailed"] as string, MessageType.Error, MessageButtons.OK);
                     ms.ShowDialog();
                 }
             }
@@ -382,7 +382,7 @@ namespace Coffee.ViewModel.AdminVM.Customer
                 package.SaveAs(fileInfo);
 
                 Mouse.OverrideCursor = System.Windows.Input.Cursors.Arrow;
-                MessageBoxCF mb = new MessageBoxCF("Xuất file thành công", MessageType.Accept, MessageButtons.OK);
+                MessageBoxCF mb = new MessageBoxCF(Application.Current.Resources["ExportSuccess"] as string, MessageType.Accept, MessageButtons.OK);
                 mb.ShowDialog();
             }
 

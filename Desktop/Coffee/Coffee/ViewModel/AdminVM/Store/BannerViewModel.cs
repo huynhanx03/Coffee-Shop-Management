@@ -58,7 +58,7 @@ namespace Coffee.ViewModel.AdminVM.Store
                 }
                 else
                 {
-                    MessageBoxCF ms = new MessageBoxCF("Tải ảnh lên thất bại", MessageType.Error, MessageButtons.OK);
+                    MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["UploadImageFailed"] as string, MessageType.Error, MessageButtons.OK);
                     ms.ShowDialog();
                 }
             }

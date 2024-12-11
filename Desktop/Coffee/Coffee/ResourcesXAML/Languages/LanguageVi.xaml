@@ -201,4 +201,30 @@
     <system:String x:Key="TableNotReservedForMerging">Bàn này chưa được đặt để gộp</system:String>
     <system:String x:Key="MergeTableSuccess">Gộp bàn thành công</system:String>
     <system:String x:Key="ConfirmDeleteWarehouseBill">Xác nhận xoá hóa đơn nhập kho?</system:String>
+    <system:String x:Key="DeleteSuccess">Đã xoá thành công</system:String>
+    <system:String x:Key="ConfirmDeleteCustomer">Xác nhận xoá khách hàng?</system:String>
+    <system:String x:Key="UploadImageFailed">Tải ảnh lên thất bại</system:String>
+    <system:String x:Key="ExportSuccess">Xuất file thành công</system:String>
+    <system:String x:Key="CCCDCMNDInvalid">CCCD/CMND không hợp lệ</system:String>
+    <system:String x:Key="EmailInvalid">Email không hợp lệ</system:String>
+    <system:String x:Key="NumberPhoneInvalid">Số điện thoại không hợp lệ</system:String>
+    <system:String x:Key="ConfirmDeleteEmployee">Xác nhận xoá nhân viên?</system:String>
+    <system:String x:Key="ComfirmDeleteEvaluate">Xác nhận xoá đánh giá?</system:String>
+    <system:String x:Key="InappropriateUnitInIngredients">Đơn vị không phù hợp tại nguyên liệu </system:String>
+    <system:String x:Key="ConfirmDeleteIngredient">Xác nhận xoá nguyên liệu?</system:String>
+    <system:String x:Key="ThereAreNoProductsToImportIntoTheWarehouse">Không có sản phẩm để nhập vào kho</system:String>
+    <system:String x:Key="ConfirmDeleteProduct">Xác nhận xoá sản phẩm?</system:String>
+    <system:String x:Key="AddQuatityProductSuccess">Thêm số lượng sản phẩm thành công</system:String>
+    <system:String x:Key="ConfirmCancelThisOrder">Xác nhận huỷ đơn hàng này?</system:String>
+    <system:String x:Key="CancelOrderSuccess">Huỷ đơn hàng thành công</system:String>
+    <system:String x:Key="ConfirmDeliveryOfThisOrder">Xác nhận giao đơn hàng này?</system:String>
+    <system:String x:Key="ConfirmDeliveryOfThisOrderSuccess">Xác nhận đơn hàng thành công</system:String>
+    <system:String x:Key="UpdateInformationSuccess">Cập nhật thông tin thành công</system:String>
+    <system:String x:Key="ConfirmDeleteBill">Xác nhận xoá hóa đơn?</system:String>
+    <system:String x:Key="NothingToExport">Không có gì để xuất hết</system:String>
+    <system:String x:Key="PrintBillSuccess">In hoá đơn thành công</system:String>
+    <system:String x:Key="CouponIssuedSuccessfully">Phát hành phiếu giảm giá thành công</system:String>
+    <system:String x:Key="ConfirmDeleteVoucher">Xác nhận xoá phiếu giảm giá?</system:String>
+
+    
 </ResourceDictionary>

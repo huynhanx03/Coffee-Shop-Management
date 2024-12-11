@@ -90,7 +90,7 @@ namespace Coffee.ViewModel.AdminVM.Ingredient
                 {
                     if (unit.MaDonVi != "DV0001" && unit.MaDonVi != "DV0002")
                     {
-                        MessageBoxCF ms = new MessageBoxCF("Đơn vị không phù hợp tại nguyên liệu " + detail.TenNguyenLieu, MessageType.Error, MessageButtons.OK);
+                        MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["InappropriateUnitInIngredients"] as string + detail.TenNguyenLieu, MessageType.Error, MessageButtons.OK);
                         w.Close();
                         ms.ShowDialog();
                         return;
@@ -100,7 +100,7 @@ namespace Coffee.ViewModel.AdminVM.Ingredient
                 {
                     if (unit.MaDonVi != "DV0003" && unit.MaDonVi != "DV0004")
                     {
-                        MessageBoxCF ms = new MessageBoxCF("Đơn vị không phù hợp tại nguyên liệu " + detail.TenNguyenLieu, MessageType.Error, MessageButtons.OK);
+                        MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["InappropriateUnitInIngredients"] as string + detail.TenNguyenLieu, MessageType.Error, MessageButtons.OK);
                         w.Close();
                         ms.ShowDialog();
                         return;

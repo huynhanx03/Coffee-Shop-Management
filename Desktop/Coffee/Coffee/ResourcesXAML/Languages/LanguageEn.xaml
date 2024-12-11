@@ -201,6 +201,30 @@
     <system:String x:Key="TableNotReservedForMerging">This table has not been reserved for merging</system:String>
     <system:String x:Key="MergeTableSuccess">Merge Table Success</system:String>
     <system:String x:Key="ConfirmDeleteWarehouseBill">Confirm delete warehouse bill?</system:String>
+    <system:String x:Key="DeleteSuccess">Delete Success</system:String>
+    <system:String x:Key="ConfirmDeleteCustomer">Confirm delete customer?</system:String>
+    <system:String x:Key="UploadImageFailed">Upload image failed</system:String>
+    <system:String x:Key="ExportSuccess">Export Success</system:String>
+    <system:String x:Key="CCCDCMNDInvalid">CCCD/CMND Invalid</system:String>
+    <system:String x:Key="EmailInvalid">Email Invalid</system:String>
+    <system:String x:Key="NumberPhoneInvalid">Number Phone Invalid</system:String>
+    <system:String x:Key="ConfirmDeleteEmployee">Confirm Delete Employee?</system:String>
+    <system:String x:Key="ComfirmDeleteEvaluate">Comfirm Delete Evaluate?</system:String>
+    <system:String x:Key="InappropriateUnitInIngredients">Inappropriate unit in ingredients </system:String>
+    <system:String x:Key="ConfirmDeleteIngredient">Confirm delete ingredient?</system:String>
+    <system:String x:Key="ThereAreNoProductsToImportIntoTheWarehouse">There are no products to import into the warehouse</system:String>
+    <system:String x:Key="ConfirmDeleteProduct">Confirm delete product?</system:String>
+    <system:String x:Key="AddQuatityProductSuccess">Add quatity product success</system:String>
+    <system:String x:Key="ConfirmCancelThisOrder">Confirm cancel this order</system:String>
+    <system:String x:Key="CancelOrderSuccess">Cancel order success</system:String>
+    <system:String x:Key="ConfirmDeliveryOfThisOrder">Confirm delivery of this order?</system:String>
+    <system:String x:Key="ConfirmDeliveryOfThisOrderSuccess">Confirm delivery of this order success</system:String>
+    <system:String x:Key="UpdateInformationSuccess">Update information success</system:String>
+    <system:String x:Key="ConfirmDeleteBill">Confirm delete bill?</system:String>
+    <system:String x:Key="NothingToExport">Nothing to export</system:String>
+    <system:String x:Key="PrintBillSuccess">Print bill success</system:String>
+    <system:String x:Key="CouponIssuedSuccessfully">Coupon issued successfully</system:String>
+    <system:String x:Key="ConfirmDeleteVoucher">Confirm delete voucher?</system:String>
 
 
 </ResourceDictionary>

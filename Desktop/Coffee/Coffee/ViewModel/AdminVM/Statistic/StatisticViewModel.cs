@@ -267,7 +267,7 @@ namespace Coffee.ViewModel.AdminVM.Statistic
                         FileInfo fileInfo = new FileInfo(sf.FileName);
                         package.SaveAs(fileInfo);
 
-                        MessageBoxCF mb = new MessageBoxCF("Xuất file thành công", MessageType.Accept, MessageButtons.OK);
+                        MessageBoxCF mb = new MessageBoxCF(Application.Current.Resources["ExportSuccess"] as string, MessageType.Accept, MessageButtons.OK);
                         mb.ShowDialog();
                     }
                     break;
@@ -299,13 +299,13 @@ namespace Coffee.ViewModel.AdminVM.Statistic
                         FileInfo fileInfo = new FileInfo(sf.FileName);
                         package.SaveAs(fileInfo);
 
-                        MessageBoxCF mb = new MessageBoxCF("Xuất file thành công", MessageType.Accept, MessageButtons.OK);
+                        MessageBoxCF mb = new MessageBoxCF(Application.Current.Resources["ExportSuccess"] as string, MessageType.Accept, MessageButtons.OK);
                         mb.ShowDialog();
                     }
                     break;
 
                 case 3:
-                    MessageBoxCF ms = new MessageBoxCF("Không có gì để xuất hết", MessageType.Error, MessageButtons.OK);
+                    MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["ExportSuccess"] as string, MessageType.Error, MessageButtons.OK);
                     ms.ShowDialog();
                     break;
             }

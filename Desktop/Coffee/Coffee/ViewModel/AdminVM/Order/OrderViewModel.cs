@@ -179,7 +179,7 @@ namespace Coffee.ViewModel.AdminVM.Order
         public async void cancelOrder(OrderDTO Order)
         {
             MaskName.Visibility = Visibility.Visible;
-            MessageBoxCF ms = new MessageBoxCF("Xác nhận huỷ đơn hàng này?", MessageType.Waitting, MessageButtons.YesNo);
+            MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["ConfirmCancelThisOrder"] as string, MessageType.Waitting, MessageButtons.YesNo);
 
             if (ms.ShowDialog() == true)
             {
@@ -189,7 +189,7 @@ namespace Coffee.ViewModel.AdminVM.Order
 
                 if (isCancelOrder)
                 {
-                    MessageBoxCF msn = new MessageBoxCF("Huỷ đơn hàng thành công", MessageType.Accept, MessageButtons.OK);
+                    MessageBoxCF msn = new MessageBoxCF(Application.Current.Resources["CancelOrderSuccess"] as string, MessageType.Accept, MessageButtons.OK);
                     loadOrderList();
                     msn.ShowDialog();
                 }
@@ -208,7 +208,7 @@ namespace Coffee.ViewModel.AdminVM.Order
         public async void confirmOrder(OrderDTO Order)
         {
             MaskName.Visibility = Visibility.Visible;
-            MessageBoxCF ms = new MessageBoxCF("Xác nhận giao đơn hàng này?", MessageType.Waitting, MessageButtons.YesNo);
+            MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["ConfirmDeliveryOfThisOrder"] as string, MessageType.Waitting, MessageButtons.YesNo);
 
             if (ms.ShowDialog() == true)
             {
@@ -248,7 +248,7 @@ namespace Coffee.ViewModel.AdminVM.Order
 
                     if (isConfirmOrder)
                     {
-                        MessageBoxCF msn = new MessageBoxCF("Xác nhận đơn hàng thành công", MessageType.Accept, MessageButtons.OK);
+                        MessageBoxCF msn = new MessageBoxCF(Application.Current.Resources["ConfirmDeliveryOfThisOrderSuccess"] as string, MessageType.Accept, MessageButtons.OK);
                         loadOrderList();
                         msn.ShowDialog();
                     }

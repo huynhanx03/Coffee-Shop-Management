@@ -207,7 +207,7 @@ namespace Coffee.ViewModel.AdminVM.Setting
                 }
                 else
                 {
-                    MessageBoxCF ms = new MessageBoxCF("Tải ảnh lên thất bại", MessageType.Error, MessageButtons.OK);
+                    MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["UploadImageFailed"] as string, MessageType.Error, MessageButtons.OK);
                     ms.ShowDialog();
                 }
             }
@@ -220,7 +220,7 @@ namespace Coffee.ViewModel.AdminVM.Setting
 
             if (!Helper.checkCardID(IDCard))
             {
-                MessageBoxCF ms = new MessageBoxCF("CCCD/CMND không hợp lệ", MessageType.Error, MessageButtons.OK);
+                MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["CCCDCMNDInvalid"] as string, MessageType.Error, MessageButtons.OK);
                 ms.ShowDialog();
 
                 Mask.Visibility = Visibility.Collapsed;
@@ -230,7 +230,7 @@ namespace Coffee.ViewModel.AdminVM.Setting
 
             if (!Helper.checkEmail(Email))
             {
-                MessageBoxCF ms = new MessageBoxCF("Email không hợp lệ", MessageType.Error, MessageButtons.OK);
+                MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["EmailInvalid"] as string, MessageType.Error, MessageButtons.OK);
                 ms.ShowDialog();
 
                 Mask.Visibility = Visibility.Collapsed;
@@ -240,7 +240,7 @@ namespace Coffee.ViewModel.AdminVM.Setting
 
             if (!Helper.checkPhone(NumberPhone))
             {
-                MessageBoxCF ms = new MessageBoxCF("Số điện thoại không hợp lệ", MessageType.Error, MessageButtons.OK);
+                MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["NumberPhoneInvalid"] as string, MessageType.Error, MessageButtons.OK);
                 ms.ShowDialog();
 
                 Mask.Visibility = Visibility.Collapsed;
@@ -276,7 +276,7 @@ namespace Coffee.ViewModel.AdminVM.Setting
 
             if (userEdit != null)
             {
-                MessageBoxCF msa = new MessageBoxCF("Cập nhật thông tin thành công", MessageType.Accept, MessageButtons.OK);
+                MessageBoxCF msa = new MessageBoxCF(Application.Current.Resources["UpdateInformationSuccess"] as string, MessageType.Accept, MessageButtons.OK);
                 msa.ShowDialog();
 
                 await CloudService.Ins.DeleteImage(OriginImage);

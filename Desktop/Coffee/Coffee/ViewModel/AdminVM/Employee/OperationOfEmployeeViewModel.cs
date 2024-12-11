@@ -187,7 +187,7 @@ namespace Coffee.ViewModel.AdminVM.Employee
 
             if (!Helper.checkCardID(IDCard))
             {
-                MessageBoxCF ms = new MessageBoxCF("CCCD/CMND không hợp lệ", MessageType.Error, MessageButtons.OK);
+                MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["CCCDCMNDInvalid"] as string, MessageType.Error, MessageButtons.OK);
                 ms.ShowDialog();
 
                 MaskNameOperation.Visibility = Visibility.Collapsed;
@@ -197,7 +197,7 @@ namespace Coffee.ViewModel.AdminVM.Employee
 
             if (!Helper.checkEmail(Email))
             {
-                MessageBoxCF ms = new MessageBoxCF("Email không hợp lệ", MessageType.Error, MessageButtons.OK);
+                MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["EmailInvalid"] as string, MessageType.Error, MessageButtons.OK);
                 ms.ShowDialog();
 
                 MaskNameOperation.Visibility = Visibility.Collapsed;
@@ -207,7 +207,7 @@ namespace Coffee.ViewModel.AdminVM.Employee
 
             if (!Helper.checkPhone(NumberPhone))
             {
-                MessageBoxCF ms = new MessageBoxCF("Số điện thoại không hợp lệ", MessageType.Error, MessageButtons.OK);
+                MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["NumberPhoneInvalid"] as string, MessageType.Error, MessageButtons.OK);
                 ms.ShowDialog();
 
                 MaskNameOperation.Visibility = Visibility.Collapsed;

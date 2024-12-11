@@ -183,7 +183,7 @@ namespace Coffee.ViewModel.AdminVM.Menu
                     }
                     else
                     {
-                        MessageBoxCF ms = new MessageBoxCF("Tải ảnh lên thất bại", MessageType.Error, MessageButtons.OK);
+                        MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["UploadImageFailed"] as string, MessageType.Error, MessageButtons.OK);
                         ms.ShowDialog();
                     }
                 }
@@ -259,7 +259,7 @@ namespace Coffee.ViewModel.AdminVM.Menu
         {
             MaskName.Visibility = Visibility.Visible;
             
-            MessageBoxCF ms = new MessageBoxCF("Xác nhận xoá sản phẩm?", MessageType.Waitting, MessageButtons.YesNo);
+            MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["ConfirmDeleteProduct"] as string, MessageType.Waitting, MessageButtons.YesNo);
 
             if (ms.ShowDialog() == true)
             {
@@ -364,7 +364,7 @@ namespace Coffee.ViewModel.AdminVM.Menu
             {
                 ProductQuantity = 0;
 
-                MessageBoxCF ms = new MessageBoxCF("Thêm số lượng sản phẩm thành công", MessageType.Accept, MessageButtons.OK);
+                MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["AddQuatityProductSuccess"] as string, MessageType.Accept, MessageButtons.OK);
                 ms.ShowDialog();
 
                 addQuantityProduct();

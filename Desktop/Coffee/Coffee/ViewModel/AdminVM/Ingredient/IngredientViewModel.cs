@@ -210,7 +210,7 @@ namespace Coffee.ViewModel.AdminVM.Ingredient
         /// </summary>
         public async void deleteIngredient()
         {
-            MessageBoxCF ms = new MessageBoxCF("Xác nhận xoá nguyên liệu?", MessageType.Waitting, MessageButtons.YesNo);
+            MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["ConfirmDeleteIngredient"] as string, MessageType.Waitting, MessageButtons.YesNo);
 
             if (ms.ShowDialog() == true)
             {
@@ -291,7 +291,7 @@ namespace Coffee.ViewModel.AdminVM.Ingredient
             // Chưa có sản phẩm để nhập thì không mở
                 if (DetailImportList.Count <= 0)
             {
-                MessageBoxCF ms = new MessageBoxCF("Không có sản phẩm để nhập vào kho", MessageType.Error, MessageButtons.OK);
+                MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["ThereAreNoProductsToImportIntoTheWarehouse"] as string, MessageType.Error, MessageButtons.OK);
                 ms.ShowDialog();
                 return;
             }

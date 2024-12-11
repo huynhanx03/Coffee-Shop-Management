@@ -81,7 +81,7 @@ namespace Coffee.Utils
                 };
 
                 var result = await cloudinary.DestroyAsync(deleteParams);
-                return "Đã xóa thành công!";
+                return Application.Current.Resources["NothingToExport"] as string;
             }
             catch (System.Exception ex)
             {

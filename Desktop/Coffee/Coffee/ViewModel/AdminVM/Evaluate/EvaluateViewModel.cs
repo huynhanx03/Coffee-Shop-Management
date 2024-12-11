@@ -141,7 +141,7 @@ namespace Coffee.ViewModel.AdminVM.Evaluate
         {
             MaskName.Visibility = Visibility.Visible;
 
-            MessageBoxCF ms = new MessageBoxCF("Xác nhận xoá đánh giá?", MessageType.Waitting, MessageButtons.YesNo);
+            MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["ComfirmDeleteEvaluate"] as string, MessageType.Waitting, MessageButtons.YesNo);
 
             if (ms.ShowDialog() == true)
             {

@@ -59,7 +59,7 @@ namespace Coffee.ViewModel.AdminVM.Table
 
                 w.Close();
 
-                MessageBoxCF ms = new MessageBoxCF("In hoá đơn thành công", MessageType.Accept, MessageButtons.OK);
+                MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["PrintBillSuccess"] as string, MessageType.Accept, MessageButtons.OK);
                 ms.ShowDialog();
             }
         }
