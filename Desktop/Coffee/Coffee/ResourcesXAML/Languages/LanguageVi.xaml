@@ -225,6 +225,17 @@
     <system:String x:Key="PrintBillSuccess">In hoá đơn thành công</system:String>
     <system:String x:Key="CouponIssuedSuccessfully">Phát hành phiếu giảm giá thành công</system:String>
     <system:String x:Key="ConfirmDeleteVoucher">Xác nhận xoá phiếu giảm giá?</system:String>
-
+    <system:String x:Key="Home">Trang chủ</system:String>
+    <system:String x:Key="MenuManagement">Quản lý thực đơn</system:String>
+    <system:String x:Key="IngredientManagement">Quản lý nguyên liệu</system:String>
+    <system:String x:Key="Statistic">Thống kê</system:String>
+    <system:String x:Key="EmployeeManagement">Quản lý nhân viên</system:String>
+    <system:String x:Key="Setting">Cài đặt</system:String>
+    <system:String x:Key="Chat">Nhắn tin</system:String>
+    <system:String x:Key="CouponManagement">Quản lý phiếu giảm giá</system:String>
+    <system:String x:Key="EvaluateManagement">Quản lý đánh giá</system:String>
+    <system:String x:Key="ShopManagement">Quản lý thông tin quán</system:String>
+    <system:String x:Key="CustomerManagement">Quản lý khách hàng</system:String>
+    <system:String x:Key="OrderManagement">Quản lý đơn hàng</system:String>
     
 </ResourceDictionary>
