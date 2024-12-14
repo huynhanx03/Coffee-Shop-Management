@@ -109,7 +109,7 @@ namespace Coffee.ViewModel.AdminVM
             {
                 settingBtn.IsChecked = true;
                 p.Content = new MainSettingPage();
-                optionName = "Cài đặt";
+                optionName = Application.Current.Resources["Setting"] as string;
             });
 
             loadSettingButtonIC = new RelayCommand<RadioButton>((p) => { return true; }, (p) =>
@@ -120,74 +120,74 @@ namespace Coffee.ViewModel.AdminVM
             loadTablesPageIC = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new MainTablePage();
-                optionName = "Trang chủ";
+                optionName = Application.Current.Resources["Home"] as string;
             });
 
             loadMenuPageIC = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new MainMenuPage();
-                optionName = "Quản lý thực đơn";
+                optionName = Application.Current.Resources["MenuManagement"] as string;
             });
 
             loadIngredientsPageIC = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new MainIngredientPage();
-                optionName = "Quản lý nguyên liệu";
+                optionName = Application.Current.Resources["IngredientManagement"] as string;
             });
 
             loadStatisticPageIC = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new MainStatisticPage();
-                optionName = "Thống kê";
+                optionName = Application.Current.Resources["Statistic"] as string;
             });
 
             loadEmployeePageIC = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new MainEmployeePage();
-                optionName = "Quản lý nhân viên";
+                optionName = Application.Current.Resources["EmployeeManagement"] as string;
             });
 
             loadSettingPageIC = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new MainSettingPage();
-                optionName = "Cài đặt";
+                optionName = Application.Current.Resources["Setting"] as string;
                 //optionName = (string)Application.Current.Resources["Setting"];
             });
 
             loadChatPageIC = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new MainChatPage();
-                optionName = "Nhắn tin";
+                optionName = Application.Current.Resources["Chat"] as string;
             });
 
             loadVoucherPageIC = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new MainVoucherPage();
-                optionName = "Quản lý phiếu giảm giá";
+                optionName = Application.Current.Resources["CouponManagement"] as string;
             });
 
             loadEvaluatePageIC = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new MainEvaluatePage();
-                optionName = "Quản lý đánh giá";
+                optionName = Application.Current.Resources["EvaluteManagement"] as string;
             });
 
             loadStorePageIC = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new MainStorePage();
-                optionName = "Quản lý thông tin quán";
+                optionName = Application.Current.Resources["ShopManagement"] as string;
             });
             
             loadCustomerPageIC = new RelayCommand<Frame>((p) => { return true; }, (p) =>
             {
                 p.Content = new MainCustomerPage();
-                optionName = "Quản lý khách hàng";
+                optionName = Application.Current.Resources["CustomerManagement"] as string;
             });
 
             loadOrderPageIC = new RelayCommand<Frame>((p) => { return true; }, async (p) =>
             {
                 p.Content = new MainOrderPage();
-                optionName = "Quản lý đơn hàng";
+                optionName = Application.Current.Resources["OrderManagement"] as string;
 
                 await ConcreteMediator.Ins.Notify(this, "LoadOrderList");
             });
