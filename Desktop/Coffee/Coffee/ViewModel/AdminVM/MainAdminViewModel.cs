@@ -151,7 +151,7 @@ namespace Coffee.ViewModel.AdminVM
             {
                 p.Content = new MainSettingPage();
                 optionName = "Cài đặt";
-                //optionName = (string)Application.Current.Resources["Setting"];
+                optionName = (string)Application.Current.Resources["Setting"];
             });
 
             loadChatPageIC = new RelayCommand<Frame>((p) => { return true; }, (p) =>

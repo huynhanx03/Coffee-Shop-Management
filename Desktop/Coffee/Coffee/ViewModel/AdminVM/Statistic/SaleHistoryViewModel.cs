@@ -84,7 +84,7 @@ namespace Coffee.ViewModel.AdminVM.Statistic
         /// </summary>
         public async void deleteBill()
         {
-            MessageBoxCF ms = new MessageBoxCF(Application.Current.Resources["ConfirmDeleteBill"] as string, MessageType.Waitting, MessageButtons.YesNo);
+            MessageBoxCF ms = new MessageBoxCF(System.Windows.Application.Current.Resources["ConfirmDeleteBill"] as string, MessageType.Waitting, MessageButtons.YesNo);
 
             if (ms.ShowDialog() == true)
             {
