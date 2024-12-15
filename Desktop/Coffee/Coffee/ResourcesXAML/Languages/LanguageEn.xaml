@@ -225,13 +225,9 @@
     <system:String x:Key="PrintBillSuccess">Print bill success</system:String>
     <system:String x:Key="CouponIssuedSuccessfully">Coupon issued successfully</system:String>
     <system:String x:Key="ConfirmDeleteVoucher">Confirm delete voucher?</system:String>
-    <system:String x:Key="Home">Home</system:String>
     <system:String x:Key="MenuManagement">Menu Management</system:String>
     <system:String x:Key="IngredientManagement">Ingredient Management</system:String>
-    <system:String x:Key="Statistic">Statistic</system:String>
     <system:String x:Key="EmployeeManagement">Employee Management</system:String>
-    <system:String x:Key="Setting">Setting</system:String>
-    <system:String x:Key="Chat">Chat</system:String>
     <system:String x:Key="CouponManagement">Coupon Management</system:String>
     <system:String x:Key="EvaluateManagement">Evaluate Management</system:String>
     <system:String x:Key="ShopManagement">Shop Management</system:String>
