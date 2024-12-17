@@ -129,13 +129,21 @@ namespace Coffee.API
                     }
                     else
                     {
-                        string responseContent = response.Content.ReadAsStringAsync().Result;
+                        try
+                        {
+                            string responseContent = response.Content.ReadAsStringAsync().Result;
 
-                        // Parse the JSON
-                        var jsonObj = JObject.Parse(responseContent);
+                            // Parse the JSON
+                            var jsonObj = JObject.Parse(responseContent);
 
 
-                        return (jsonObj["message"].ToString(), null);
+                            return (jsonObj["message"].ToString(), null);
+                        }
+                        catch (Exception ex)
+                        {
+                            return ("Application error", null);
+                        }
+                        
                     }
                 }
                 catch (HttpRequestException e)

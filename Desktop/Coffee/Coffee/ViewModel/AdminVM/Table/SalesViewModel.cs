@@ -357,6 +357,7 @@ namespace Coffee.ViewModel.AdminVM.Table
             {
                 BillModel billUpdate = new BillModel
                 {
+                    MaHoaDon = billCurrent.MaHoaDon,
                     MaBan = currentTable == null ? "" : currentTable.MaBan,
                     MaNhanVien = Memory.user.MaNguoiDung,
                     NgayTao = DateTime.Now.ToString("HH:mm:ss dd/MM/yyyy"),
