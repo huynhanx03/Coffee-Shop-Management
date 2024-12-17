@@ -28,7 +28,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Style="{DynamicResource Header2}"
-                Text="Đăng nhập" />
+                Text="{DynamicResource Login}" />
 
             <StackPanel
                 Margin="0,20,0,0"

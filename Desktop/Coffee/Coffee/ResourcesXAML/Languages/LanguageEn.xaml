@@ -233,5 +233,7 @@
     <system:String x:Key="ShopManagement">Shop Management</system:String>
     <system:String x:Key="CustomerManagement">Customer Management</system:String>
     <system:String x:Key="OrderManagement">Order Management</system:String>
+    <system:String x:Key="Hello">RO HELLO</system:String>
+    <system:String x:Key="SignIn">Sign In...</system:String>
 
 </ResourceDictionary>

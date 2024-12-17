@@ -233,5 +233,7 @@
     <system:String x:Key="ShopManagement">Quản lý thông tin quán</system:String>
     <system:String x:Key="CustomerManagement">Quản lý khách hàng</system:String>
     <system:String x:Key="OrderManagement">Quản lý đơn hàng</system:String>
+    <system:String x:Key="Hello">RO XIN CHÀO</system:String>
+    <system:String x:Key="SignIn">Đang đăng nhập...</system:String>
     
 </ResourceDictionary>
