@@ -76,6 +76,11 @@ The objective of this project is to develop software for managing coffee shops.
 ## III. Authors
 - **Huỳnh Mai Cao Nhân** ([GitHub](https://github.com/huynhanx03)) - Team Leader, Database Design, Frontend Developer, Backend Developer
 
+- **Phạm Nguyễn** ([GitHub](https://github.com/huynhanx03)) - Frontend Developer
+
+- **Đào Anh Tú** ([GitHub](https://github.com/huynhanx03)) - Database Design
+
+- **Trần Quang Khải** ([GitHub](https://github.com/huynhanx03)) - Backend Developer
 ---
 
 ## IV. Advisor
